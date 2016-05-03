@@ -21,6 +21,28 @@ private:
     QAction *printFile;
     QAction *settingFile;
     QAction *exitApp;
+
+    //Menu edit
+    QMenu *editMenu;
+    QAction *cut;
+    QAction *copy;
+    QAction *paste;
+    QAction *clean;
+    //Menu Screen
+    QMenu *screenMenu;
+    QAction *theme;
+    QAction *canvas;
+    QAction *leftToolsMenu;
+    //Menu picture
+    QMenu *pictureMenu;
+    QAction *rotation;
+    QAction *resize;
+    //Menu layer
+    QMenu *layerMenu;
+    QAction *newCalque;
+    QMenu *toolsMenu;
+    QMenu *geometricMenu;
+
 public:
     MyMenu();
     QPushButton* getM_button();

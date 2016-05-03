@@ -22,15 +22,70 @@ MyMenu::MyMenu()
     fileMenu->addAction(settingFile);
     fileMenu->addAction(exitApp);
 
+
+    //Menu edit
+    editMenu= new QMenu("Edit");
+    cut=new QAction("Cut", editMenu);
+    copy=new QAction("Copy", editMenu);
+    paste=new QAction("Paste", editMenu);
+    clean=new QAction("Clean", editMenu);
+
+    //add to edit menu
+    editMenu->addAction(cut);
+    editMenu->addAction(copy);
+    editMenu->addAction(copy);
+    editMenu->addAction(clean);
+
+
+    //Menu Screen
+    screenMenu= new QMenu("Screen");
+    theme=new QAction("Thème", screenMenu);
+    canvas=new QAction("Canvas", screenMenu);
+    leftToolsMenu=new QAction("Left Tool Menu", screenMenu);
+
+    //add to Screen
+    screenMenu->addAction(theme);
+    screenMenu->addAction(canvas);
+    screenMenu->addAction(leftToolsMenu);
+
+    //Menu picture
+    pictureMenu= new QMenu("Picture");
+    rotation=new QAction("Rotation", pictureMenu);
+    resize=new QAction("Resize", pictureMenu);
+
+    //add to picture
+    pictureMenu->addAction(rotation);
+    pictureMenu->addAction(resize);
+
+    //Menu layer
+    layerMenu= new QMenu("Layer");
+    newCalque=new QAction("New layer", layerMenu);
+
+    //add to layer
+    layerMenu->addAction(newCalque);
+
+    toolsMenu= new QMenu("Tools");
+    geometricMenu= new QMenu("Geometric sharpes");
+
+
     m_button= new QPushButton();
     m_button->connect(m_button, SIGNAL(clicked()), this, SLOT(myopenfile()), Qt::AutoConnection);
  //   QWidget::connect(&m_button, SIGNAL(clicked()), this, SLOT(myopenfile()), Qt::AutoConnection);
+
+
 
 }
 
 QVector<QMenu*> MyMenu::ListMenu(){
    QVector<QMenu*> qlistMenu;
    qlistMenu.push_back(fileMenu);
+   qlistMenu.push_back(fileMenu);
+   qlistMenu.push_back(editMenu);
+   qlistMenu.push_back(screenMenu);
+   qlistMenu.push_back(pictureMenu);
+   qlistMenu.push_back(layerMenu);
+   qlistMenu.push_back(toolsMenu);
+   qlistMenu.push_back(geometricMenu);
    return qlistMenu;
 }
 
