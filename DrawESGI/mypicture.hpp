@@ -10,12 +10,18 @@ class MyPicture : public QWidget
     //Q_OBJECT
 private:
     QGraphicsScene *sceneGraphic;
+    QString fileName;
+    QPixmap imageChoose;
 public:
     MyPicture();
-    MyPicture(QPixmap *imageChoose);
+    MyPicture(QString fileName);
     QGraphicsScene* getSceneGraphic();
+    QString getFileName();
+    QPixmap getImageChoose();
+    void setImageChoose(QPixmap imageChoose);
+    void setFileName(QString fileName);
 public slots:
-    void receiveSignalOpenFile(QPixmap*);
+    void signalOpenFile(QPixmap*);
 
 };
 

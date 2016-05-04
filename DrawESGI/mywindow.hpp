@@ -31,7 +31,7 @@ private:
 public:
     MyWindow();
 public slots:
-    void reception(QPixmap);
+    void slotOpenFile(QString);
 };
 
 #endif // WINDOWTEST_H

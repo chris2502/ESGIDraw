@@ -20,7 +20,7 @@
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_MyWindow_t {
     QByteArrayData data[3];
-    char stringdata0[20];
+    char stringdata0[23];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -30,11 +30,11 @@ struct qt_meta_stringdata_MyWindow_t {
 static const qt_meta_stringdata_MyWindow_t qt_meta_stringdata_MyWindow = {
     {
 QT_MOC_LITERAL(0, 0, 8), // "MyWindow"
-QT_MOC_LITERAL(1, 9, 9), // "reception"
-QT_MOC_LITERAL(2, 19, 0) // ""
+QT_MOC_LITERAL(1, 9, 12), // "slotOpenFile"
+QT_MOC_LITERAL(2, 22, 0) // ""
 
     },
-    "MyWindow\0reception\0"
+    "MyWindow\0slotOpenFile\0"
 };
 #undef QT_MOC_LITERAL
 
@@ -55,7 +55,7 @@ static const uint qt_meta_data_MyWindow[] = {
        1,    1,   19,    2, 0x0a /* Public */,
 
  // slots: parameters
-    QMetaType::Void, QMetaType::QPixmap,    2,
+    QMetaType::Void, QMetaType::QString,    2,
 
        0        // eod
 };
@@ -66,7 +66,7 @@ void MyWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, vo
         MyWindow *_t = static_cast<MyWindow *>(_o);
         Q_UNUSED(_t)
         switch (_id) {
-        case 0: _t->reception((*reinterpret_cast< QPixmap(*)>(_a[1]))); break;
+        case 0: _t->slotOpenFile((*reinterpret_cast< QString(*)>(_a[1]))); break;
         default: ;
         }
     }

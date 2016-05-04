@@ -6,19 +6,17 @@
 #include <QFileDialog>
 #include <QWidget>
 #include <QMenu>
-#include <QPixmap>
-#include <QGraphicsScene>
+
 class MyMenu : public QWidget//: public AbtractTestQobject
 {
     Q_OBJECT
 private:
-    QGraphicsScene* sceneGraphic;
-    QPushButton *m_button;
     //Menu file
     QMenu *fileMenu;
     QAction *newFile;
     QAction *openFile;
-    QPixmap imageChoose;
+    //path's image
+    QString fileName;
     QAction *saveFile;
     QAction *printFile;
     QAction *settingFile;
@@ -47,16 +45,14 @@ private:
 
 public:
     MyMenu();
-    QPushButton* getM_button();
     //Menu list to add to menuBar
     QVector<QMenu*>ListMenu();
-    QPixmap getImageChoose();
-    QGraphicsScene* getSceneGraphic();
+    QString getFileName();
 public slots:
-    void myopenfile();
+    void slotOpenfile();
 
 signals:
-    void signalOpenfile(QPixmap);
+    void signalOpenfile(QString);
 };
 
 #endif // TESTQOBJET_H
