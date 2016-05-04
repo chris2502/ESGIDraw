@@ -95,7 +95,6 @@ void MyMenu::slotOpenfile(){
     dialogFile.setViewMode(QFileDialog::Detail);
     fileName= dialogFile.getOpenFileName();
     emit signalOpenfile(fileName);
-
 }
 
 QString MyMenu::getFileName(){
