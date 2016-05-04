@@ -1,5 +1,5 @@
 #include "mymenu.hpp"
-
+#include "QDebug"
 MyMenu::MyMenu()
 {
     //Menu file
@@ -97,8 +97,23 @@ void MyMenu::myopenfile(){
     dialogFile.setViewMode(QFileDialog::Detail);
     QString fileName;
     fileName= dialogFile.getOpenFileName();
+
+    imageChoose.load(fileName);
+    //sceneGraphic=new QGraphicsScene();
+    //sceneGraphic->addPixmap(*imageChoose);
+
+        emit signalOpenfile(imageChoose);
+
+}
+
+QGraphicsScene* MyMenu::getSceneGraphic(){
+    return sceneGraphic;
 }
 
 QPushButton* MyMenu::getM_button(){
     return m_button;
+}
+
+QPixmap MyMenu::getImageChoose(){
+    return imageChoose;
 }

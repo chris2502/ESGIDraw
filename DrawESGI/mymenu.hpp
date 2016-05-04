@@ -7,10 +7,12 @@
 #include <QWidget>
 #include <QMenu>
 #include <QPixmap>
+#include <QGraphicsScene>
 class MyMenu : public QWidget//: public AbtractTestQobject
 {
     Q_OBJECT
 private:
+    QGraphicsScene* sceneGraphic;
     QPushButton *m_button;
     //Menu file
     QMenu *fileMenu;
@@ -48,8 +50,13 @@ public:
     QPushButton* getM_button();
     //Menu list to add to menuBar
     QVector<QMenu*>ListMenu();
+    QPixmap getImageChoose();
+    QGraphicsScene* getSceneGraphic();
 public slots:
     void myopenfile();
+
+signals:
+    void signalOpenfile(QPixmap);
 };
 
 #endif // TESTQOBJET_H
