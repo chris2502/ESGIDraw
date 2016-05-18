@@ -1,14 +1,17 @@
-MAKE_CXXFLAGS += -std=c++0x
 QT += widgets
+QT += printsupport
+
 SOURCES += \
     main.cpp \
-    abtracttestqobject.cpp \
     mymenu.cpp \
     mywindow.cpp \
-    mypicture.cpp
+    mypicture.cpp \
+    abstractmenu.cpp \
+    myloadplugin.cpp
 
 HEADERS += \
-    abtracttestqobject.hpp \
     mymenu.hpp \
     mywindow.hpp \
-    mypicture.hpp
+    mypicture.hpp \
+    abstractmenu.hpp \
+    myloadplugin.hpp

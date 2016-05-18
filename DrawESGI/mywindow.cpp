@@ -11,19 +11,35 @@ MyWindow::MyWindow() : QWidget()
 
     //layout of main window
     layoutGrid= new QGridLayout(this);
-
     //Bar menu of main window
     barMenu= new QMenuBar(this);
+
     //menu which add to bar menu
-    mymenu = new MyMenu();
-    mypicture =new MyPicture();
-    QVector<QMenu*> tmpMenu= mymenu->ListMenu();
-    foreach (QMenu* eltMenu, tmpMenu) {
-        barMenu->addMenu(eltMenu);
+    AbstractMenu *mymenu= new MyMenu();
+    menuAbstractList.push_back(mymenu);
+    const QString str=qApp->applicationDirPath() + "/../build-Myplugins-Desktop_Qt_5_6_0_GCC_64bit-Release";
+    qDebug()<< "Dossier des plugins: "<< str;
+    foreach (AbstractMenu* idPlugin, MyLoadPlugin::getLoadPlugin(str)) {
+        menuAbstractList.push_back(idPlugin);
     }
 
+    //picture which add to graphicview
+    mypicture =new MyPicture(this);
+    //canvas
     viewGraphic=new QGraphicsView();
-    connect(mymenu, SIGNAL(signalOpenfile(QString)), this, SLOT(slotOpenFile(QString)));
+
+    foreach (AbstractMenu* menuAbstract, menuAbstractList) {
+        //add to bar menu
+        QVector<QMenu*> tmpMenu= menuAbstract->ListMenu();
+        foreach (QMenu* eltMenu, tmpMenu) {
+            barMenu->addMenu(eltMenu);
+        }
+        connect(menuAbstract->getThisWidget(), SIGNAL(signalOpenfile(QString, QAction*)), this, SLOT(slotOpenFile(QString, QAction*)), Qt::AutoConnection);
+        connect(menuAbstract->getThisWidget(), SIGNAL(signalClearScene(QAction*)), this, SLOT(slotClearScene(QAction*)));
+        connect(menuAbstract->getThisWidget(), SIGNAL(signalSavePicture()), this, SLOT(slotSavePicture()));
+        connect(menuAbstract->getThisWidget(), SIGNAL(signalPrintPicture()), this, SLOT(slotPrintPicture()));
+    }
+
     layoutGrid->addWidget(barMenu, 0,0, 1, 5);
     layoutGrid->addWidget(viewGraphic, 1,0, 9, 3);
    // layoutGrid->addWidget(mymenu->getM_button(), 1,0, 1, 1);
@@ -35,7 +51,21 @@ MyWindow::MyWindow() : QWidget()
     show();
 }
 
-void MyWindow::slotOpenFile(QString fileName){
+void MyWindow::slotOpenFile(QString fileName, QAction *saveFile){
     mypicture->setFileName(fileName);
     viewGraphic->setScene(mypicture->getSceneGraphic());
+    saveFile->setEnabled(true);
+}
+
+void MyWindow::slotClearScene(QAction *saveFile){
+    mypicture->clearSceneGraphic();
+    saveFile->setDisabled(true);
+}
+
+void MyWindow::slotSavePicture(){
+    mypicture->savePicture();
+}
+
+void MyWindow::slotPrintPicture(){
+    mypicture->printPicture();
 }

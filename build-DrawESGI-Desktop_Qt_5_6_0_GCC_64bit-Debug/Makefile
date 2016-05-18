@@ -12,10 +12,10 @@ MAKEFILE      = Makefile
 
 CC            = gcc
 CXX           = g++
-DEFINES       = -DQT_QML_DEBUG -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_CORE_LIB
+DEFINES       = -DQT_QML_DEBUG -DQT_PRINTSUPPORT_LIB -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_CORE_LIB
 CFLAGS        = -pipe -g -Wall -W -D_REENTRANT -fPIC $(DEFINES)
 CXXFLAGS      = -pipe -g -std=gnu++0x -Wall -W -D_REENTRANT -fPIC $(DEFINES)
-INCPATH       = -I../DrawESGI -I. -I/home/ebongue/Qt/5.6/gcc_64/include -I/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets -I/home/ebongue/Qt/5.6/gcc_64/include/QtGui -I/home/ebongue/Qt/5.6/gcc_64/include/QtCore -I. -I/home/ebongue/Qt/5.6/gcc_64/mkspecs/linux-g++
+INCPATH       = -I../DrawESGI -I. -I/home/ebongue/Qt/5.6/gcc_64/include -I/home/ebongue/Qt/5.6/gcc_64/include/QtPrintSupport -I/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets -I/home/ebongue/Qt/5.6/gcc_64/include/QtGui -I/home/ebongue/Qt/5.6/gcc_64/include/QtCore -I. -I/home/ebongue/Qt/5.6/gcc_64/mkspecs/linux-g++
 QMAKE         = /home/ebongue/Qt/5.6/gcc_64/bin/qmake
 DEL_FILE      = rm -f
 CHK_DIR_EXISTS= test -d
@@ -36,7 +36,7 @@ DISTNAME      = DrawESGI1.0.0
 DISTDIR = /home/ebongue/Documents/Cpp/workspace/EsgiDraw/build-DrawESGI-Desktop_Qt_5_6_0_GCC_64bit-Debug/.tmp/DrawESGI1.0.0
 LINK          = g++
 LFLAGS        = -Wl,-z,origin -Wl,-rpath,\$$ORIGIN -Wl,-rpath,/home/ebongue/Qt/5.6/gcc_64/lib
-LIBS          = $(SUBLIBS) -L/home/ebongue/Qt/5.6/gcc_64/lib -lQt5Widgets -lQt5Gui -lQt5Core -lGL -lpthread 
+LIBS          = $(SUBLIBS) -L/home/ebongue/Qt/5.6/gcc_64/lib -lQt5PrintSupport -lQt5Widgets -lQt5Gui -lQt5Core -lGL -lpthread 
 AR            = ar cqs
 RANLIB        = 
 SED           = sed
@@ -49,16 +49,18 @@ OBJECTS_DIR   = ./
 ####### Files
 
 SOURCES       = ../DrawESGI/main.cpp \
-		../DrawESGI/abtracttestqobject.cpp \
 		../DrawESGI/mymenu.cpp \
 		../DrawESGI/mywindow.cpp \
-		../DrawESGI/mypicture.cpp moc_mymenu.cpp \
+		../DrawESGI/mypicture.cpp \
+		../DrawESGI/abstractmenu.cpp \
+		../DrawESGI/myloadplugin.cpp moc_mymenu.cpp \
 		moc_mywindow.cpp
 OBJECTS       = main.o \
-		abtracttestqobject.o \
 		mymenu.o \
 		mywindow.o \
 		mypicture.o \
+		abstractmenu.o \
+		myloadplugin.o \
 		moc_mymenu.o \
 		moc_mywindow.o
 DIST          = /home/ebongue/Qt/5.6/gcc_64/mkspecs/features/spec_pre.prf \
@@ -195,14 +197,16 @@ DIST          = /home/ebongue/Qt/5.6/gcc_64/mkspecs/features/spec_pre.prf \
 		/home/ebongue/Qt/5.6/gcc_64/mkspecs/features/exceptions.prf \
 		/home/ebongue/Qt/5.6/gcc_64/mkspecs/features/yacc.prf \
 		/home/ebongue/Qt/5.6/gcc_64/mkspecs/features/lex.prf \
-		../DrawESGI/DrawESGI.pro ../DrawESGI/abtracttestqobject.hpp \
-		../DrawESGI/mymenu.hpp \
+		../DrawESGI/DrawESGI.pro ../DrawESGI/mymenu.hpp \
 		../DrawESGI/mywindow.hpp \
-		../DrawESGI/mypicture.hpp ../DrawESGI/main.cpp \
-		../DrawESGI/abtracttestqobject.cpp \
+		../DrawESGI/mypicture.hpp \
+		../DrawESGI/abstractmenu.hpp \
+		../DrawESGI/myloadplugin.hpp ../DrawESGI/main.cpp \
 		../DrawESGI/mymenu.cpp \
 		../DrawESGI/mywindow.cpp \
-		../DrawESGI/mypicture.cpp
+		../DrawESGI/mypicture.cpp \
+		../DrawESGI/abstractmenu.cpp \
+		../DrawESGI/myloadplugin.cpp
 QMAKE_TARGET  = DrawESGI
 DESTDIR       = 
 TARGET        = DrawESGI
@@ -349,6 +353,7 @@ Makefile: ../DrawESGI/DrawESGI.pro /home/ebongue/Qt/5.6/gcc_64/mkspecs/linux-g++
 		/home/ebongue/Qt/5.6/gcc_64/mkspecs/features/yacc.prf \
 		/home/ebongue/Qt/5.6/gcc_64/mkspecs/features/lex.prf \
 		../DrawESGI/DrawESGI.pro \
+		/home/ebongue/Qt/5.6/gcc_64/lib/libQt5PrintSupport.prl \
 		/home/ebongue/Qt/5.6/gcc_64/lib/libQt5Widgets.prl \
 		/home/ebongue/Qt/5.6/gcc_64/lib/libQt5Gui.prl \
 		/home/ebongue/Qt/5.6/gcc_64/lib/libQt5Core.prl
@@ -488,6 +493,7 @@ Makefile: ../DrawESGI/DrawESGI.pro /home/ebongue/Qt/5.6/gcc_64/mkspecs/linux-g++
 /home/ebongue/Qt/5.6/gcc_64/mkspecs/features/yacc.prf:
 /home/ebongue/Qt/5.6/gcc_64/mkspecs/features/lex.prf:
 ../DrawESGI/DrawESGI.pro:
+/home/ebongue/Qt/5.6/gcc_64/lib/libQt5PrintSupport.prl:
 /home/ebongue/Qt/5.6/gcc_64/lib/libQt5Widgets.prl:
 /home/ebongue/Qt/5.6/gcc_64/lib/libQt5Gui.prl:
 /home/ebongue/Qt/5.6/gcc_64/lib/libQt5Core.prl:
@@ -505,8 +511,8 @@ dist: distdir FORCE
 distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
-	$(COPY_FILE) --parents ../DrawESGI/abtracttestqobject.hpp ../DrawESGI/mymenu.hpp ../DrawESGI/mywindow.hpp ../DrawESGI/mypicture.hpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../DrawESGI/main.cpp ../DrawESGI/abtracttestqobject.cpp ../DrawESGI/mymenu.cpp ../DrawESGI/mywindow.cpp ../DrawESGI/mypicture.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../DrawESGI/mymenu.hpp ../DrawESGI/mywindow.hpp ../DrawESGI/mypicture.hpp ../DrawESGI/abstractmenu.hpp ../DrawESGI/myloadplugin.hpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../DrawESGI/main.cpp ../DrawESGI/mymenu.cpp ../DrawESGI/mywindow.cpp ../DrawESGI/mypicture.cpp ../DrawESGI/abstractmenu.cpp ../DrawESGI/myloadplugin.cpp $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -532,7 +538,8 @@ compiler_rcc_clean:
 compiler_moc_header_make_all: moc_mymenu.cpp moc_mywindow.cpp
 compiler_moc_header_clean:
 	-$(DEL_FILE) moc_mymenu.cpp moc_mywindow.cpp
-moc_mymenu.cpp: /home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/QApplication \
+moc_mymenu.cpp: ../DrawESGI/abstractmenu.hpp \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/QApplication \
 		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/qapplication.h \
 		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qcoreapplication.h \
 		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qglobal.h \
@@ -642,30 +649,34 @@ moc_mymenu.cpp: /home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/QApplication \
 		/home/ebongue/Qt/5.6/gcc_64/include/QtGui/qtouchdevice.h \
 		/home/ebongue/Qt/5.6/gcc_64/include/QtGui/qguiapplication.h \
 		/home/ebongue/Qt/5.6/gcc_64/include/QtGui/qinputmethod.h \
-		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/QPushButton \
-		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/qpushbutton.h \
-		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/qabstractbutton.h \
-		/home/ebongue/Qt/5.6/gcc_64/include/QtGui/qicon.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/QtPlugin \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qplugin.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qpointer.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qjsonobject.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qjsonvalue.h \
 		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/QFileDialog \
 		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/qfiledialog.h \
 		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qdir.h \
 		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qfileinfo.h \
 		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/qdialog.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/QMessageBox \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/qmessagebox.h \
 		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/QWidget \
-		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/QMenu \
-		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/qmenu.h \
-		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/qaction.h \
-		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/qactiongroup.h \
-		/home/ebongue/Qt/5.6/gcc_64/include/QtGui/QPixmap \
 		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/QGraphicsScene \
 		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/qgraphicsscene.h \
 		/home/ebongue/Qt/5.6/gcc_64/include/QtGui/qpen.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/QMenu \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/qmenu.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtGui/qicon.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/qaction.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/qactiongroup.h \
 		../DrawESGI/mymenu.hpp
-	/home/ebongue/Qt/5.6/gcc_64/bin/moc $(DEFINES) -I/home/ebongue/Qt/5.6/gcc_64/mkspecs/linux-g++ -I/home/ebongue/Documents/Cpp/workspace/EsgiDraw/DrawESGI -I/home/ebongue/Qt/5.6/gcc_64/include -I/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets -I/home/ebongue/Qt/5.6/gcc_64/include/QtGui -I/home/ebongue/Qt/5.6/gcc_64/include/QtCore -I. ../DrawESGI/mymenu.hpp -o moc_mymenu.cpp
+	/home/ebongue/Qt/5.6/gcc_64/bin/moc $(DEFINES) -I/home/ebongue/Qt/5.6/gcc_64/mkspecs/linux-g++ -I/home/ebongue/Documents/Cpp/workspace/EsgiDraw/DrawESGI -I/home/ebongue/Qt/5.6/gcc_64/include -I/home/ebongue/Qt/5.6/gcc_64/include/QtPrintSupport -I/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets -I/home/ebongue/Qt/5.6/gcc_64/include/QtGui -I/home/ebongue/Qt/5.6/gcc_64/include/QtCore -I. ../DrawESGI/mymenu.hpp -o moc_mymenu.cpp
 
-moc_mywindow.cpp: /home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/QWidget \
-		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/qwidget.h \
-		/home/ebongue/Qt/5.6/gcc_64/include/QtGui/qwindowdefs.h \
+moc_mywindow.cpp: ../DrawESGI/abstractmenu.hpp \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/QApplication \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/qapplication.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qcoreapplication.h \
 		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qglobal.h \
 		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qconfig.h \
 		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qfeatures.h \
@@ -695,17 +706,16 @@ moc_mywindow.cpp: /home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/QWidget \
 		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qmutex.h \
 		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qnumeric.h \
 		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qversiontagging.h \
-		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qobjectdefs.h \
-		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qnamespace.h \
-		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qobjectdefs_impl.h \
-		/home/ebongue/Qt/5.6/gcc_64/include/QtGui/qwindowdefs_win.h \
-		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qobject.h \
 		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qstring.h \
 		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qchar.h \
 		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qbytearray.h \
 		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qrefcount.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qnamespace.h \
 		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qarraydata.h \
 		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qstringbuilder.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qobject.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qobjectdefs.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qobjectdefs_impl.h \
 		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qlist.h \
 		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qalgorithms.h \
 		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qiterator.h \
@@ -721,11 +731,17 @@ moc_mywindow.cpp: /home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/QWidget \
 		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qvarlengtharray.h \
 		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qcontainerfwd.h \
 		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qobject_impl.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qeventloop.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtGui/qwindowdefs.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtGui/qwindowdefs_win.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qpoint.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qsize.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtGui/qcursor.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/qdesktopwidget.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/qwidget.h \
 		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qmargins.h \
 		/home/ebongue/Qt/5.6/gcc_64/include/QtGui/qpaintdevice.h \
 		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qrect.h \
-		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qsize.h \
-		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qpoint.h \
 		/home/ebongue/Qt/5.6/gcc_64/include/QtGui/qpalette.h \
 		/home/ebongue/Qt/5.6/gcc_64/include/QtGui/qcolor.h \
 		/home/ebongue/Qt/5.6/gcc_64/include/QtGui/qrgb.h \
@@ -751,7 +767,6 @@ moc_mywindow.cpp: /home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/QWidget \
 		/home/ebongue/Qt/5.6/gcc_64/include/QtGui/qfontmetrics.h \
 		/home/ebongue/Qt/5.6/gcc_64/include/QtGui/qfontinfo.h \
 		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/qsizepolicy.h \
-		/home/ebongue/Qt/5.6/gcc_64/include/QtGui/qcursor.h \
 		/home/ebongue/Qt/5.6/gcc_64/include/QtGui/qkeysequence.h \
 		/home/ebongue/Qt/5.6/gcc_64/include/QtGui/qevent.h \
 		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qvariant.h \
@@ -767,35 +782,50 @@ moc_mywindow.cpp: /home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/QWidget \
 		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qfiledevice.h \
 		/home/ebongue/Qt/5.6/gcc_64/include/QtGui/qvector2d.h \
 		/home/ebongue/Qt/5.6/gcc_64/include/QtGui/qtouchdevice.h \
-		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/QApplication \
-		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/qapplication.h \
-		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qcoreapplication.h \
-		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qeventloop.h \
-		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/qdesktopwidget.h \
 		/home/ebongue/Qt/5.6/gcc_64/include/QtGui/qguiapplication.h \
 		/home/ebongue/Qt/5.6/gcc_64/include/QtGui/qinputmethod.h \
-		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/QMenuBar \
-		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/qmenubar.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/QtPlugin \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qplugin.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qpointer.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qjsonobject.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qjsonvalue.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/QFileDialog \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/qfiledialog.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qdir.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qfileinfo.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/qdialog.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/QMessageBox \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/qmessagebox.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/QWidget \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/QGraphicsScene \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/qgraphicsscene.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtGui/qpen.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/QMenu \
 		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/qmenu.h \
 		/home/ebongue/Qt/5.6/gcc_64/include/QtGui/qicon.h \
 		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/qaction.h \
 		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/qactiongroup.h \
 		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/QDesktopWidget \
+		../DrawESGI/myloadplugin.hpp \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/QVector \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/QPluginLoader \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qpluginloader.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qlibrary.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/QDir \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/QDebug \
 		../DrawESGI/mymenu.hpp \
-		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/QPushButton \
-		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/qpushbutton.h \
-		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/qabstractbutton.h \
-		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/QFileDialog \
-		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/qfiledialog.h \
-		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qdir.h \
-		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qfileinfo.h \
-		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/qdialog.h \
-		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/QMenu \
-		/home/ebongue/Qt/5.6/gcc_64/include/QtGui/QPixmap \
-		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/QGraphicsScene \
-		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/qgraphicsscene.h \
-		/home/ebongue/Qt/5.6/gcc_64/include/QtGui/qpen.h \
 		../DrawESGI/mypicture.hpp \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtGui/QPixmap \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/QFile \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtPrintSupport/QPrinter \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtPrintSupport/qprinter.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtGui/qpagedpaintdevice.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtGui/qpagelayout.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtGui/qpagesize.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtPrintSupport/qtprintsupportglobal.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtGui/QPainter \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtGui/qpainter.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtGui/qtextoption.h \
 		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/QGridLayout \
 		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/qgridlayout.h \
 		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/qlayout.h \
@@ -803,13 +833,13 @@ moc_mywindow.cpp: /home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/QWidget \
 		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/qboxlayout.h \
 		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/QGraphicsView \
 		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/qgraphicsview.h \
-		/home/ebongue/Qt/5.6/gcc_64/include/QtGui/qpainter.h \
-		/home/ebongue/Qt/5.6/gcc_64/include/QtGui/qtextoption.h \
 		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/qscrollarea.h \
 		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/qabstractscrollarea.h \
 		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/qframe.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/QMenuBar \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/qmenubar.h \
 		../DrawESGI/mywindow.hpp
-	/home/ebongue/Qt/5.6/gcc_64/bin/moc $(DEFINES) -I/home/ebongue/Qt/5.6/gcc_64/mkspecs/linux-g++ -I/home/ebongue/Documents/Cpp/workspace/EsgiDraw/DrawESGI -I/home/ebongue/Qt/5.6/gcc_64/include -I/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets -I/home/ebongue/Qt/5.6/gcc_64/include/QtGui -I/home/ebongue/Qt/5.6/gcc_64/include/QtCore -I. ../DrawESGI/mywindow.hpp -o moc_mywindow.cpp
+	/home/ebongue/Qt/5.6/gcc_64/bin/moc $(DEFINES) -I/home/ebongue/Qt/5.6/gcc_64/mkspecs/linux-g++ -I/home/ebongue/Documents/Cpp/workspace/EsgiDraw/DrawESGI -I/home/ebongue/Qt/5.6/gcc_64/include -I/home/ebongue/Qt/5.6/gcc_64/include/QtPrintSupport -I/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets -I/home/ebongue/Qt/5.6/gcc_64/include/QtGui -I/home/ebongue/Qt/5.6/gcc_64/include/QtCore -I. ../DrawESGI/mywindow.hpp -o moc_mywindow.cpp
 
 compiler_moc_source_make_all:
 compiler_moc_source_clean:
@@ -936,29 +966,49 @@ main.o: ../DrawESGI/main.cpp /home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/QAppl
 		/home/ebongue/Qt/5.6/gcc_64/include/QtGui/qguiapplication.h \
 		/home/ebongue/Qt/5.6/gcc_64/include/QtGui/qinputmethod.h \
 		../DrawESGI/mywindow.hpp \
-		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/QWidget \
-		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/QMenuBar \
-		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/qmenubar.h \
-		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/qmenu.h \
-		/home/ebongue/Qt/5.6/gcc_64/include/QtGui/qicon.h \
-		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/qaction.h \
-		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/qactiongroup.h \
-		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/QDesktopWidget \
-		../DrawESGI/mymenu.hpp \
-		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/QPushButton \
-		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/qpushbutton.h \
-		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/qabstractbutton.h \
+		../DrawESGI/abstractmenu.hpp \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/QtPlugin \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qplugin.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qpointer.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qjsonobject.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qjsonvalue.h \
 		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/QFileDialog \
 		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/qfiledialog.h \
 		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qdir.h \
 		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qfileinfo.h \
 		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/qdialog.h \
-		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/QMenu \
-		/home/ebongue/Qt/5.6/gcc_64/include/QtGui/QPixmap \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/QMessageBox \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/qmessagebox.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/QWidget \
 		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/QGraphicsScene \
 		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/qgraphicsscene.h \
 		/home/ebongue/Qt/5.6/gcc_64/include/QtGui/qpen.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/QMenu \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/qmenu.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtGui/qicon.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/qaction.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/qactiongroup.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/QDesktopWidget \
+		../DrawESGI/myloadplugin.hpp \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/QVector \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/QPluginLoader \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qpluginloader.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qlibrary.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/QDir \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/QDebug \
+		../DrawESGI/mymenu.hpp \
 		../DrawESGI/mypicture.hpp \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtGui/QPixmap \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/QFile \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtPrintSupport/QPrinter \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtPrintSupport/qprinter.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtGui/qpagedpaintdevice.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtGui/qpagelayout.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtGui/qpagesize.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtPrintSupport/qtprintsupportglobal.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtGui/QPainter \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtGui/qpainter.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtGui/qtextoption.h \
 		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/QGridLayout \
 		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/qgridlayout.h \
 		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/qlayout.h \
@@ -966,17 +1016,15 @@ main.o: ../DrawESGI/main.cpp /home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/QAppl
 		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/qboxlayout.h \
 		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/QGraphicsView \
 		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/qgraphicsview.h \
-		/home/ebongue/Qt/5.6/gcc_64/include/QtGui/qpainter.h \
-		/home/ebongue/Qt/5.6/gcc_64/include/QtGui/qtextoption.h \
 		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/qscrollarea.h \
 		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/qabstractscrollarea.h \
-		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/qframe.h
+		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/qframe.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/QMenuBar \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/qmenubar.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../DrawESGI/main.cpp
 
-abtracttestqobject.o: ../DrawESGI/abtracttestqobject.cpp ../DrawESGI/abtracttestqobject.hpp
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o abtracttestqobject.o ../DrawESGI/abtracttestqobject.cpp
-
 mymenu.o: ../DrawESGI/mymenu.cpp ../DrawESGI/mymenu.hpp \
+		../DrawESGI/abstractmenu.hpp \
 		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/QApplication \
 		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/qapplication.h \
 		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qcoreapplication.h \
@@ -1087,31 +1135,35 @@ mymenu.o: ../DrawESGI/mymenu.cpp ../DrawESGI/mymenu.hpp \
 		/home/ebongue/Qt/5.6/gcc_64/include/QtGui/qtouchdevice.h \
 		/home/ebongue/Qt/5.6/gcc_64/include/QtGui/qguiapplication.h \
 		/home/ebongue/Qt/5.6/gcc_64/include/QtGui/qinputmethod.h \
-		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/QPushButton \
-		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/qpushbutton.h \
-		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/qabstractbutton.h \
-		/home/ebongue/Qt/5.6/gcc_64/include/QtGui/qicon.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/QtPlugin \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qplugin.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qpointer.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qjsonobject.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qjsonvalue.h \
 		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/QFileDialog \
 		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/qfiledialog.h \
 		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qdir.h \
 		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qfileinfo.h \
 		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/qdialog.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/QMessageBox \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/qmessagebox.h \
 		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/QWidget \
-		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/QMenu \
-		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/qmenu.h \
-		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/qaction.h \
-		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/qactiongroup.h \
-		/home/ebongue/Qt/5.6/gcc_64/include/QtGui/QPixmap \
 		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/QGraphicsScene \
 		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/qgraphicsscene.h \
 		/home/ebongue/Qt/5.6/gcc_64/include/QtGui/qpen.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/QMenu \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/qmenu.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtGui/qicon.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/qaction.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/qactiongroup.h \
 		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/QDebug
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mymenu.o ../DrawESGI/mymenu.cpp
 
 mywindow.o: ../DrawESGI/mywindow.cpp ../DrawESGI/mywindow.hpp \
-		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/QWidget \
-		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/qwidget.h \
-		/home/ebongue/Qt/5.6/gcc_64/include/QtGui/qwindowdefs.h \
+		../DrawESGI/abstractmenu.hpp \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/QApplication \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/qapplication.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qcoreapplication.h \
 		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qglobal.h \
 		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qconfig.h \
 		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qfeatures.h \
@@ -1141,17 +1193,16 @@ mywindow.o: ../DrawESGI/mywindow.cpp ../DrawESGI/mywindow.hpp \
 		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qmutex.h \
 		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qnumeric.h \
 		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qversiontagging.h \
-		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qobjectdefs.h \
-		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qnamespace.h \
-		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qobjectdefs_impl.h \
-		/home/ebongue/Qt/5.6/gcc_64/include/QtGui/qwindowdefs_win.h \
-		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qobject.h \
 		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qstring.h \
 		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qchar.h \
 		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qbytearray.h \
 		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qrefcount.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qnamespace.h \
 		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qarraydata.h \
 		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qstringbuilder.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qobject.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qobjectdefs.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qobjectdefs_impl.h \
 		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qlist.h \
 		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qalgorithms.h \
 		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qiterator.h \
@@ -1167,11 +1218,17 @@ mywindow.o: ../DrawESGI/mywindow.cpp ../DrawESGI/mywindow.hpp \
 		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qvarlengtharray.h \
 		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qcontainerfwd.h \
 		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qobject_impl.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qeventloop.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtGui/qwindowdefs.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtGui/qwindowdefs_win.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qpoint.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qsize.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtGui/qcursor.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/qdesktopwidget.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/qwidget.h \
 		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qmargins.h \
 		/home/ebongue/Qt/5.6/gcc_64/include/QtGui/qpaintdevice.h \
 		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qrect.h \
-		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qsize.h \
-		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qpoint.h \
 		/home/ebongue/Qt/5.6/gcc_64/include/QtGui/qpalette.h \
 		/home/ebongue/Qt/5.6/gcc_64/include/QtGui/qcolor.h \
 		/home/ebongue/Qt/5.6/gcc_64/include/QtGui/qrgb.h \
@@ -1197,7 +1254,6 @@ mywindow.o: ../DrawESGI/mywindow.cpp ../DrawESGI/mywindow.hpp \
 		/home/ebongue/Qt/5.6/gcc_64/include/QtGui/qfontmetrics.h \
 		/home/ebongue/Qt/5.6/gcc_64/include/QtGui/qfontinfo.h \
 		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/qsizepolicy.h \
-		/home/ebongue/Qt/5.6/gcc_64/include/QtGui/qcursor.h \
 		/home/ebongue/Qt/5.6/gcc_64/include/QtGui/qkeysequence.h \
 		/home/ebongue/Qt/5.6/gcc_64/include/QtGui/qevent.h \
 		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qvariant.h \
@@ -1213,35 +1269,50 @@ mywindow.o: ../DrawESGI/mywindow.cpp ../DrawESGI/mywindow.hpp \
 		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qfiledevice.h \
 		/home/ebongue/Qt/5.6/gcc_64/include/QtGui/qvector2d.h \
 		/home/ebongue/Qt/5.6/gcc_64/include/QtGui/qtouchdevice.h \
-		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/QApplication \
-		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/qapplication.h \
-		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qcoreapplication.h \
-		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qeventloop.h \
-		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/qdesktopwidget.h \
 		/home/ebongue/Qt/5.6/gcc_64/include/QtGui/qguiapplication.h \
 		/home/ebongue/Qt/5.6/gcc_64/include/QtGui/qinputmethod.h \
-		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/QMenuBar \
-		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/qmenubar.h \
-		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/qmenu.h \
-		/home/ebongue/Qt/5.6/gcc_64/include/QtGui/qicon.h \
-		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/qaction.h \
-		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/qactiongroup.h \
-		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/QDesktopWidget \
-		../DrawESGI/mymenu.hpp \
-		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/QPushButton \
-		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/qpushbutton.h \
-		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/qabstractbutton.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/QtPlugin \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qplugin.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qpointer.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qjsonobject.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qjsonvalue.h \
 		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/QFileDialog \
 		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/qfiledialog.h \
 		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qdir.h \
 		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qfileinfo.h \
 		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/qdialog.h \
-		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/QMenu \
-		/home/ebongue/Qt/5.6/gcc_64/include/QtGui/QPixmap \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/QMessageBox \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/qmessagebox.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/QWidget \
 		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/QGraphicsScene \
 		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/qgraphicsscene.h \
 		/home/ebongue/Qt/5.6/gcc_64/include/QtGui/qpen.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/QMenu \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/qmenu.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtGui/qicon.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/qaction.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/qactiongroup.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/QDesktopWidget \
+		../DrawESGI/myloadplugin.hpp \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/QVector \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/QPluginLoader \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qpluginloader.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qlibrary.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/QDir \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/QDebug \
+		../DrawESGI/mymenu.hpp \
 		../DrawESGI/mypicture.hpp \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtGui/QPixmap \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/QFile \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtPrintSupport/QPrinter \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtPrintSupport/qprinter.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtGui/qpagedpaintdevice.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtGui/qpagelayout.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtGui/qpagesize.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtPrintSupport/qtprintsupportglobal.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtGui/QPainter \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtGui/qpainter.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtGui/qtextoption.h \
 		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/QGridLayout \
 		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/qgridlayout.h \
 		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/qlayout.h \
@@ -1249,11 +1320,11 @@ mywindow.o: ../DrawESGI/mywindow.cpp ../DrawESGI/mywindow.hpp \
 		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/qboxlayout.h \
 		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/QGraphicsView \
 		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/qgraphicsview.h \
-		/home/ebongue/Qt/5.6/gcc_64/include/QtGui/qpainter.h \
-		/home/ebongue/Qt/5.6/gcc_64/include/QtGui/qtextoption.h \
 		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/qscrollarea.h \
 		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/qabstractscrollarea.h \
-		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/qframe.h
+		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/qframe.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/QMenuBar \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/qmenubar.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mywindow.o ../DrawESGI/mywindow.cpp
 
 mypicture.o: ../DrawESGI/mypicture.cpp ../DrawESGI/mypicture.hpp \
@@ -1372,8 +1443,293 @@ mypicture.o: ../DrawESGI/mypicture.cpp ../DrawESGI/mypicture.hpp \
 		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/qgraphicsscene.h \
 		/home/ebongue/Qt/5.6/gcc_64/include/QtGui/qpen.h \
 		/home/ebongue/Qt/5.6/gcc_64/include/QtGui/QPixmap \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/QFile \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtPrintSupport/QPrinter \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtPrintSupport/qprinter.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtGui/qpagedpaintdevice.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtGui/qpagelayout.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtGui/qpagesize.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtPrintSupport/qtprintsupportglobal.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtGui/QPainter \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtGui/qpainter.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtGui/qtextoption.h \
 		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/QDebug
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mypicture.o ../DrawESGI/mypicture.cpp
+
+abstractmenu.o: ../DrawESGI/abstractmenu.cpp ../DrawESGI/abstractmenu.hpp \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/QApplication \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/qapplication.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qcoreapplication.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qglobal.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qconfig.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qfeatures.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qsystemdetection.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qprocessordetection.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qcompilerdetection.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qtypeinfo.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qtypetraits.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qisenum.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qsysinfo.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qlogging.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qflags.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qatomic.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qbasicatomic.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qatomic_bootstrap.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qgenericatomic.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qatomic_cxx11.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qatomic_gcc.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qatomic_msvc.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qatomic_armv7.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qatomic_armv6.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qatomic_armv5.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qatomic_ia64.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qatomic_x86.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qatomic_unix.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qglobalstatic.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qmutex.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qnumeric.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qversiontagging.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qstring.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qchar.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qbytearray.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qrefcount.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qnamespace.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qarraydata.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qstringbuilder.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qobject.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qobjectdefs.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qobjectdefs_impl.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qlist.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qalgorithms.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qiterator.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qhashfunctions.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qpair.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qbytearraylist.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qstringlist.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qregexp.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qstringmatcher.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qcoreevent.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qscopedpointer.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qmetatype.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qvarlengtharray.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qcontainerfwd.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qobject_impl.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qeventloop.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtGui/qwindowdefs.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtGui/qwindowdefs_win.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qpoint.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qsize.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtGui/qcursor.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/qdesktopwidget.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/qwidget.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qmargins.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtGui/qpaintdevice.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qrect.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtGui/qpalette.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtGui/qcolor.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtGui/qrgb.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtGui/qrgba64.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtGui/qbrush.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qvector.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtGui/qmatrix.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtGui/qpolygon.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtGui/qregion.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qdatastream.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qiodevice.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qline.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtGui/qtransform.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtGui/qpainterpath.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtGui/qimage.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtGui/qpixelformat.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtGui/qpixmap.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qsharedpointer.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qshareddata.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qhash.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qsharedpointer_impl.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtGui/qfont.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtGui/qfontmetrics.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtGui/qfontinfo.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/qsizepolicy.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtGui/qkeysequence.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtGui/qevent.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qvariant.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qmap.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qdebug.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qtextstream.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qlocale.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qset.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qcontiguouscache.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qurl.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qurlquery.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qfile.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qfiledevice.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtGui/qvector2d.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtGui/qtouchdevice.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtGui/qguiapplication.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtGui/qinputmethod.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/QtPlugin \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qplugin.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qpointer.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qjsonobject.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qjsonvalue.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/QFileDialog \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/qfiledialog.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qdir.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qfileinfo.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/qdialog.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/QMessageBox \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/qmessagebox.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/QWidget \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/QGraphicsScene \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/qgraphicsscene.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtGui/qpen.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/QMenu \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/qmenu.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtGui/qicon.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/qaction.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/qactiongroup.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o abstractmenu.o ../DrawESGI/abstractmenu.cpp
+
+myloadplugin.o: ../DrawESGI/myloadplugin.cpp ../DrawESGI/myloadplugin.hpp \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/QVector \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qvector.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qalgorithms.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qglobal.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qconfig.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qfeatures.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qsystemdetection.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qprocessordetection.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qcompilerdetection.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qtypeinfo.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qtypetraits.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qisenum.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qsysinfo.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qlogging.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qflags.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qatomic.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qbasicatomic.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qatomic_bootstrap.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qgenericatomic.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qatomic_cxx11.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qatomic_gcc.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qatomic_msvc.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qatomic_armv7.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qatomic_armv6.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qatomic_armv5.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qatomic_ia64.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qatomic_x86.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qatomic_unix.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qglobalstatic.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qmutex.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qnumeric.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qversiontagging.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qiterator.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qlist.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qrefcount.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qarraydata.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qhashfunctions.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qchar.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qpair.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qbytearraylist.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qbytearray.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qnamespace.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qstring.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qstringbuilder.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qstringlist.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qregexp.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qstringmatcher.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qpoint.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/QPluginLoader \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qpluginloader.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qlibrary.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qobject.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qobjectdefs.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qobjectdefs_impl.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qcoreevent.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qscopedpointer.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qmetatype.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qvarlengtharray.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qcontainerfwd.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qobject_impl.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qplugin.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qpointer.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qsharedpointer.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qshareddata.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qhash.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qsharedpointer_impl.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qjsonobject.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qjsonvalue.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/QDir \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qdir.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qfileinfo.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qfile.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qfiledevice.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qiodevice.h \
+		../DrawESGI/abstractmenu.hpp \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/QApplication \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/qapplication.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qcoreapplication.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qeventloop.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtGui/qwindowdefs.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtGui/qwindowdefs_win.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qsize.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtGui/qcursor.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/qdesktopwidget.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/qwidget.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qmargins.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtGui/qpaintdevice.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qrect.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtGui/qpalette.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtGui/qcolor.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtGui/qrgb.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtGui/qrgba64.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtGui/qbrush.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtGui/qmatrix.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtGui/qpolygon.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtGui/qregion.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qdatastream.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qline.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtGui/qtransform.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtGui/qpainterpath.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtGui/qimage.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtGui/qpixelformat.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtGui/qpixmap.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtGui/qfont.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtGui/qfontmetrics.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtGui/qfontinfo.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/qsizepolicy.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtGui/qkeysequence.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtGui/qevent.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qvariant.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qmap.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qdebug.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qtextstream.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qlocale.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qset.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qcontiguouscache.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qurl.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/qurlquery.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtGui/qvector2d.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtGui/qtouchdevice.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtGui/qguiapplication.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtGui/qinputmethod.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/QtPlugin \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/QFileDialog \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/qfiledialog.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/qdialog.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/QMessageBox \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/qmessagebox.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/QWidget \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/QGraphicsScene \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/qgraphicsscene.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtGui/qpen.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/QMenu \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/qmenu.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtGui/qicon.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/qaction.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtWidgets/qactiongroup.h \
+		/home/ebongue/Qt/5.6/gcc_64/include/QtCore/QDebug
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o myloadplugin.o ../DrawESGI/myloadplugin.cpp
 
 moc_mymenu.o: moc_mymenu.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_mymenu.o moc_mymenu.cpp

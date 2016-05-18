@@ -1,17 +1,14 @@
 #ifndef WINDOWTEST_H
 #define WINDOWTEST_H
-
-#include <QWidget>
-#include <QApplication>
-#include <QMenuBar>
+#include "abstractmenu.hpp"
 #include <QDesktopWidget>
-//#include "abtracttestqobject.hpp"
+#include "myloadplugin.hpp"
 #include "mymenu.hpp"
 #include "mypicture.hpp"
 #include <QGridLayout>
 #include <QGraphicsView>
-#include <QGraphicsScene>
-#include <QPixmap>
+#include <QMenuBar>
+#include <QVector>
 class MyWindow : public QWidget
 {
     Q_OBJECT
@@ -21,8 +18,8 @@ private:
     int x_win;
     int y_win;
 
+    QVector<AbstractMenu*> menuAbstractList;
     QMenuBar *barMenu;
-    MyMenu *mymenu;
     MyPicture *mypicture;
     QGridLayout *layoutGrid;
     QGraphicsView *viewGraphic;
@@ -31,7 +28,11 @@ private:
 public:
     MyWindow();
 public slots:
-    void slotOpenFile(QString);
+    void slotOpenFile(QString, QAction*);
+    void slotClearScene(QAction*);
+    void slotSavePicture();
+    void slotPrintPicture();
+
 };
 
 #endif // WINDOWTEST_H

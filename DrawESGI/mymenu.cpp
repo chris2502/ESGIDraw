@@ -6,14 +6,18 @@ MyMenu::MyMenu()
     fileMenu= new QMenu("File");
 
     newFile= new QAction("New file", fileMenu);
+    connect(newFile, SIGNAL(triggered()), this, SLOT(slotClearScene()), Qt::AutoConnection);
 
     openFile= new QAction("Open file",fileMenu);
     //open dialog window to choose file image
-    connect(openFile,SIGNAL(triggered()), this, SLOT(slotOpenfile()));
+    connect(openFile,SIGNAL(triggered()), this, SLOT(slotOpenfile()), Qt::AutoConnection);
 
     saveFile= new QAction("Save file",fileMenu);
+    saveFile->setDisabled(true);
+    connect(saveFile, SIGNAL(triggered()), this, SLOT(slotSavePicture()));
 
     printFile= new QAction("Print picture",fileMenu);
+    connect(printFile, SIGNAL(triggered()), this, SLOT(slotPrintPicture()));
 
     settingFile= new QAction("Setting",fileMenu);
 
@@ -74,9 +78,16 @@ MyMenu::MyMenu()
     geometricMenu= new QMenu("Geometric sharpes");
 }
 
+MyMenu::~MyMenu(){
+ qDebug() << "destructor mymenu";
+}
+
+QWidget* MyMenu::getThisWidget(){
+    return this;
+}
+
 QVector<QMenu*> MyMenu::ListMenu(){
    QVector<QMenu*> qlistMenu;
-   qlistMenu.push_back(fileMenu);
    qlistMenu.push_back(fileMenu);
    qlistMenu.push_back(editMenu);
    qlistMenu.push_back(screenMenu);
@@ -88,13 +99,29 @@ QVector<QMenu*> MyMenu::ListMenu(){
 }
 
 
+void MyMenu::slotClearScene(){
+    QMessageBox::StandardButton messageBox;
+    messageBox= QMessageBox::question(this, "Open new project", "Are you sure to open a new project?", QMessageBox::Yes|QMessageBox::No);
+    if(messageBox == QMessageBox::Yes){
+        emit signalClearScene(saveFile);
+    }
+}
+
 void MyMenu::slotOpenfile(){
-    QFileDialog dialogFile;
-    dialogFile.setFileMode(QFileDialog::ExistingFile);
-    dialogFile.setNameFilter(tr("Images (*.png *.jpg)"));
-    dialogFile.setViewMode(QFileDialog::Detail);
-    fileName= dialogFile.getOpenFileName();
-    emit signalOpenfile(fileName);
+
+    fileName= QFileDialog::getOpenFileName(this, tr("Open File"),
+                                           "",
+                                           tr("Images (*.png *.xpm *.jpg)"));
+    emit signalOpenfile(fileName, saveFile);
+}
+
+void MyMenu::slotSavePicture(){
+    QString name;
+    saveFile->setDisabled(true);
+    emit signalSavePicture();
+}
+void MyMenu::slotPrintPicture(){
+    emit signalPrintPicture();
 }
 
 QString MyMenu::getFileName(){

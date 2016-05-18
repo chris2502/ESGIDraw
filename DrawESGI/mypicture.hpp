@@ -4,6 +4,12 @@
 #include <QWidget>
 #include <QGraphicsScene>
 #include <QPixmap>
+#include <QImage>
+#include <QImageWriter>
+#include <QFile>
+#include <QPrinter>
+#include <QPainter>
+#include <QFileDialog>
 
 class MyPicture : public QWidget
 {
@@ -12,16 +18,21 @@ private:
     QGraphicsScene *sceneGraphic;
     QString fileName;
     QPixmap imageChoose;
+    QImage image;
 public:
-    MyPicture();
-    MyPicture(QString fileName);
+    MyPicture(QWidget *parent=Q_NULLPTR, QString fileName=Q_NULLPTR);
     QGraphicsScene* getSceneGraphic();
+    void clearSceneGraphic();
+    void setSceneGraphic(QGraphicsScene *sceneGraphic);
     QString getFileName();
     QPixmap getImageChoose();
     void setImageChoose(QPixmap imageChoose);
     void setFileName(QString fileName);
+    void savePicture();
+    void printPicture();
+    void draw();
 public slots:
-    void signalOpenFile(QPixmap*);
+    void slotOpenFile(QPixmap*);
 
 };
 

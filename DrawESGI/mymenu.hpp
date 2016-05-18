@@ -1,16 +1,16 @@
 #ifndef TESTQOBJET_H
 #define TESTQOBJET_H
-//#include "abtracttestqobject.hpp"
-#include <QApplication>
-#include <QPushButton>
-#include <QFileDialog>
-#include <QWidget>
-#include <QMenu>
+#include "abstractmenu.hpp"
+#include <QSaveFile>
 
-class MyMenu : public QWidget//: public AbtractTestQobject
+
+
+class MyMenu : public QWidget, public AbstractMenu
 {
     Q_OBJECT
+    Q_INTERFACES(AbstractMenu)
 private:
+    QString name;
     //Menu file
     QMenu *fileMenu;
     QAction *newFile;
@@ -45,14 +45,24 @@ private:
 
 public:
     MyMenu();
+    ~MyMenu();
     //Menu list to add to menuBar
     QVector<QMenu*>ListMenu();
     QString getFileName();
+    QWidget* getThisWidget();
+
 public slots:
     void slotOpenfile();
+    void slotClearScene();
+    void slotSavePicture();
+    void slotPrintPicture();
 
 signals:
-    void signalOpenfile(QString);
+    void mySignal(QGraphicsScene*);
+    void signalOpenfile(QString, QAction*);
+    void signalClearScene(QAction*);
+    void signalSavePicture();
+    void signalPrintPicture();
 };
 
 #endif // TESTQOBJET_H

@@ -1,0 +1,11 @@
+{
+    \"Name\" : \"MyPlugin\",
+    \"Version\" : \"0.0.1\",
+    \"CompatVersion\" : \"0.0.1\",
+    \"Vendor\" : \"MyCompany\",
+    \"Copyright\" : \"(C) MyCompany\",
+    \"License\" : \"ESGI DRAW\",
+    \"Description\" : \"plugin to add Qmenu\",
+    \"Url\" : \"http://www.mycompany.com\",
+    $$dependencyList
+}
