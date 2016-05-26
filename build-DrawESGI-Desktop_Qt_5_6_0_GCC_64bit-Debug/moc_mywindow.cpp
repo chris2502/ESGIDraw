@@ -19,8 +19,8 @@
 
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_MyWindow_t {
-    QByteArrayData data[7];
-    char stringdata0[80];
+    QByteArrayData data[8];
+    char stringdata0[95];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -35,12 +35,13 @@ QT_MOC_LITERAL(2, 22, 0), // ""
 QT_MOC_LITERAL(3, 23, 8), // "QAction*"
 QT_MOC_LITERAL(4, 32, 14), // "slotClearScene"
 QT_MOC_LITERAL(5, 47, 15), // "slotSavePicture"
-QT_MOC_LITERAL(6, 63, 16) // "slotPrintPicture"
+QT_MOC_LITERAL(6, 63, 16), // "slotPrintPicture"
+QT_MOC_LITERAL(7, 80, 14) // "slotMouseCatch"
 
     },
     "MyWindow\0slotOpenFile\0\0QAction*\0"
     "slotClearScene\0slotSavePicture\0"
-    "slotPrintPicture"
+    "slotPrintPicture\0slotMouseCatch"
 };
 #undef QT_MOC_LITERAL
 
@@ -50,7 +51,7 @@ static const uint qt_meta_data_MyWindow[] = {
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-       4,   14, // methods
+       5,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -58,16 +59,18 @@ static const uint qt_meta_data_MyWindow[] = {
        0,       // signalCount
 
  // slots: name, argc, parameters, tag, flags
-       1,    2,   34,    2, 0x0a /* Public */,
-       4,    1,   39,    2, 0x0a /* Public */,
-       5,    0,   42,    2, 0x0a /* Public */,
-       6,    0,   43,    2, 0x0a /* Public */,
+       1,    2,   39,    2, 0x0a /* Public */,
+       4,    1,   44,    2, 0x0a /* Public */,
+       5,    0,   47,    2, 0x0a /* Public */,
+       6,    0,   48,    2, 0x0a /* Public */,
+       7,    1,   49,    2, 0x0a /* Public */,
 
  // slots: parameters
     QMetaType::Void, QMetaType::QString, 0x80000000 | 3,    2,    2,
     QMetaType::Void, 0x80000000 | 3,    2,
     QMetaType::Void,
     QMetaType::Void,
+    QMetaType::Void, QMetaType::QPoint,    2,
 
        0        // eod
 };
@@ -82,6 +85,7 @@ void MyWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, vo
         case 1: _t->slotClearScene((*reinterpret_cast< QAction*(*)>(_a[1]))); break;
         case 2: _t->slotSavePicture(); break;
         case 3: _t->slotPrintPicture(); break;
+        case 4: _t->slotMouseCatch((*reinterpret_cast< const QPoint(*)>(_a[1]))); break;
         default: ;
         }
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
@@ -130,13 +134,13 @@ int MyWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 4)
+        if (_id < 5)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 4;
+        _id -= 5;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 4)
+        if (_id < 5)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 4;
+        _id -= 5;
     }
     return _id;
 }

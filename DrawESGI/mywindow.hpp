@@ -9,6 +9,7 @@
 #include <QGraphicsView>
 #include <QMenuBar>
 #include <QVector>
+#include "catchmouse.hpp"
 class MyWindow : public QWidget
 {
     Q_OBJECT
@@ -21,9 +22,12 @@ private:
     QVector<AbstractMenu*> menuAbstractList;
     QMenuBar *barMenu;
     MyPicture *mypicture;
+    CatchMouse *mouseCatch;
     QGridLayout *layoutGrid;
     QGraphicsView *viewGraphic;
     QGraphicsScene *sceneGraphic;
+
+    QMouseEvent *event;
    // AbtractTestQobject *testObjectAbs;
 public:
     MyWindow();
@@ -32,6 +36,7 @@ public slots:
     void slotClearScene(QAction*);
     void slotSavePicture();
     void slotPrintPicture();
+    void slotMouseCatch(const QPoint);
 
 };
 

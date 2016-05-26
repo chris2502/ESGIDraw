@@ -7,6 +7,7 @@ MyPicture::MyPicture(QWidget *parent, QString fileName)
     this->fileName=fileName;
     sceneGraphic= new QGraphicsScene(parent);
 
+
 }
 
 QGraphicsScene* MyPicture::getSceneGraphic(){
@@ -19,6 +20,7 @@ void MyPicture::setSceneGraphic(QGraphicsScene * sceneGraphic){
 }
 
 void MyPicture::clearSceneGraphic(){
+    pointMouse.clear();
     sceneGraphic->clear();
 }
 
@@ -56,28 +58,48 @@ void MyPicture::savePicture(){
     image.setText("Author", "chris");
     imageWriter.write(image);
     image.save("media/toto.png");*/
-    QString saveFilename=QFileDialog::getSaveFileName(this, tr("Save File"),
+    QString saveFilename=QFileDialog::getSaveFileName(this, QWidget::tr("Save File"),
                                                       "media/imageSave.png",
-                                                      tr("Images (*.png *.xpm *.jpg)"));
+                                                      QWidget::tr("Images (*.png *.xpm *.jpg)"));
 
     imageChoose.save(saveFilename);
 }
 
 void MyPicture::printPicture(){
 
-    QString saveFilename=QFileDialog::getSaveFileName(this, tr("Save File to pdf"),
+    QString saveFilename=QFileDialog::getSaveFileName(this, QWidget::tr("Save File to pdf"),
                                                       "media/ouput.pdf",
-                                                      tr("Files (*.pdf)"));
+                                                      QWidget::tr("Files (*.pdf)"));
     QPrinter printer(QPrinter::HighResolution); //create your QPrinter (don't need to be high resolution, anyway)
     printer.setPageSize(QPrinter::A4);
     printer.setOrientation(QPrinter::Portrait);
     printer.setPageMargins (15,15,15,15,QPrinter::Millimeter);
     printer.setFullPage(false);
     printer.setOutputFileName(saveFilename);
-    printer.setOutputFormat(QPrinter::PdfFormat); //you can use native format of system usin QPrinter::NativeFormat
+    printer.setOutputFormat(QPrinter::PdfFormat);
     QPainter *painter= new QPainter(&printer); // create a painter which will paint 'on printer'.
     painter->setFont(QFont("Tahoma",8));
     painter->drawPixmap(200, 200, imageChoose.width()*20, imageChoose.height()*20, imageChoose);
 
     painter->end();
+}
+
+void MyPicture::addPointMouse(QPoint point, QPoint posViewGraphics){
+    qDebug() << "posviewgraph: "<< posViewGraphics;
+    pointMouse.push_back(point);
+}
+
+void MyPicture::drawPointMouse(){
+    QPen pen(Qt::blue, 5, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
+    foreach(QPoint point, pointMouse){
+        qDebug() << "drawPoint: "<< point<<"| pointX :"<<point.x()<<"| pointY: "<<point.y();
+        sceneGraphic->addEllipse(point.x(), point.y(), 5, 5, pen);
+    }
+}
+
+bool MyPicture::isEmptyScene(){
+    if(sceneGraphic->isActive()){
+        return false;
+    }
+    return true;
 }
