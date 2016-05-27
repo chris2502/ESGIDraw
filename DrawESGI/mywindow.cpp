@@ -38,6 +38,7 @@ MyWindow::MyWindow() : QWidget()
         connect(menuAbstract->getThisWidget(), SIGNAL(signalClearScene(QAction*)), this, SLOT(slotClearScene(QAction*)));
         connect(menuAbstract->getThisWidget(), SIGNAL(signalSavePicture()), this, SLOT(slotSavePicture()));
         connect(menuAbstract->getThisWidget(), SIGNAL(signalPrintPicture()), this, SLOT(slotPrintPicture()));
+        connect(menuAbstract->getThisWidget(), SIGNAL(signalRotate()), this, SLOT(slotRotate()));
     }
 
     layoutGrid->addWidget(barMenu, 0,0, 1, 5);
@@ -68,4 +69,9 @@ void MyWindow::slotSavePicture(){
 
 void MyWindow::slotPrintPicture(){
     mypicture->printPicture();
+}
+
+void MyWindow::slotRotate(){
+//qInfo() << "Slot Rotate call"<<endl;
+viewGraphic->rotate(90);
 }

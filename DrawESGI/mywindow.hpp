@@ -32,6 +32,7 @@ public slots:
     void slotClearScene(QAction*);
     void slotSavePicture();
     void slotPrintPicture();
+    void slotRotate();
 
 };
 

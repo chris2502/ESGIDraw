@@ -60,7 +60,10 @@ MyMenu::MyMenu()
 
     //Menu picture
     pictureMenu= new QMenu("Picture");
+
     rotation=new QAction("Rotation", pictureMenu);
+    connect(rotation,SIGNAL(triggered()), this, SLOT(slotRotate()));
+
     resize=new QAction("Resize", pictureMenu);
 
     //add to picture
@@ -127,3 +130,8 @@ void MyMenu::slotPrintPicture(){
 QString MyMenu::getFileName(){
     return fileName;
 }
+
+void MyMenu::slotRotate(){
+    emit signalRotate();
+}
+

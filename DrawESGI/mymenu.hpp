@@ -56,6 +56,7 @@ public slots:
     void slotClearScene();
     void slotSavePicture();
     void slotPrintPicture();
+    void slotRotate();
 
 signals:
     void mySignal(QGraphicsScene*);
@@ -63,6 +64,7 @@ signals:
     void signalClearScene(QAction*);
     void signalSavePicture();
     void signalPrintPicture();
+    void signalRotate();
 };
 
 #endif // TESTQOBJET_H
