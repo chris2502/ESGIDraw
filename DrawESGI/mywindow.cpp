@@ -81,6 +81,7 @@ void MyWindow::slotPrintPicture(){
 void MyWindow::slotRotate(){
 //qInfo() << "Slot Rotate call"<<endl;
 viewGraphic->rotate(90);
+}
 
 void MyWindow::slotMouseCatch(const QPoint point){
     mypicture->addPointMouse(point, viewGraphic->pos());
@@ -88,5 +89,5 @@ void MyWindow::slotMouseCatch(const QPoint point){
     if(mypicture->isEmptyScene()){
         viewGraphic->setScene(mypicture->getSceneGraphic());
     }
-
 }
+
