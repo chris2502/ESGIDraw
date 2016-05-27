@@ -5,13 +5,15 @@
 #include <QGraphicsScene>
 #include <QPixmap>
 #include <QImage>
+#include <QPoint>
+#include <QPen>
 #include <QImageWriter>
 #include <QFile>
 #include <QPrinter>
 #include <QPainter>
 #include <QFileDialog>
-
-class MyPicture : public QWidget
+#include <QMouseEvent>
+class MyPicture : public QWidget, public QGraphicsScene
 {
     //Q_OBJECT
 private:
@@ -19,6 +21,8 @@ private:
     QString fileName;
     QPixmap imageChoose;
     QImage image;
+    QVector<QPoint> pointMouse;
+    QMouseEvent *event;
 public:
     MyPicture(QWidget *parent=Q_NULLPTR, QString fileName=Q_NULLPTR);
     QGraphicsScene* getSceneGraphic();
@@ -27,6 +31,9 @@ public:
     QString getFileName();
     QPixmap getImageChoose();
     void setImageChoose(QPixmap imageChoose);
+    void addPointMouse(QPoint, QPoint posViewGraphics);
+    void drawPointMouse();
+    bool isEmptyScene();
     void setFileName(QString fileName);
     void savePicture();
     void printPicture();

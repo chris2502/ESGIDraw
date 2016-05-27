@@ -7,11 +7,17 @@ SOURCES += \
     mywindow.cpp \
     mypicture.cpp \
     abstractmenu.cpp \
-    myloadplugin.cpp
+    myloadplugin.cpp \
+    catchmouse.cpp
 
 HEADERS += \
     mymenu.hpp \
     mywindow.hpp \
     mypicture.hpp \
     abstractmenu.hpp \
-    myloadplugin.hpp
+    myloadplugin.hpp \
+    catchmouse.hpp
+
+DISTFILES += \
+    DrawESGI.pro.user \
+    .gitignore

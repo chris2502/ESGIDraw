@@ -13,7 +13,8 @@ MyWindow::MyWindow() : QWidget()
     layoutGrid= new QGridLayout(this);
     //Bar menu of main window
     barMenu= new QMenuBar(this);
-
+    //catch pos mouse
+    mouseCatch= new CatchMouse();
     //menu which add to bar menu
     AbstractMenu *mymenu= new MyMenu();
     menuAbstractList.push_back(mymenu);
@@ -41,8 +42,11 @@ MyWindow::MyWindow() : QWidget()
         connect(menuAbstract->getThisWidget(), SIGNAL(signalRotate()), this, SLOT(slotRotate()));
     }
 
+    connect(mouseCatch, SIGNAL(signalMouseCatch(QPoint)), this, SLOT(slotMouseCatch(QPoint)));
     layoutGrid->addWidget(barMenu, 0,0, 1, 5);
     layoutGrid->addWidget(viewGraphic, 1,0, 9, 3);
+
+    layoutGrid->addWidget(mouseCatch, 1,0, 9, 3);
    // layoutGrid->addWidget(mymenu->getM_button(), 1,0, 1, 1);
 
     setLayout(layoutGrid);
@@ -54,7 +58,9 @@ MyWindow::MyWindow() : QWidget()
 
 void MyWindow::slotOpenFile(QString fileName, QAction *saveFile){
     mypicture->setFileName(fileName);
-    viewGraphic->setScene(mypicture->getSceneGraphic());
+    if(mypicture->isEmptyScene()){
+        viewGraphic->setScene(mypicture->getSceneGraphic());
+    }
     saveFile->setEnabled(true);
 }
 
@@ -71,7 +77,16 @@ void MyWindow::slotPrintPicture(){
     mypicture->printPicture();
 }
 
+
 void MyWindow::slotRotate(){
 //qInfo() << "Slot Rotate call"<<endl;
 viewGraphic->rotate(90);
+
+void MyWindow::slotMouseCatch(const QPoint point){
+    mypicture->addPointMouse(point, viewGraphic->pos());
+    mypicture->drawPointMouse();
+    if(mypicture->isEmptyScene()){
+        viewGraphic->setScene(mypicture->getSceneGraphic());
+    }
+
 }
