@@ -56,7 +56,7 @@ MyWindow::MyWindow() : QWidget()
     show();
 }
 
-void MyWindow::slotOpenFile(QString fileName, QAction *saveFile){
+void MyWindow::slotOpenFile(QString fileName, QAction *saveFile){ qDebug() << "iewgraph";
     mypicture->setFileName(fileName);
     if(mypicture->isEmptyScene()){
         viewGraphic->setScene(mypicture->getSceneGraphic());
@@ -80,7 +80,7 @@ void MyWindow::slotPrintPicture(){
 
 void MyWindow::slotRotate(){
 //qInfo() << "Slot Rotate call"<<endl;
-viewGraphic->rotate(90);
+    mypicture->rotatePixmap();
 }
 
 void MyWindow::slotMouseCatch(const QPoint point){

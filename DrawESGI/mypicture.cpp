@@ -6,8 +6,8 @@ MyPicture::MyPicture(QWidget *parent, QString fileName)
     this->fileName.clear();
     this->fileName=fileName;
     sceneGraphic= new QGraphicsScene(parent);
-
-
+    pixmapItem=Q_NULLPTR;
+    degreeRotate=0;
 }
 
 QGraphicsScene* MyPicture::getSceneGraphic(){
@@ -40,16 +40,19 @@ void MyPicture::setFileName(QString fileName){
     this->fileName.clear();
     this->fileName=fileName;
     imageChoose.load(fileName);
-    sceneGraphic->addPixmap(imageChoose);
+    pixmapItem = new QGraphicsPixmapItem(imageChoose);
+    sceneGraphic->addItem(pixmapItem);
+    pixmapItem->setPos(-50, -70);
+
 }
 
-void MyPicture::slotOpenFile(QPixmap* imageChoose){
+/*void MyPicture::slotOpenFile(QPixmap* imageChoose){ qDebug() << "pk slotOPen";
     if(imageChoose!=nullptr){
         sceneGraphic->clear();
         sceneGraphic->addPixmap(*imageChoose);
     }
 }
-
+*/
 void MyPicture::savePicture(){
     /*
     QImage image("media/toto.png");
@@ -102,4 +105,12 @@ bool MyPicture::isEmptyScene(){
         return false;
     }
     return true;
+}
+
+void MyPicture::rotatePixmap(){ qDebug() << "i do rotate: "<<pixmapItem;
+
+   if(pixmapItem != Q_NULLPTR){
+       degreeRotate=degreeRotate+90;
+       pixmapItem->setRotation(degreeRotate);
+   }
 }

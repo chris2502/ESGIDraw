@@ -4,6 +4,7 @@
 #include <QWidget>
 #include <QGraphicsScene>
 #include <QPixmap>
+#include <QGraphicsPixmapItem>
 #include <QImage>
 #include <QPoint>
 #include <QPen>
@@ -23,6 +24,8 @@ private:
     QImage image;
     QVector<QPoint> pointMouse;
     QMouseEvent *event;
+    QGraphicsPixmapItem *pixmapItem;
+    int degreeRotate=0;
 public:
     MyPicture(QWidget *parent=Q_NULLPTR, QString fileName=Q_NULLPTR);
     QGraphicsScene* getSceneGraphic();
@@ -38,6 +41,7 @@ public:
     void savePicture();
     void printPicture();
     void draw();
+    void rotatePixmap();
 public slots:
     void slotOpenFile(QPixmap*);
 
