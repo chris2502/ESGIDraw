@@ -13,7 +13,7 @@ MyMenu::MyMenu()
     connect(openFile,SIGNAL(triggered()), this, SLOT(slotOpenfile()), Qt::AutoConnection);
 
     saveFile= new QAction("Save file",fileMenu);
-    saveFile->setDisabled(true);
+    //saveFile->setDisabled(true);
     connect(saveFile, SIGNAL(triggered()), this, SLOT(slotSavePicture()));
 
     printFile= new QAction("Print picture",fileMenu);
@@ -51,12 +51,14 @@ MyMenu::MyMenu()
     screenMenu= new QMenu("Screen");
     theme=new QAction("Thème", screenMenu);
     canvas=new QAction("Canvas", screenMenu);
-    leftToolsMenu=new QAction("Left Tool Menu", screenMenu);
+
+    rightToolsMenu=new QAction("Right Tool Menu", screenMenu);
+    connect(rightToolsMenu, SIGNAL(triggered()), this, SLOT(slotRightTools()));
 
     //add to Screen
     screenMenu->addAction(theme);
     screenMenu->addAction(canvas);
-    screenMenu->addAction(leftToolsMenu);
+    screenMenu->addAction(rightToolsMenu);
 
     //Menu picture
     pictureMenu= new QMenu("Picture");
@@ -120,7 +122,7 @@ void MyMenu::slotOpenfile(){
 
 void MyMenu::slotSavePicture(){
     QString name;
-    saveFile->setDisabled(true);
+    //saveFile->setDisabled(true);
     emit signalSavePicture();
 }
 void MyMenu::slotPrintPicture(){
@@ -135,3 +137,6 @@ void MyMenu::slotRotate(){
     emit signalRotate();
 }
 
+void MyMenu::slotRightTools(){
+    emit signalRightTools();
+}

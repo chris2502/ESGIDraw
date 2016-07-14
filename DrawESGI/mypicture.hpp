@@ -5,6 +5,7 @@
 #include <QGraphicsScene>
 #include <QPixmap>
 #include <QGraphicsPixmapItem>
+#include <QGraphicsItemGroup>
 #include <QImage>
 #include <QPoint>
 #include <QPen>
@@ -12,22 +13,30 @@
 #include <QFile>
 #include <QPrinter>
 #include <QPainter>
+#include <QPaintEvent>
 #include <QFileDialog>
 #include <QMouseEvent>
-class MyPicture : public QWidget, public QGraphicsScene
+class MyPicture : public QWidget, QGraphicsItemGroup
 {
     //Q_OBJECT
 private:
     QGraphicsScene *sceneGraphic;
     QString fileName;
     QPixmap imageChoose;
+    QGraphicsItemGroup *groupItemGraphics;
     QImage image;
     QVector<QPoint> pointMouse;
     QMouseEvent *event;
     QGraphicsPixmapItem *pixmapItem;
-    int degreeRotate=0;
+    QPoint  posViewGraphics;
+    int degreeRotate;
+    int priority;
+    int positionX;
+    int positionY;
+    qreal opacity;
+
 public:
-    MyPicture(QWidget *parent=Q_NULLPTR, QString fileName=Q_NULLPTR);
+    MyPicture(QPoint  posViewGraphics, QWidget *parent=Q_NULLPTR, QString fileName=Q_NULLPTR);
     QGraphicsScene* getSceneGraphic();
     void clearSceneGraphic();
     void setSceneGraphic(QGraphicsScene *sceneGraphic);
@@ -36,12 +45,32 @@ public:
     void setImageChoose(QPixmap imageChoose);
     void addPointMouse(QPoint, QPoint posViewGraphics);
     void drawPointMouse();
+    void drawPointMouse(QPoint point);
     bool isEmptyScene();
     void setFileName(QString fileName);
     void savePicture();
     void printPicture();
     void draw();
     void rotatePixmap();
+
+    qreal getOpacity();
+    void setOpacity(qreal);
+
+    int getPositionX();
+    void setPositionX(int positionX);
+
+    int getPositionY();
+    void setPositionY(int positionY);
+
+    int getPriority();
+    void setPriority(int priority);
+
+
+    virtual void paintEvent(QPaintEvent *);
+
+
+    void saveDraw(QPainter &painter);
+
 public slots:
     void slotOpenFile(QPixmap*);
 

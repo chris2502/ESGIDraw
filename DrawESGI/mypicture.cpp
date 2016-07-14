@@ -1,13 +1,20 @@
 #include "mypicture.hpp"
 #include <QDebug>
 
-MyPicture::MyPicture(QWidget *parent, QString fileName)
+MyPicture::MyPicture(QPoint  posViewGraphics, QWidget *parent, QString fileName)
 {
+    this->posViewGraphics=posViewGraphics;
+    degreeRotate=0;
+    positionX=posViewGraphics.x();
+    positionY=posViewGraphics.y();
+    priority=0;
+    opacity=1;
     this->fileName.clear();
     this->fileName=fileName;
     sceneGraphic= new QGraphicsScene(parent);
     pixmapItem=Q_NULLPTR;
     degreeRotate=0;
+    groupItemGraphics=  new QGraphicsItemGroup();
 }
 
 QGraphicsScene* MyPicture::getSceneGraphic(){
@@ -34,6 +41,7 @@ QPixmap MyPicture::getImageChoose(){
 
 void MyPicture::setImageChoose(QPixmap imageChoose){
     this->imageChoose=imageChoose;
+
 }
 
 void MyPicture::setFileName(QString fileName){
@@ -41,8 +49,9 @@ void MyPicture::setFileName(QString fileName){
     this->fileName=fileName;
     imageChoose.load(fileName);
     pixmapItem = new QGraphicsPixmapItem(imageChoose);
+    groupItemGraphics->addToGroup(pixmapItem);
+    //pixmapItem->setPos(-50, -70);
     sceneGraphic->addItem(pixmapItem);
-    pixmapItem->setPos(-50, -70);
 
 }
 
@@ -65,7 +74,12 @@ void MyPicture::savePicture(){
                                                       "media/imageSave.png",
                                                       QWidget::tr("Images (*.png *.xpm *.jpg)"));
 
-    imageChoose.save(saveFilename);
+    QImage img(this->size(), QImage::Format_ARGB32);
+    QPainter painter(&img);
+    this->render(&painter);
+        img.save(saveFilename);
+
+   // imageChoose.save(saveFilename);
 }
 
 void MyPicture::printPicture(){
@@ -100,6 +114,14 @@ void MyPicture::drawPointMouse(){
     }
 }
 
+void MyPicture::drawPointMouse(QPoint point){
+    QPen pen(Qt::blue, 5, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
+
+        qDebug() << "drawPoint: "<< point<<"| pointX :"<<point.x()<<"| pointY: "<<point.y();
+        sceneGraphic->addEllipse(point.x(), point.y(), 5, 5, pen);
+
+}
+
 bool MyPicture::isEmptyScene(){
     if(sceneGraphic->isActive()){
         return false;
@@ -113,4 +135,68 @@ void MyPicture::rotatePixmap(){ qDebug() << "i do rotate: "<<pixmapItem;
        degreeRotate=degreeRotate+90;
        pixmapItem->setRotation(degreeRotate);
    }
+}
+
+void MyPicture::saveDraw(QPainter &painter){
+    painter.setOpacity(pixmapItem->opacity());
+
+    painter.drawPixmap(pixmapItem->x(), pixmapItem->y(), pixmapItem->pixmap());qDebug() << "opacity"<<opacity;
+    //painter.setOpacity(opacity);
+    //painter.drawPixmap(pixmapItem->x()+40, pixmapItem->y()+50, imageChoose);
+    //painter.setOpacity(0.1);
+
+    foreach (QPoint p, pointMouse) {
+        painter.drawPoint(p);
+    }
+}
+
+void MyPicture::paintEvent(QPaintEvent *){
+    QPainter painter;
+    painter.begin(this);
+
+    painter.setRenderHint(QPainter::Antialiasing);
+    QPen pen(Qt::blue, 5, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
+    painter.setPen(pen);
+    saveDraw(painter);
+    painter.end();
+}
+
+void MyPicture::setOpacity(qreal opacity){
+    this->opacity=opacity;
+    pixmapItem->setOpacity(opacity);
+
+}
+
+
+
+qreal MyPicture::getOpacity(){
+    return opacity;
+}
+
+
+
+int MyPicture::getPositionX(){
+    return positionX;
+}
+
+void MyPicture::setPositionX(int positionX){
+    this->positionX=positionX;
+    pixmapItem->setX(positionX);
+}
+
+int MyPicture::getPositionY(){
+    return positionY;
+}
+
+void MyPicture::setPositionY(int positionY){
+    this->positionY=positionY;
+    pixmapItem->setY(positionY);
+}
+
+int MyPicture::getPriority(){
+    return priority;
+}
+
+void MyPicture::setPriority(int priority){
+    this->priority=priority;
 }

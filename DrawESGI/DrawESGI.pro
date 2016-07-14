@@ -8,7 +8,8 @@ SOURCES += \
     mypicture.cpp \
     abstractmenu.cpp \
     myloadplugin.cpp \
-    catchmouse.cpp
+    catchmouse.cpp \
+    righttoolmenu.cpp
 
 HEADERS += \
     mymenu.hpp \
@@ -16,7 +17,8 @@ HEADERS += \
     mypicture.hpp \
     abstractmenu.hpp \
     myloadplugin.hpp \
-    catchmouse.hpp
+    catchmouse.hpp \
+    righttoolmenu.hpp
 
 DISTFILES += \
     DrawESGI.pro.user \

@@ -32,7 +32,7 @@ private:
     QMenu *screenMenu;
     QAction *theme;
     QAction *canvas;
-    QAction *leftToolsMenu;
+    QAction *rightToolsMenu;
     //Menu picture
     QMenu *pictureMenu;
     QAction *rotation;
@@ -56,7 +56,10 @@ public slots:
     void slotClearScene();
     void slotSavePicture();
     void slotPrintPicture();
+
     void slotRotate();
+
+    void slotRightTools();
 
 signals:
     void mySignal(QGraphicsScene*);
@@ -64,6 +67,8 @@ signals:
     void signalClearScene(QAction*);
     void signalSavePicture();
     void signalPrintPicture();
+
+    void signalRightTools();
     void signalRotate();
 };
 

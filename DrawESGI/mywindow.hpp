@@ -1,6 +1,7 @@
 #ifndef WINDOWTEST_H
 #define WINDOWTEST_H
 #include "abstractmenu.hpp"
+#include "righttoolmenu.hpp"
 #include <QDesktopWidget>
 #include "myloadplugin.hpp"
 #include "mymenu.hpp"
@@ -9,6 +10,7 @@
 #include <QGraphicsView>
 #include <QMenuBar>
 #include <QVector>
+#include <QResizeEvent>
 #include "catchmouse.hpp"
 class MyWindow : public QWidget
 {
@@ -26,7 +28,7 @@ private:
     QGridLayout *layoutGrid;
     QGraphicsView *viewGraphic;
     QGraphicsScene *sceneGraphic;
-
+    RightToolMenu *toolMenuRight;
     QMouseEvent *event;
    // AbtractTestQobject *testObjectAbs;
 public:
@@ -36,9 +38,15 @@ public slots:
     void slotClearScene(QAction*);
     void slotSavePicture();
     void slotPrintPicture();
+    void slotRightTools();
     void slotRotate();
     void slotMouseCatch(const QPoint);
-
+    void slotPriority(int);
+    void slotPositionX(int);
+    void slotPositionY(int);
+    void slotOpacity(qreal);
+public:
+    virtual void resizeEvent(QResizeEvent *);
 };
 
 #endif // WINDOWTEST_H

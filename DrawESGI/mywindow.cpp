@@ -24,10 +24,14 @@ MyWindow::MyWindow() : QWidget()
         menuAbstractList.push_back(idPlugin);
     }
 
-    //picture which add to graphicview
-    mypicture =new MyPicture(this);
+
     //canvas
     viewGraphic=new QGraphicsView();
+    viewGraphic->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    viewGraphic->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+
+    //picture which add to graphicview
+    mypicture =new MyPicture(viewGraphic->pos(), this);
 
     foreach (AbstractMenu* menuAbstract, menuAbstractList) {
         //add to bar menu
@@ -39,6 +43,7 @@ MyWindow::MyWindow() : QWidget()
         connect(menuAbstract->getThisWidget(), SIGNAL(signalClearScene(QAction*)), this, SLOT(slotClearScene(QAction*)));
         connect(menuAbstract->getThisWidget(), SIGNAL(signalSavePicture()), this, SLOT(slotSavePicture()));
         connect(menuAbstract->getThisWidget(), SIGNAL(signalPrintPicture()), this, SLOT(slotPrintPicture()));
+        connect(menuAbstract->getThisWidget(), SIGNAL(signalRightTools()), this, SLOT(slotRightTools()));
         connect(menuAbstract->getThisWidget(), SIGNAL(signalRotate()), this, SLOT(slotRotate()));
     }
 
@@ -85,9 +90,50 @@ void MyWindow::slotRotate(){
 
 void MyWindow::slotMouseCatch(const QPoint point){
     mypicture->addPointMouse(point, viewGraphic->pos());
-    mypicture->drawPointMouse();
+    mypicture->drawPointMouse(point);
     if(mypicture->isEmptyScene()){
         viewGraphic->setScene(mypicture->getSceneGraphic());
     }
+
 }
 
+void MyWindow::slotRightTools(){
+    toolMenuRight =new RightToolMenu(this->pos());
+    connect(toolMenuRight, SIGNAL(signalPriority(int)), this, SLOT(slotPriority(int)));
+    connect(toolMenuRight, SIGNAL(signalPositionX(int)), this, SLOT(slotPositionX(int)));
+    connect(toolMenuRight, SIGNAL(signalPositionY(int)), this, SLOT(slotPositionY(int)));
+    connect(toolMenuRight, SIGNAL(signalOpacity(qreal)), this, SLOT(slotOpacity(qreal)));
+}
+
+
+void MyWindow::slotPriority(int priority){
+    mypicture->setPriority(priority);
+}
+
+void MyWindow::slotPositionX(int positionX){
+    int tmp=positionX;qDebug() << "tmpx: "<<tmp << "viewX"<<viewGraphic->x();
+    if(positionX <(viewGraphic->x()-8) || positionX> (viewGraphic->width()-8)){
+        toolMenuRight->setPositionSpinBoxX(viewGraphic->x());
+        tmp=viewGraphic->x()-8;
+    }
+    mypicture->setPositionX(tmp);
+}
+
+void MyWindow::slotPositionY(int positionY){
+    int tmp=positionY;
+    if(positionY <(viewGraphic->y()-45) || positionY> (viewGraphic->height()-45)){
+        toolMenuRight->setPositionSpinBoxX(viewGraphic->y());
+        tmp=viewGraphic->y()-45;
+    }qDebug() << "posy: "<<positionY<< "viewY"<<viewGraphic->y()<<"tmpy"<<tmp;
+    mypicture->setPositionY(tmp);
+}
+
+void MyWindow::slotOpacity(qreal opacity){
+    mypicture->setOpacity(opacity);
+}
+
+
+void MyWindow::resizeEvent(QResizeEvent *){
+   viewGraphic->setSceneRect(viewGraphic->x()-8, viewGraphic->y()-45, viewGraphic->width(), viewGraphic->height());
+   //qDebug() << "viewPoint: "<<"viewpointX :"<<viewGraphic->x()<<"| viewY: "<<viewGraphic->y()<<"| viewWid: " <<viewGraphic->width() <<"| viewhei:" <<viewGraphic->height();
+}
