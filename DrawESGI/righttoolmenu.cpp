@@ -2,6 +2,12 @@
 #include <QDebug>
 RightToolMenu::RightToolMenu(QPoint p)
 {
+
+    barMenu = new QMenuBar(this);
+
+
+    //pixmapAction = new QVector<QAction*>();
+//    menuPixmap->addAction(&pixmapAction);
     prioritySPinBox= new QSpinBox();
     prioritySPinBox->setMaximum(20);
     positionSpinBoxX= new QSpinBox();
@@ -12,10 +18,13 @@ RightToolMenu::RightToolMenu(QPoint p)
     opacitySpinBox->setMaximum(20);
     opacitySpinBox->setValue(10);
     QFormLayout *formLayout = new QFormLayout();
+    formLayout->setMargin(50);
     formLayout->addRow(tr("&Priority:"), prioritySPinBox);
     formLayout->addRow(tr("&Position x:"), positionSpinBoxX);
     formLayout->addRow(tr("&Position y:"), positionSpinBoxY);
     formLayout->addRow(tr("&Opacity:"), opacitySpinBox);
+
+
 
     connect(prioritySPinBox, SIGNAL(valueChanged(int)), this, SLOT(slotPriority(int)));
     connect(positionSpinBoxX, SIGNAL(valueChanged(int)), this, SLOT(slotPositionX(int)));
@@ -25,7 +34,6 @@ RightToolMenu::RightToolMenu(QPoint p)
     setLayout(formLayout);
     this->move(p.x()+400, p.y()+100);
     this->setWindowTitle("Tools Menu");
-    this->show();
 }
 
 
@@ -56,3 +64,26 @@ void RightToolMenu::slotOpacity(int opacity){
     emit signalOpacity(r);
 }
 
+
+void RightToolMenu::setFileNameActive(QString fileNameActive){
+    this->fileNameActive=fileNameActive;
+}
+
+void RightToolMenu::addFileNameImageToAction(QString fileName){
+    QAction *action = new QAction(fileName, this);
+    action->setCheckable(true);
+    barMenu->addAction(action);
+    connect(barMenu, SIGNAL(triggered(QAction*)), SLOT(slotSelectPixmap(QAction*)));
+}
+
+void RightToolMenu::slotSelectPixmap(QAction * action){
+
+    foreach (QAction *actionVar, barMenu->actions()) {
+        if(actionVar != action){
+            actionVar->setChecked(false);
+
+        }
+    }
+    action->setChecked(true);
+    emit signalSelectPixmap((action->text()));
+}

@@ -23,7 +23,7 @@ private:
     QGraphicsScene *sceneGraphic;
     QString fileName;
     QPixmap imageChoose;
-    QGraphicsItemGroup *groupItemGraphics;
+    QVector<QGraphicsPixmapItem*> pixmapItemList;
     QImage image;
     QVector<QPoint> pointMouse;
     QMouseEvent *event;
@@ -67,6 +67,8 @@ public:
     void setPriority(int priority);
 
     void setPenColor(QColor *color);
+
+    void setPixmapItem(QString);
 
     virtual void paintEvent(QPaintEvent *);
 

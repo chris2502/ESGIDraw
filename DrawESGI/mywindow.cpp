@@ -30,6 +30,14 @@ MyWindow::MyWindow() : QWidget()
     viewGraphic->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     viewGraphic->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
+    //right tool menu
+    toolMenuRight =new RightToolMenu(this->pos());
+    connect(toolMenuRight, SIGNAL(signalSelectPixmap(QString)), SLOT(slotSelectPixmap(QString)));
+    connect(toolMenuRight, SIGNAL(signalPriority(int)), this, SLOT(slotPriority(int)));
+    connect(toolMenuRight, SIGNAL(signalPositionX(int)), this, SLOT(slotPositionX(int)));
+    connect(toolMenuRight, SIGNAL(signalPositionY(int)), this, SLOT(slotPositionY(int)));
+    connect(toolMenuRight, SIGNAL(signalOpacity(qreal)), this, SLOT(slotOpacity(qreal)));
+
     //picture which add to graphicview
     mypicture =new MyPicture(viewGraphic->pos(), this);
 
@@ -64,6 +72,9 @@ MyWindow::MyWindow() : QWidget()
 
 void MyWindow::slotOpenFile(QString fileName, QAction *saveFile){ qDebug() << "iewgraph";
     mypicture->setFileName(fileName);
+    toolMenuRight->setFocus();
+    toolMenuRight->show();
+    toolMenuRight->addFileNameImageToAction(fileName);
     if(mypicture->isEmptyScene()){
         viewGraphic->setScene(mypicture->getSceneGraphic());
     }
@@ -99,11 +110,8 @@ void MyWindow::slotMouseCatch(const QPoint point){
 }
 
 void MyWindow::slotRightTools(){
-    toolMenuRight =new RightToolMenu(this->pos());
-    connect(toolMenuRight, SIGNAL(signalPriority(int)), this, SLOT(slotPriority(int)));
-    connect(toolMenuRight, SIGNAL(signalPositionX(int)), this, SLOT(slotPositionX(int)));
-    connect(toolMenuRight, SIGNAL(signalPositionY(int)), this, SLOT(slotPositionY(int)));
-    connect(toolMenuRight, SIGNAL(signalOpacity(qreal)), this, SLOT(slotOpacity(qreal)));
+    toolMenuRight->show();
+
 }
 
 
@@ -135,6 +143,10 @@ void MyWindow::slotOpacity(qreal opacity){
 
 void MyWindow::slotChangeColor(QColor* color){
     mypicture->setPenColor(color);
+}
+
+void MyWindow::slotSelectPixmap(QString fileName){qDebug() <<"slotselectpixmap window";
+    mypicture->setPixmapItem(fileName);
 }
 
 void MyWindow::resizeEvent(QResizeEvent *){

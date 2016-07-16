@@ -29,6 +29,7 @@ private:
     QGraphicsView *viewGraphic;
     QGraphicsScene *sceneGraphic;
     RightToolMenu *toolMenuRight;
+    bool activeToolMenuRight;
     QMouseEvent *event;
    // AbtractTestQobject *testObjectAbs;
 public:
@@ -46,7 +47,7 @@ public slots:
     void slotPositionY(int);
     void slotOpacity(qreal);
     void slotChangeColor(QColor*);
-
+    void slotSelectPixmap(QString);
 public:
     virtual void resizeEvent(QResizeEvent *);
 };

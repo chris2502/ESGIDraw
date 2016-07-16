@@ -14,7 +14,6 @@ MyPicture::MyPicture(QPoint  posViewGraphics, QWidget *parent, QString fileName)
     sceneGraphic= new QGraphicsScene(parent);
     pixmapItem=Q_NULLPTR;
     degreeRotate=0;
-    groupItemGraphics=  new QGraphicsItemGroup();
     pen = new QPen(Qt::green, 3, Qt::DashDotLine, Qt::RoundCap, Qt::RoundJoin);
 }
 
@@ -50,7 +49,8 @@ void MyPicture::setFileName(QString fileName){
     this->fileName=fileName;
     imageChoose.load(fileName);
     pixmapItem = new QGraphicsPixmapItem(imageChoose);
-    groupItemGraphics->addToGroup(pixmapItem);
+    pixmapItemList.push_back(pixmapItem);
+
     //pixmapItem->setPos(-50, -70);
     sceneGraphic->addItem(pixmapItem);
 
@@ -200,4 +200,14 @@ int MyPicture::getPriority(){
 
 void MyPicture::setPriority(int priority){
     this->priority=priority;
+}
+
+void MyPicture::setPixmapItem(QString fileName){qDebug() <<"filename: "<<fileName;
+    foreach (QGraphicsPixmapItem *item, pixmapItemList) {
+        qDebug() <<"filename listpixmap"<<item->pixmap().toImage().text();
+        if(item->pixmap().toImage().text().compare(fileName)){
+            pixmapItem=item;
+            break;
+        }
+    }
 }
