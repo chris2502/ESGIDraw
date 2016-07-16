@@ -205,3 +205,11 @@ void MyPicture::setPriority(int priority){
 void MyPicture::setSize(int sizeX, int sizeY) {
     pixmapItem->setPixmap(pixmapItem->pixmap().scaled(sizeX, sizeY));
 }
+
+int MyPicture::getSizeX() {
+    return ixmapItem->pixmap().size().width();
+}
+
+void MyPicture::getSizeY() {
+    return ixmapItem->pixmap().size().height();
+}
