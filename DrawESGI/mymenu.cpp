@@ -69,6 +69,7 @@ MyMenu::MyMenu()
     connect(rotation,SIGNAL(triggered()), this, SLOT(slotRotate()));
 
     resize=new QAction("Resize", pictureMenu);
+    connect(resize,SIGNAL(triggered()), this, SLOT(slotResize()));
 
     //add to picture
     pictureMenu->addAction(rotation);
@@ -163,6 +164,10 @@ QString MyMenu::getFileName(){
 
 void MyMenu::slotRotate(){
     emit signalRotate();
+}
+
+void MyMenu::slotResize(){
+    emit signalResize();
 }
 
 void MyMenu::slotRightTools(){
