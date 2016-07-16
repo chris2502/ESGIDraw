@@ -135,20 +135,18 @@ void MyWindow::slotOpacity(qreal opacity){
 
 
 void MyWindow::slotResize(){
-    qDebug() << "toto";
-
-    resizetoolmenu =new ResizeToolMenu(this->pos());
+    resizetoolmenu =new ResizeToolMenu(this->pos(), mypicture->getSizeX(), mypicture->getSizeY());
     connect(resizetoolmenu, SIGNAL(signalResizeX(int)), this, SLOT(slotResizeX(int)));
     connect(resizetoolmenu, SIGNAL(signalResizeY(int)), this, SLOT(slotResizeY(int)));
 }
 
 void MyWindow::slotResizeX(int sizeX){
     //qDebug() << "totoResize";
-    mypicture->setSize(sizeX, 300);
+    mypicture->setSizeX(sizeX);
 }
 
-void MyWindow::slotResizeY(int priority){
-    mypicture->setPriority(priority);
+void MyWindow::slotResizeY(int sizeY){
+    mypicture->setSizeY(sizeY);
 }
 
 void MyWindow::slotChangeColor(QColor* color){

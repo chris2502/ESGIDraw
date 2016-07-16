@@ -1,11 +1,14 @@
 #include "resizetoolmenu.h"
 #include <QDebug>
-ResizeToolMenu::ResizeToolMenu(QPoint p)
+ResizeToolMenu::ResizeToolMenu(QPoint p, int defaultSizeX, int defaultSizeY)
 {
+
     sizeX= new QSpinBox();
-    sizeX->setMaximum(400);
+    sizeX->setMaximum(1000);
+    sizeX->setValue(defaultSizeX);
     sizeY= new QSpinBox();
-    sizeY->setMaximum(400);
+    sizeY->setMaximum(1000);
+    sizeY->setValue(defaultSizeY);
     //opacitySpinBox->setValue(10);
 
     QFormLayout *formLayout = new QFormLayout();
@@ -21,10 +24,10 @@ ResizeToolMenu::ResizeToolMenu(QPoint p)
     this->show();
 }
 
-void ResizeToolMenu::slotResizeX(int priority){
-    emit signalResizeX(priority);
+void ResizeToolMenu::slotResizeX(int newSizeX){
+    emit signalResizeX(newSizeX);
 }
 
-void ResizeToolMenu::slotResizeY(int positionX){
-    emit signalResizeY(positionX);
+void ResizeToolMenu::slotResizeY(int newSizeY){
+    emit signalResizeY(newSizeY);
 }

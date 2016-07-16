@@ -202,14 +202,28 @@ void MyPicture::setPriority(int priority){
     this->priority=priority;
 }
 
-void MyPicture::setSize(int sizeX, int sizeY) {
-    pixmapItem->setPixmap(pixmapItem->pixmap().scaled(sizeX, sizeY));
+void MyPicture::setSizeX(int sizeX) {
+    if(pixmapItem != Q_NULLPTR && !pixmapItem->pixmap().isNull())
+        pixmapItem->setPixmap(pixmapItem->pixmap().scaled(sizeX, this->getSizeY(), Qt::IgnoreAspectRatio,
+                                                          Qt::SmoothTransformation));
+}
+
+void MyPicture::setSizeY(int sizeY) {
+    if(pixmapItem != Q_NULLPTR && !pixmapItem->pixmap().isNull())
+        pixmapItem->setPixmap(pixmapItem->pixmap().scaled(this->getSizeX(), sizeY, Qt::IgnoreAspectRatio,
+                                                          Qt::SmoothTransformation));
 }
 
 int MyPicture::getSizeX() {
-    return ixmapItem->pixmap().size().width();
+    int result = 0;
+    if(pixmapItem != Q_NULLPTR && !pixmapItem->pixmap().isNull())
+        result = pixmapItem->pixmap().size().width();
+    return result;
 }
 
-void MyPicture::getSizeY() {
-    return ixmapItem->pixmap().size().height();
+int MyPicture::getSizeY() {
+    int result = 0;
+    if(pixmapItem != Q_NULLPTR && !pixmapItem->pixmap().isNull())
+        result = pixmapItem->pixmap().size().height();
+    return result;
 }
