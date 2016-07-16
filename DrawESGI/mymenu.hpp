@@ -42,6 +42,15 @@ private:
     QAction *newCalque;
     QMenu *toolsMenu;
     QMenu *geometricMenu;
+    //Menu Color
+    QMenu *colorMenu;
+    QAction *blue;
+    QAction *red;
+    QAction *green;
+    QAction *black;
+    QAction *white;
+    QAction *grey;
+    QAction *pink;
 
 public:
     MyMenu();

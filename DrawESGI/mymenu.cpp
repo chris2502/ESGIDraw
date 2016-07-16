@@ -81,6 +81,24 @@ MyMenu::MyMenu()
 
     toolsMenu= new QMenu("Tools");
     geometricMenu= new QMenu("Geometric sharpes");
+
+    colorMenu= new QMenu("Color");
+    blue=new QAction("Blue", colorMenu);
+    red=new QAction("Red", colorMenu);
+    green=new QAction("Green", colorMenu);
+    black=new QAction("Black", colorMenu);
+    white=new QAction("White", colorMenu);
+    grey=new QAction("Grey", colorMenu);
+    pink=new QAction("Pink", colorMenu);
+
+    colorMenu->addAction(blue);
+    colorMenu->addAction(red);
+    colorMenu->addAction(green);
+    colorMenu->addAction(black);
+    colorMenu->addAction(white);
+    colorMenu->addAction(grey);
+    colorMenu->addAction(pink);
+
 }
 
 MyMenu::~MyMenu(){
@@ -100,6 +118,7 @@ QVector<QMenu*> MyMenu::ListMenu(){
    qlistMenu.push_back(layerMenu);
    qlistMenu.push_back(toolsMenu);
    qlistMenu.push_back(geometricMenu);
+   qlistMenu.push_back(colorMenu);
    return qlistMenu;
 }
 
