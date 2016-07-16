@@ -15,6 +15,7 @@ MyPicture::MyPicture(QPoint  posViewGraphics, QWidget *parent, QString fileName)
     pixmapItem=Q_NULLPTR;
     degreeRotate=0;
     groupItemGraphics=  new QGraphicsItemGroup();
+    qpen = new QPen(Qt::green, 3, Qt::DashDotLine, Qt::RoundCap, Qt::RoundJoin);
 }
 
 QGraphicsScene* MyPicture::getSceneGraphic(){
@@ -74,9 +75,10 @@ void MyPicture::savePicture(){
                                                       "media/imageSave.png",
                                                       QWidget::tr("Images (*.png *.xpm *.jpg)"));
 
-    QImage img(this->size(), QImage::Format_ARGB32);
+    QImage img(sceneGraphic->sceneRect().size().toSize(), QImage::Format_ARGB32);
+    //image.fill(Qt::transparent);
     QPainter painter(&img);
-    this->render(&painter);
+    sceneGraphic->render(&painter);
         img.save(saveFilename);
 
    // imageChoose.save(saveFilename);
@@ -107,18 +109,15 @@ void MyPicture::addPointMouse(QPoint point, QPoint posViewGraphics){
 }
 
 void MyPicture::drawPointMouse(){
-    QPen pen(Qt::blue, 5, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
     foreach(QPoint point, pointMouse){
         qDebug() << "drawPoint: "<< point<<"| pointX :"<<point.x()<<"| pointY: "<<point.y();
-        sceneGraphic->addEllipse(point.x(), point.y(), 5, 5, pen);
+        sceneGraphic->addEllipse(point.x(), point.y(), 5, 5, *qpen);
     }
 }
 
 void MyPicture::drawPointMouse(QPoint point){
-    QPen pen(Qt::blue, 5, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
-
         qDebug() << "drawPoint: "<< point<<"| pointX :"<<point.x()<<"| pointY: "<<point.y();
-        sceneGraphic->addEllipse(point.x(), point.y(), 5, 5, pen);
+        sceneGraphic->addEllipse(point.x(), point.y(), 5, 5, *qpen);
 
 }
 

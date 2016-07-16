@@ -10,7 +10,7 @@ RightToolMenu::RightToolMenu(QPoint p)
     positionSpinBoxY->setMaximum(400);
     opacitySpinBox = new QSpinBox();
     opacitySpinBox->setMaximum(20);
-    opacitySpinBox->setValue(1);
+    opacitySpinBox->setValue(10);
     QFormLayout *formLayout = new QFormLayout();
     formLayout->addRow(tr("&Priority:"), prioritySPinBox);
     formLayout->addRow(tr("&Position x:"), positionSpinBoxX);
