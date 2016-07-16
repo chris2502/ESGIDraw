@@ -53,6 +53,7 @@ MyWindow::MyWindow() : QWidget()
         connect(menuAbstract->getThisWidget(), SIGNAL(signalPrintPicture()), this, SLOT(slotPrintPicture()));
         connect(menuAbstract->getThisWidget(), SIGNAL(signalRightTools()), this, SLOT(slotRightTools()));
         connect(menuAbstract->getThisWidget(), SIGNAL(signalRotate()), this, SLOT(slotRotate()));
+        connect(menuAbstract->getThisWidget(), SIGNAL(signalResize()), this, SLOT(slotMenuResize()));
         connect(menuAbstract->getThisWidget(), SIGNAL(signalChangeColor(QColor*)), this, SLOT(slotChangeColor(QColor*)));
     }
 
@@ -114,7 +115,6 @@ void MyWindow::slotRightTools(){
 
 }
 
-
 void MyWindow::slotPriority(int priority){
     mypicture->setPriority(priority);
 }
@@ -139,6 +139,16 @@ void MyWindow::slotPositionY(int positionY){
 
 void MyWindow::slotOpacity(qreal opacity){
     mypicture->setOpacity(opacity);
+}
+
+
+void MyWindow::slotMenuResize(){
+    resizetoolmenu =new ResizeToolMenu(this->pos(), mypicture->getSizeX(), mypicture->getSizeY());
+    connect(resizetoolmenu, SIGNAL(signalResize(int, int)), this, SLOT(slotResize(int, int)));
+}
+
+void MyWindow::slotResize(int sizeX, int sizeY){
+    mypicture->setSize(sizeX, sizeY);
 }
 
 void MyWindow::slotChangeColor(QColor* color){

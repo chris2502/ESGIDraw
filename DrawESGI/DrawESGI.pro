@@ -14,7 +14,8 @@ SOURCES += \
     abstractparams.cpp \
     abstractlayer.cpp \
     layer.cpp \
-    compositelayer.cpp
+    compositelayer.cpp \
+    resizetoolmenu.cpp
 
 HEADERS += \
     mymenu.hpp \
@@ -28,7 +29,8 @@ HEADERS += \
     abstractparams.hpp \
     layer.hpp \
     compositelayer.hpp \
-    abstractlayer.hpp
+    abstractlayer.hpp \
+    resizetoolmenu.h
 
 DISTFILES += \
     DrawESGI.pro.user \

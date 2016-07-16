@@ -202,6 +202,7 @@ void MyPicture::setPriority(int priority){
     this->priority=priority;
 }
 
+
 void MyPicture::setPixmapItem(QString fileName){qDebug() <<"filename: "<<fileName;
     foreach (QGraphicsPixmapItem *item, pixmapItemList) {
         qDebug() <<"filename listpixmap"<<item->pixmap().toImage().text();
@@ -210,4 +211,24 @@ void MyPicture::setPixmapItem(QString fileName){qDebug() <<"filename: "<<fileNam
             break;
         }
     }
+}
+
+void MyPicture::setSize(int sizeX, int sizeY) {
+    if(pixmapItem != Q_NULLPTR && !pixmapItem->pixmap().isNull())
+        pixmapItem->setPixmap(pixmapItem->pixmap().scaled(sizeX, sizeY, Qt::IgnoreAspectRatio,
+                                                          Qt::SmoothTransformation));
+}
+
+int MyPicture::getSizeX() {
+    int result = 0;
+    if(pixmapItem != Q_NULLPTR && !pixmapItem->pixmap().isNull())
+        result = pixmapItem->pixmap().size().width();
+    return result;
+}
+
+int MyPicture::getSizeY() {
+    int result = 0;
+    if(pixmapItem != Q_NULLPTR && !pixmapItem->pixmap().isNull())
+        result = pixmapItem->pixmap().size().height();
+    return result;
 }

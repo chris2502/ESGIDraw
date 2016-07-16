@@ -69,6 +69,7 @@ public slots:
     void slotTheme();
 
     void slotRotate();
+    void slotResize();
 
     void slotRightTools();
 
@@ -91,6 +92,7 @@ signals:
 
     void signalRightTools();
     void signalRotate();
+    void signalResize();
 
     void signalChangeColor(QColor*);
 };

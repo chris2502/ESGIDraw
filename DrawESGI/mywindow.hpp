@@ -2,6 +2,7 @@
 #define WINDOWTEST_H
 #include "abstractmenu.hpp"
 #include "righttoolmenu.hpp"
+#include "resizetoolmenu.h"
 #include <QDesktopWidget>
 #include "myloadplugin.hpp"
 #include "mymenu.hpp"
@@ -29,7 +30,7 @@ private:
     QGraphicsView *viewGraphic;
     QGraphicsScene *sceneGraphic;
     RightToolMenu *toolMenuRight;
-    bool activeToolMenuRight;
+    ResizeToolMenu *resizetoolmenu;
     QMouseEvent *event;
    // AbtractTestQobject *testObjectAbs;
 public:
@@ -47,7 +48,12 @@ public slots:
     void slotPositionY(int);
     void slotOpacity(qreal);
     void slotChangeColor(QColor*);
+
     void slotSelectPixmap(QString);
+
+    void slotMenuResize();
+    void slotResize(int, int);
+
 public:
     virtual void resizeEvent(QResizeEvent *);
 };

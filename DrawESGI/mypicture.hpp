@@ -1,5 +1,5 @@
-#ifndef MYPICUTRE_H
-#define MYPICUTRE_H
+#ifndef MYPICTURE_H
+#define MYPICTURE_H
 #include <QApplication>
 #include <QWidget>
 #include <QGraphicsScene>
@@ -75,9 +75,12 @@ public:
 
     void saveDraw(QPainter &painter);
 
+    void setSize(int sizeX, int sizeY);
+    int getSizeX();
+    int getSizeY();
 public slots:
     void slotOpenFile(QPixmap*);
 
 };
 
-#endif // MYPICUTRE_H
+#endif // MYPICTURE_H

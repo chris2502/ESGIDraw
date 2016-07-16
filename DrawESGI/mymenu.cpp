@@ -69,6 +69,7 @@ MyMenu::MyMenu()
     connect(rotation,SIGNAL(triggered()), this, SLOT(slotRotate()));
 
     resize=new QAction("Resize", pictureMenu);
+    connect(resize,SIGNAL(triggered()), this, SLOT(slotResize()));
 
     //add to picture
     pictureMenu->addAction(rotation);
@@ -144,7 +145,7 @@ void MyMenu::slotOpenfile(){
 
     fileName= QFileDialog::getOpenFileName(this, tr("Open File"),
                                            "",
-                                           tr("Images (*.png *.xpm *.jpg)"));
+                                           tr("Images (*.png *.xpm *.jpg *.jpeg)"));
     emit signalOpenfile(fileName, saveFile);
 }
 
@@ -163,6 +164,11 @@ QString MyMenu::getFileName(){
 
 void MyMenu::slotRotate(){
     emit signalRotate();
+}
+
+void MyMenu::slotResize(){
+    qDebug() << "SLOT RESIZE MENU";
+    emit signalResize();
 }
 
 void MyMenu::slotRightTools(){
