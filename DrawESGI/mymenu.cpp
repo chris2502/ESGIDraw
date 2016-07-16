@@ -101,6 +101,13 @@ MyMenu::MyMenu()
     colorMenu->addAction(grey);
     colorMenu->addAction(pink);
 
+    connect(blue, SIGNAL(triggered()), this, SLOT(slotColorBlue()));
+    connect(red, SIGNAL(triggered()), this, SLOT(slotColorRed()));
+    connect(green, SIGNAL(triggered()), this, SLOT(slotColorGreen()));
+    connect(black, SIGNAL(triggered()), this, SLOT(slotColorBlack()));
+    connect(white, SIGNAL(triggered()), this, SLOT(slotColorWhite()));
+    connect(grey, SIGNAL(triggered()), this, SLOT(slotColorGrey()));
+    connect(pink, SIGNAL(triggered()), this, SLOT(slotColorPink()));
 }
 
 MyMenu::~MyMenu(){

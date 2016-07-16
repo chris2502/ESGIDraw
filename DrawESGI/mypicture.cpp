@@ -108,12 +108,12 @@ void MyPicture::addPointMouse(QPoint point, QPoint posViewGraphics){
     pointMouse.push_back(point);
 }
 
-void MyPicture::drawPointMouse(){
+/*void MyPicture::drawPointMouse(){
     foreach(QPoint point, pointMouse){
         qDebug() << "drawPoint: "<< point<<"| pointX :"<<point.x()<<"| pointY: "<<point.y();
         sceneGraphic->addEllipse(point.x(), point.y(), 5, 5, *pen);
     }
-}
+}*/
 
 void MyPicture::drawPointMouse(QPoint point){
         qDebug() << "drawPoint: "<< point<<"| pointX :"<<point.x()<<"| pointY: "<<point.y();
@@ -166,7 +166,9 @@ void MyPicture::setOpacity(qreal opacity){
 
 }
 
-
+void MyPicture::setPenColor(QColor* color){
+    qpen->setColor(*color);
+}
 
 qreal MyPicture::getOpacity(){
     return opacity;

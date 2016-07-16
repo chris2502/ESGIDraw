@@ -45,6 +45,8 @@ public slots:
     void slotPositionX(int);
     void slotPositionY(int);
     void slotOpacity(qreal);
+    void slotChangeColor(QColor*);
+
 public:
     virtual void resizeEvent(QResizeEvent *);
 };
