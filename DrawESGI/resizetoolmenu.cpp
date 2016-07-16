@@ -9,14 +9,15 @@ ResizeToolMenu::ResizeToolMenu(QPoint p, int defaultSizeX, int defaultSizeY)
     sizeY= new QSpinBox();
     sizeY->setMaximum(1000);
     sizeY->setValue(defaultSizeY);
-    //opacitySpinBox->setValue(10);
+
+    button = new QPushButton();
 
     QFormLayout *formLayout = new QFormLayout();
     formLayout->addRow(tr("&Width :"), sizeX);
     formLayout->addRow(tr("&Height :"), sizeY);
+    formLayout->addRow(tr("&Valider :"), button);
 
-    connect(sizeX, SIGNAL(valueChanged(int)), this, SLOT(slotResizeX(int)));
-    connect(sizeY, SIGNAL(valueChanged(int)), this, SLOT(slotResizeY(int)));
+    connect(button, SIGNAL(clicked()), this, SLOT(slotResize()));
 
     setLayout(formLayout);
     this->move(p.x()+400, p.y()+100);
@@ -24,10 +25,6 @@ ResizeToolMenu::ResizeToolMenu(QPoint p, int defaultSizeX, int defaultSizeY)
     this->show();
 }
 
-void ResizeToolMenu::slotResizeX(int newSizeX){
-    emit signalResizeX(newSizeX);
-}
-
-void ResizeToolMenu::slotResizeY(int newSizeY){
-    emit signalResizeY(newSizeY);
+void ResizeToolMenu::slotResize(){
+    emit signalResize(sizeX->value(), sizeY->value());
 }

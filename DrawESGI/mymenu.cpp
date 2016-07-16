@@ -167,6 +167,7 @@ void MyMenu::slotRotate(){
 }
 
 void MyMenu::slotResize(){
+    qDebug() << "SLOT RESIZE MENU";
     emit signalResize();
 }
 

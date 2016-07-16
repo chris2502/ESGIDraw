@@ -73,8 +73,7 @@ public:
 
     void saveDraw(QPainter &painter);
 
-    void setSizeX(int sizeX);
-    void setSizeY(int sizeY);
+    void setSize(int sizeX, int sizeY);
     int getSizeX();
     int getSizeY();
 public slots:

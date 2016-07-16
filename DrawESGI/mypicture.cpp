@@ -202,15 +202,9 @@ void MyPicture::setPriority(int priority){
     this->priority=priority;
 }
 
-void MyPicture::setSizeX(int sizeX) {
+void MyPicture::setSize(int sizeX, int sizeY) {
     if(pixmapItem != Q_NULLPTR && !pixmapItem->pixmap().isNull())
-        pixmapItem->setPixmap(pixmapItem->pixmap().scaled(sizeX, this->getSizeY(), Qt::IgnoreAspectRatio,
-                                                          Qt::SmoothTransformation));
-}
-
-void MyPicture::setSizeY(int sizeY) {
-    if(pixmapItem != Q_NULLPTR && !pixmapItem->pixmap().isNull())
-        pixmapItem->setPixmap(pixmapItem->pixmap().scaled(this->getSizeX(), sizeY, Qt::IgnoreAspectRatio,
+        pixmapItem->setPixmap(pixmapItem->pixmap().scaled(sizeX, sizeY, Qt::IgnoreAspectRatio,
                                                           Qt::SmoothTransformation));
 }
 

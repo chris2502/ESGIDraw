@@ -7,12 +7,15 @@
 #include <QSpinBox>
 #include <QString>
 #include <QPoint>
+#include <QPushButton>
 
 class ResizeToolMenu: public QWidget
 {
     Q_OBJECT
     QSpinBox *sizeX;
     QSpinBox *sizeY;
+     QPushButton *button;
+
 public:
     ResizeToolMenu(QPoint point, int defaultSizeX, int defaultSizeY);
 
@@ -20,11 +23,10 @@ public:
     void setPositionSpinBoxY(int positionSpinBoxY);
 
 public slots:
-    void slotResizeX(int);
-    void slotResizeY(int);
+    void slotResize();
+
 signals:
-    void signalResizeX(int);
-    void signalResizeY(int);
+    void signalResize(int, int);
 };
 
 #endif // RESIZETOOLMENU_H

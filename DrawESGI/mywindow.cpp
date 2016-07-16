@@ -45,7 +45,7 @@ MyWindow::MyWindow() : QWidget()
         connect(menuAbstract->getThisWidget(), SIGNAL(signalPrintPicture()), this, SLOT(slotPrintPicture()));
         connect(menuAbstract->getThisWidget(), SIGNAL(signalRightTools()), this, SLOT(slotRightTools()));
         connect(menuAbstract->getThisWidget(), SIGNAL(signalRotate()), this, SLOT(slotRotate()));
-        connect(menuAbstract->getThisWidget(), SIGNAL(signalResize()), this, SLOT(slotResize()));
+        connect(menuAbstract->getThisWidget(), SIGNAL(signalResize()), this, SLOT(slotMenuResize()));
         connect(menuAbstract->getThisWidget(), SIGNAL(signalChangeColor(QColor*)), this, SLOT(slotChangeColor(QColor*)));
     }
 
@@ -134,19 +134,13 @@ void MyWindow::slotOpacity(qreal opacity){
 }
 
 
-void MyWindow::slotResize(){
+void MyWindow::slotMenuResize(){
     resizetoolmenu =new ResizeToolMenu(this->pos(), mypicture->getSizeX(), mypicture->getSizeY());
-    connect(resizetoolmenu, SIGNAL(signalResizeX(int)), this, SLOT(slotResizeX(int)));
-    connect(resizetoolmenu, SIGNAL(signalResizeY(int)), this, SLOT(slotResizeY(int)));
+    connect(resizetoolmenu, SIGNAL(signalResize(int, int)), this, SLOT(slotResize(int, int)));
 }
 
-void MyWindow::slotResizeX(int sizeX){
-    //qDebug() << "totoResize";
-    mypicture->setSizeX(sizeX);
-}
-
-void MyWindow::slotResizeY(int sizeY){
-    mypicture->setSizeY(sizeY);
+void MyWindow::slotResize(int sizeX, int sizeY){
+    mypicture->setSize(sizeX, sizeY);
 }
 
 void MyWindow::slotChangeColor(QColor* color){
