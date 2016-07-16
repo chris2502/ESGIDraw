@@ -11,7 +11,10 @@ SOURCES += \
     catchmouse.cpp \
     righttoolmenu.cpp \
     theme.cpp \
-    abstractparams.cpp
+    abstractparams.cpp \
+    abstractlayer.cpp \
+    layer.cpp \
+    compositelayer.cpp
 
 HEADERS += \
     mymenu.hpp \
@@ -22,7 +25,10 @@ HEADERS += \
     catchmouse.hpp \
     righttoolmenu.hpp \
     theme.hpp \
-    abstractparams.hpp
+    abstractparams.hpp \
+    layer.hpp \
+    compositelayer.hpp \
+    abstractlayer.hpp
 
 DISTFILES += \
     DrawESGI.pro.user \
