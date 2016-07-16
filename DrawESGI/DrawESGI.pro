@@ -9,7 +9,10 @@ SOURCES += \
     abstractmenu.cpp \
     myloadplugin.cpp \
     catchmouse.cpp \
-    righttoolmenu.cpp
+    righttoolmenu.cpp \
+    abstractlayer.cpp \
+    layer.cpp \
+    compositelayer.cpp
 
 HEADERS += \
     mymenu.hpp \
@@ -18,7 +21,10 @@ HEADERS += \
     abstractmenu.hpp \
     myloadplugin.hpp \
     catchmouse.hpp \
-    righttoolmenu.hpp
+    righttoolmenu.hpp \
+    layer.hpp \
+    compositelayer.hpp \
+    abstractlayer.hpp
 
 DISTFILES += \
     DrawESGI.pro.user \
