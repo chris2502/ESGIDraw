@@ -74,9 +74,10 @@ void MyPicture::savePicture(){
                                                       "media/imageSave.png",
                                                       QWidget::tr("Images (*.png *.xpm *.jpg)"));
 
-    QImage img(this->size(), QImage::Format_ARGB32);
+    QImage img(sceneGraphic->sceneRect().size().toSize(), QImage::Format_ARGB32);
+    //image.fill(Qt::transparent);
     QPainter painter(&img);
-    this->render(&painter);
+    sceneGraphic->render(&painter);
         img.save(saveFilename);
 
    // imageChoose.save(saveFilename);
