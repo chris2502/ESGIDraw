@@ -201,3 +201,7 @@ int MyPicture::getPriority(){
 void MyPicture::setPriority(int priority){
     this->priority=priority;
 }
+
+void MyPicture::setSize(int sizeX, int sizeY) {
+    pixmapItem->setPixmap(pixmapItem->pixmap().scaled(sizeX, sizeY));
+}

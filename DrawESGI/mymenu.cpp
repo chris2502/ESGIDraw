@@ -144,7 +144,7 @@ void MyMenu::slotOpenfile(){
 
     fileName= QFileDialog::getOpenFileName(this, tr("Open File"),
                                            "",
-                                           tr("Images (*.png *.xpm *.jpg)"));
+                                           tr("Images (*.png *.xpm *.jpg *.jpeg)"));
     emit signalOpenfile(fileName, saveFile);
 }
 
