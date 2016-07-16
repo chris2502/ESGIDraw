@@ -1,6 +1,6 @@
 #include "compositelayer.hpp"
 
-CompositeLayer::CompositeLayer(vector<AbstractLayer*> layers, int positionX, int positionY):
+CompositeLayer::CompositeLayer(std::vector<AbstractLayer *> layers, int positionX, int positionY):
     AbstractLayer(positionX, positionY)
 {
     this->layers = layers;
@@ -10,9 +10,9 @@ CompositeLayer::CompositeLayer(vector<AbstractLayer*> layers, int positionX, int
 int CompositeLayer::getSizeX() {
     int result = 0;
     for (AbstractLayer * layer : layers) {
-        for(int i = 0 ; i < layer.getSizeX() ; i++) {
-            if(i + layer.getPositionX() > result) {
-                result = i + layer.getPositionX();
+        for(int i = 0 ; i < layer->getSizeX() ; i++) {
+            if(i + layer->getPositionX() > result) {
+                result = i + layer->getPositionX();
             }
         }
     }
@@ -22,9 +22,9 @@ int CompositeLayer::getSizeX() {
 int CompositeLayer::getSizeY() {
     int result = 0;
     for (AbstractLayer * layer : layers) {
-        for(int i = 0 ; i < layer.getSizeY() ; i++) {
-            if(i + layer.getPositionY() > result) {
-                result = i + layer.getPositionY();
+        for(int i = 0 ; i < layer->getSizeY() ; i++) {
+            if(i + layer->getPositionY() > result) {
+                result = i + layer->getPositionY();
             }
         }
     }
@@ -32,11 +32,11 @@ int CompositeLayer::getSizeY() {
 }
 
 unsigned int CompositeLayer::getGridPoint(int x, int y) {
-    uint result=0;
+    unsigned int result=0;
     for(AbstractLayer * layer : layers) {
         if(layer->getPositionX() + layer->getSizeX() >= x &&
                 layer->getPositionX() <= x &&
-                layer->getPositionY() + layer.getSizeY() >= y &&
+                layer->getPositionY() + layer->getSizeY() >= y &&
                 layer->getPositionY() <= y)
         {
             result = layer->getGridPoint(x - layer->getPositionX(),
@@ -51,7 +51,7 @@ void CompositeLayer::setGridPoint(int x, int y, unsigned int pixel) {
     for(AbstractLayer * layer : layers) {
         if(layer->getPositionX() + layer->getSizeX() >= x &&
                 layer->getPositionX() <= x &&
-                layer->getPositionY() + layer.getSizeY() >= y &&
+                layer->getPositionY() + layer->getSizeY() >= y &&
                 layer->getPositionY() <= y)
         {
             layer->setGridPoint(x - layer->getPositionX(), y - layer->getPositionY(), pixel);

@@ -1,6 +1,8 @@
 #ifndef LAYER_H
 #define LAYER_H
 
+#include<vector>
+#include "abstractlayer.hpp"
 
 class Layer : public AbstractLayer
 {
@@ -12,7 +14,7 @@ public:
     void setGridPoint(int x, int y, unsigned int pixel);
     void changeSize(float multiplierX, float multiplierY);
 private:
-    vector<vector<uint>> grid;
+    std::vector<std::vector<unsigned int>> grid;
     int sizeX;
     int sizeY;
     int positionX;
