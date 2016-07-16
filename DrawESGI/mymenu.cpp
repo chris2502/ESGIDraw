@@ -169,6 +169,33 @@ void MyMenu::slotRightTools(){
     emit signalRightTools();
 }
 
+
 void MyMenu::slotTheme(){
     emit signalTheme();
+}
+
+void MyMenu::slotColorBlue(){
+    emit signalChangeColor(new QColor("blue"));
+}
+
+void MyMenu::slotColorRed(){
+    emit signalChangeColor(new QColor("red"));
+}
+void MyMenu::slotColorGreen(){
+    emit signalChangeColor(new QColor("green"));
+}
+void MyMenu::slotColorBlack(){
+    emit signalChangeColor(new QColor("black"));
+}
+void MyMenu::slotColorWhite(){
+    emit signalChangeColor(new QColor("white"));
+}
+
+void MyMenu::slotColorGrey(){
+    emit signalChangeColor(new QColor("grey"));
+}
+
+void MyMenu::slotColorPink(){
+    emit signalChangeColor(new QColor("pink"));
+
 }
