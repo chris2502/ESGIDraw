@@ -167,7 +167,7 @@ void MyPicture::setOpacity(qreal opacity){
 }
 
 void MyPicture::setPenColor(QColor* color){
-    qpen->setColor(*color);
+    pen->setColor(*color);
 }
 
 qreal MyPicture::getOpacity(){
