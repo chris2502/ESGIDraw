@@ -101,6 +101,13 @@ MyMenu::MyMenu()
     colorMenu->addAction(grey);
     colorMenu->addAction(pink);
 
+    connect(blue, SIGNAL(triggered()), this, SLOT(slotColorBlue()));
+    connect(red, SIGNAL(triggered()), this, SLOT(slotColorRed()));
+    connect(green, SIGNAL(triggered()), this, SLOT(slotColorGreen()));
+    connect(black, SIGNAL(triggered()), this, SLOT(slotColorBlack()));
+    connect(white, SIGNAL(triggered()), this, SLOT(slotColorWhite()));
+    connect(grey, SIGNAL(triggered()), this, SLOT(slotColorGrey()));
+    connect(pink, SIGNAL(triggered()), this, SLOT(slotColorPink()));
 }
 
 MyMenu::~MyMenu(){
@@ -162,6 +169,33 @@ void MyMenu::slotRightTools(){
     emit signalRightTools();
 }
 
+
 void MyMenu::slotTheme(){
     emit signalTheme();
+}
+
+void MyMenu::slotColorBlue(){
+    emit signalChangeColor(new QColor("blue"));
+}
+
+void MyMenu::slotColorRed(){
+    emit signalChangeColor(new QColor("red"));
+}
+void MyMenu::slotColorGreen(){
+    emit signalChangeColor(new QColor("green"));
+}
+void MyMenu::slotColorBlack(){
+    emit signalChangeColor(new QColor("black"));
+}
+void MyMenu::slotColorWhite(){
+    emit signalChangeColor(new QColor("white"));
+}
+
+void MyMenu::slotColorGrey(){
+    emit signalChangeColor(new QColor("grey"));
+}
+
+void MyMenu::slotColorPink(){
+    emit signalChangeColor(new QColor("pink"));
+
 }

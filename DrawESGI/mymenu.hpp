@@ -72,6 +72,14 @@ public slots:
 
     void slotRightTools();
 
+    void slotColorBlue();
+    void slotColorRed();
+    void slotColorGreen();
+    void slotColorBlack();
+    void slotColorWhite();
+    void slotColorGrey();
+    void slotColorPink();
+
 signals:
     void mySignal(QGraphicsScene*);
     void signalOpenfile(QString, QAction*);
@@ -83,6 +91,8 @@ signals:
 
     void signalRightTools();
     void signalRotate();
+
+    void signalChangeColor(QColor*);
 };
 
 #endif // TESTQOBJET_H

@@ -66,6 +66,7 @@ public:
     int getPriority();
     void setPriority(int priority);
 
+    void setPenColor(QColor *color);
 
     virtual void paintEvent(QPaintEvent *);
 

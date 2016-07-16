@@ -45,6 +45,7 @@ MyWindow::MyWindow() : QWidget()
         connect(menuAbstract->getThisWidget(), SIGNAL(signalPrintPicture()), this, SLOT(slotPrintPicture()));
         connect(menuAbstract->getThisWidget(), SIGNAL(signalRightTools()), this, SLOT(slotRightTools()));
         connect(menuAbstract->getThisWidget(), SIGNAL(signalRotate()), this, SLOT(slotRotate()));
+        connect(menuAbstract->getThisWidget(), SIGNAL(signalChangeColor(QColor*)), this, SLOT(slotChangeColor(QColor*)));
     }
 
     connect(mouseCatch, SIGNAL(signalMouseCatch(QPoint)), this, SLOT(slotMouseCatch(QPoint)));
@@ -132,6 +133,9 @@ void MyWindow::slotOpacity(qreal opacity){
     mypicture->setOpacity(opacity);
 }
 
+void MyWindow::slotChangeColor(QColor* color){
+    mypicture->setPenColor(color);
+}
 
 void MyWindow::resizeEvent(QResizeEvent *){
    viewGraphic->setSceneRect(viewGraphic->x()-8, viewGraphic->y()-45, viewGraphic->width(), viewGraphic->height());
