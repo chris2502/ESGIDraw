@@ -73,7 +73,7 @@ public:
 
     void saveDraw(QPainter &painter);
 
-    void setSize(int scale);
+    void setSize(int sizeX, int sizeY);
 
 public slots:
     void slotOpenFile(QPixmap*);

@@ -142,8 +142,9 @@ void MyWindow::slotResize(){
     connect(resizetoolmenu, SIGNAL(signalResizeY(int)), this, SLOT(slotResizeY(int)));
 }
 
-void MyWindow::slotResizeX(int priority){
-    mypicture->setPriority(priority);
+void MyWindow::slotResizeX(int sizeX){
+    //qDebug() << "totoResize";
+    mypicture->setSize(sizeX, 300);
 }
 
 void MyWindow::slotResizeY(int priority){
