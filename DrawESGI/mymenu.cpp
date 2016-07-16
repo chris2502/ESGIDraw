@@ -50,6 +50,8 @@ MyMenu::MyMenu()
     //Menu Screen
     screenMenu= new QMenu("Screen");
     theme=new QAction("Thème", screenMenu);
+    connect(theme, SIGNAL(triggered()), SLOT(slotTheme()));
+
     canvas=new QAction("Canvas", screenMenu);
 
     rightToolsMenu=new QAction("Right Tool Menu", screenMenu);
@@ -158,4 +160,8 @@ void MyMenu::slotRotate(){
 
 void MyMenu::slotRightTools(){
     emit signalRightTools();
+}
+
+void MyMenu::slotTheme(){
+    emit signalTheme();
 }

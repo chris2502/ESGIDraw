@@ -34,7 +34,7 @@ private:
     int positionX;
     int positionY;
     qreal opacity;
-    QPen *qpen;
+    QPen *pen;
 
 public:
     MyPicture(QPoint  posViewGraphics, QWidget *parent=Q_NULLPTR, QString fileName=Q_NULLPTR);

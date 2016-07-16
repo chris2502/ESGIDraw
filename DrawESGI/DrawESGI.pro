@@ -10,6 +10,8 @@ SOURCES += \
     myloadplugin.cpp \
     catchmouse.cpp \
     righttoolmenu.cpp \
+    theme.cpp \
+    abstractparams.cpp \
     abstractlayer.cpp \
     layer.cpp \
     compositelayer.cpp
@@ -22,6 +24,8 @@ HEADERS += \
     myloadplugin.hpp \
     catchmouse.hpp \
     righttoolmenu.hpp \
+    theme.hpp \
+    abstractparams.hpp \
     layer.hpp \
     compositelayer.hpp \
     abstractlayer.hpp

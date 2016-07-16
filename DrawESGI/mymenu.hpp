@@ -66,6 +66,8 @@ public slots:
     void slotSavePicture();
     void slotPrintPicture();
 
+    void slotTheme();
+
     void slotRotate();
 
     void slotRightTools();
@@ -76,6 +78,8 @@ signals:
     void signalClearScene(QAction*);
     void signalSavePicture();
     void signalPrintPicture();
+
+    void signalTheme();
 
     void signalRightTools();
     void signalRotate();
