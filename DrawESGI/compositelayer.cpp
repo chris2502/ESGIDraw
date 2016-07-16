@@ -31,7 +31,7 @@ int CompositeLayer::getSizeY() {
     return result;
 }
 
-uint CompositeLayer::getGridPoint(int x, int y) {
+unsigned int CompositeLayer::getGridPoint(int x, int y) {
     uint result=0;
     for(AbstractLayer * layer : layers) {
         if(layer->getPositionX() + layer->getSizeX() >= x &&
@@ -47,7 +47,7 @@ uint CompositeLayer::getGridPoint(int x, int y) {
     return result;
 }
 
-void CompositeLayer::setGridPoint(int x, int y, uint pixel) {
+void CompositeLayer::setGridPoint(int x, int y, unsigned int pixel) {
     for(AbstractLayer * layer : layers) {
         if(layer->getPositionX() + layer->getSizeX() >= x &&
                 layer->getPositionX() <= x &&

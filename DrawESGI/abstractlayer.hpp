@@ -10,8 +10,8 @@ public:
     virtual int getSizeY() = 0;
     int getPositionX() { return positionX; }
     int getPositionY() { return positionY; }
-    virtual uint getGridPoint(int x, int y) = 0;
-    virtual void setGridPoint(int x, int y, uint pixel) = 0;
+    virtual unsigned int getGridPoint(int x, int y) = 0;
+    virtual void setGridPoint(int x, int y, unsigned int pixel) = 0;
     virtual void changeSize(float multiplierX, float multiplierY) = 0;
     void changePosition(int diffX, int diffY);
 private:

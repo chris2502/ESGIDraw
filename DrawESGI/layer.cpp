@@ -8,11 +8,11 @@ Layer::Layer(int sizeX, int sizeY, int positionX, int positionY):
 }
 
 
-uint Layer::getGridPoint(int x, int y) {
+unsigned int Layer::getGridPoint(int x, int y) {
     return grid[x][y];
 }
 
-void Layer::setGridPoint(int x, int y, uint pixel) {
+void Layer::setGridPoint(int x, int y, unsigned int pixel) {
     grid[x][y] = pixel;
 }
 
