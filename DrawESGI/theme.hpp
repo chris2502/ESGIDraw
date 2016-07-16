@@ -4,6 +4,10 @@
 
 class Theme
 {
+private:
+        //QSpinBox windowColor;
+        //QSprinBox viewGraphicsColor;
+        //QSprinBox menuColor;
 public:
     Theme();
 };
