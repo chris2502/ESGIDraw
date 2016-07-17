@@ -29,6 +29,10 @@ public:
     void setPositionSpinBoxX(int positionSpinBoxX);
     void setPositionSpinBoxY(int positionSpinBoxY);
 
+    void setPrioritySpinBox(int prioritySPinBox);
+
+    void setOpacitySpinBox(int opacitySpinBox);
+
     void addFileNameImageToAction(QString);
     void setFileNameActive(QString);
 

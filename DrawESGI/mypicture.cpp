@@ -14,6 +14,7 @@ MyPicture::MyPicture(QPoint  posViewGraphics, QWidget *parent, QString fileName)
     sceneGraphic= new QGraphicsScene(parent);
     sceneRight = new QGraphicsScene(parent);
     pixmapItem=Q_NULLPTR;
+    pixmapItemRight= new QGraphicsPixmapItem();
     degreeRotate=0;
     pen = new QPen(Qt::green, 3, Qt::DashDotLine, Qt::RoundCap, Qt::RoundJoin);
 }
@@ -51,10 +52,25 @@ void MyPicture::setFileName(QString fileName){
     imageChoose.load(fileName);
     pixmapItem = new QGraphicsPixmapItem(imageChoose);
     pixmapItemList[fileName]=pixmapItem;
+    QMap<QString, int> tmp;
+    tmp[tr("priority")]=pixmapItem->zValue();
+    tmp[tr("positionX")]=pixmapItem->pos().x();
+    tmp[tr("positionY")]=pixmapItem->pos().y();
+    tmp[tr("opacity")]=pixmapItem->opacity();
+    infosPixmapItemList[fileName]=tmp;
 
     //pixmapItem->setPos(-50, -70);
     sceneGraphic->addItem(pixmapItem);
 
+}
+
+
+QMap<QString, int> MyPicture::getInfosPixmapList(QString fileName){
+     foreach (QString key, infosPixmapItemList.keys()) {
+        if(key.compare(fileName) == 0){
+            return infosPixmapItemList[key];
+        }
+    }
 }
 
 /*void MyPicture::slotOpenFile(QPixmap* imageChoose){ qDebug() << "pk slotOPen";
@@ -237,13 +253,14 @@ QImage MyPicture::getImage(){
     //image.fill(Qt::transparent);
     QPainter painter(&img);
     sceneGraphic->render(&painter);
-    img.save(tr("test.png"));
+
     return img;
 }
 
 
 QGraphicsScene* MyPicture::renderSceneRightImage(){
-    sceneRight->addPixmap(QPixmap::fromImage(getImage()));
+    pixmapItemRight->setPixmap(QPixmap::fromImage(getImage()));
+    sceneRight->addItem(pixmapItem);
 
     return scene();
 }

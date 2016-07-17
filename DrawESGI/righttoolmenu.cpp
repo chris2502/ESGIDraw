@@ -54,7 +54,13 @@ void RightToolMenu::setPositionSpinBoxY(int positionSpinBoxY){
     this->positionSpinBoxY->setValue(positionSpinBoxY);
 }
 
+void RightToolMenu::setPrioritySpinBox(int prioritySpinBox){
+    this->prioritySPinBox->setValue(prioritySpinBox);
+}
 
+void RightToolMenu::setOpacitySpinBox(int opacitySpinBox){
+    this->opacitySpinBox->setValue(opacitySpinBox);
+}
 
 void RightToolMenu::slotPriority(int priority){
     emit signalPriority(priority);

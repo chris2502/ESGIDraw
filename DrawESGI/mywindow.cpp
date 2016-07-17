@@ -56,6 +56,8 @@ MyWindow::MyWindow() : QWidget()
 
 
     view = new QGraphicsView();
+    view->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    view->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     layoutGrid->addWidget(barMenu, 0,0, 1, 5);
     layoutGrid->addWidget(viewGraphic, 1,0, 9, 6);
     layoutGrid->addWidget(view, 1,7, 3, 3);
@@ -160,6 +162,27 @@ void MyWindow::slotChangeColor(QColor* color){
 }
 
 void MyWindow::slotSelectPixmap(QString fileName){qDebug() <<"slotselectpixmap window";
+    /* QMap<QString, int> tmpInfos= mypicture->getInfosPixmapList(fileName);
+    foreach (AbstractMenu* menu, menuAbstractList) {
+        RightToolMenu* tmp;
+        if(tmp=dynamic_cast<RightToolMenu*>(menu)){
+            foreach (QString key, tmpInfos.keys) {
+                if(key.compare(tr("priority")) ==0){
+                    tmp->setPrioritySpinBox(tmpInfos[key]);
+                }
+                else if(key.compare(tr("positionX")) ==0){
+                    tmp->setPositionSpinBoxX(tmpInfos[key]);
+                }
+                else if(key.compare(tr("positionY")) ==0){
+                    tmp->setPositionSpinBoxY(tmpInfos[key]);
+                }
+                else if(key.compare(tr("opacity")) ==0){
+                    tmp->setOpacitySpinBox(tmpInfos[key]);
+                }
+            }
+
+        }
+    }*/
     mypicture->setPixmapItem(fileName);
 }
 

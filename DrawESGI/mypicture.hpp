@@ -26,9 +26,11 @@ private:
     QString fileName;
     QPixmap imageChoose;
     QMap<QString, QGraphicsPixmapItem*> pixmapItemList;
+    QMap<QString, QMap<QString, int>> infosPixmapItemList;
     QVector<QPoint> pointMouse;
     QMouseEvent *event;
     QGraphicsPixmapItem *pixmapItem;
+    QGraphicsPixmapItem *pixmapItemRight;
     QPoint  posViewGraphics;
     int degreeRotate;
     int priority;
@@ -57,6 +59,9 @@ public:
 
     qreal getOpacity();
     void setOpacity(qreal);
+
+
+    QMap<QString, int> getInfosPixmapList(QString fileName);
 
     int getPositionX();
     void setPositionX(int positionX);
