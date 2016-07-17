@@ -42,6 +42,9 @@ private:
     QAction *newCalque;
     QMenu *toolsMenu;
     QMenu *geometricMenu;
+    //Menu GeometricsSharp
+    QAction *gPoint;
+    QAction *gLine;
     //Menu Color
     QMenu *colorMenu;
     QAction *blue;
@@ -83,6 +86,10 @@ public slots:
     void slotColorGrey();
     void slotColorPink();
 
+    //void slotChangeGeometricsSharp(int*);
+    void slotChangeGeometricsSharpPoint();
+    void slotChangeGeometricsSharpLine();
+
 signals:
     void mySignal(QGraphicsScene*);
     void signalOpenfile(QString, QAction*);
@@ -99,6 +106,7 @@ signals:
     void signalResize();
 
     void signalChangeColor(QColor*);
+    void signalChangeGeometricsSharp(int);
 };
 
 #endif // TESTQOBJET_H

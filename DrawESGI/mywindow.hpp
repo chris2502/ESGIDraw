@@ -21,6 +21,11 @@ private:
     int h_win;
     int x_win;
     int y_win;
+    int nInitialX = 0;
+    int nInitialY = 0;
+    int nFinalX = 0;
+    int nFinalY = 0;
+    int drawLines = 1;
 
     QVector<AbstractMenu*> menuAbstractList;
     QMenuBar *barMenu;
@@ -46,6 +51,7 @@ public slots:
     void slotRightTools();
     void slotRotate();
     void slotMouseCatch(const QPoint);
+    void slotMouseCatchDrawLine(const QPoint, const QPoint);
     void slotPriority(int);
     void slotPositionX(int);
     void slotPositionY(int);
@@ -53,6 +59,7 @@ public slots:
     void slotChangeColor(QColor*);
     void slotNewCalque();
     void slotSelectPixmap(QString);
+   void slotChangeGeometricsSharp(int);
 
     void slotMenuResize();
     void slotResize(int, int);

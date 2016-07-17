@@ -84,8 +84,19 @@ MyMenu::MyMenu()
     connect(newCalque, SIGNAL(triggered()), this, SLOT(slotNewCalque()));
 
     toolsMenu= new QMenu("Tools");
-    geometricMenu= new QMenu("Geometric sharpes");
 
+
+    geometricMenu= new QMenu("Geometric sharpes");
+    gPoint=new QAction("Point", geometricMenu);
+    gLine=new QAction("Line", geometricMenu);
+
+    geometricMenu->addAction(gPoint);
+    geometricMenu->addAction(gLine);
+
+    connect(gPoint, SIGNAL(triggered()), this, SLOT(slotChangeGeometricsSharpPoint()));
+    connect(gLine, SIGNAL(triggered()), this, SLOT(slotChangeGeometricsSharpLine()));
+
+    //Color Menu
     colorMenu= new QMenu("Color");
     blue=new QAction("Blue", colorMenu);
     red=new QAction("Red", colorMenu);
@@ -210,3 +221,11 @@ void MyMenu::slotColorPink(){
 void MyMenu::slotNewCalque(){
     emit signalNewCalque();
 }
+
+void MyMenu::slotChangeGeometricsSharpPoint(){
+    emit signalChangeGeometricsSharp(1);
+}
+void MyMenu::slotChangeGeometricsSharpLine(){
+    emit signalChangeGeometricsSharp(2);
+}
+

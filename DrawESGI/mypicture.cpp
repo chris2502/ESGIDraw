@@ -14,7 +14,7 @@ MyPicture::MyPicture(QPoint  posViewGraphics, QWidget *parent, QString fileName)
     sceneGraphic= new QGraphicsScene(parent);
     pixmapItem=Q_NULLPTR;
     degreeRotate=0;
-    pen = new QPen(Qt::green, 3, Qt::DashDotLine, Qt::RoundCap, Qt::RoundJoin);
+    pen = new QPen(Qt::black, 3, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
 }
 
 QGraphicsScene* MyPicture::getSceneGraphic(){
@@ -115,6 +115,13 @@ void MyPicture::drawPointMouse(QPoint point){
         qDebug() << "drawPoint: "<< point<<"| pointX :"<<point.x()<<"| pointY: "<<point.y();
         sceneGraphic->addEllipse(point.x(), point.y(), 5, 5, *pen);
 
+}
+
+void MyPicture::DrawLine(QPoint pointStart, QPoint pointEnd){
+    qDebug() << "draw line mypicture";
+    //QPen penLine(Qt::blue, 5, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
+    QLine line(pointStart.x(), pointStart.y(),pointEnd.x(), pointEnd.y());
+    sceneGraphic->addLine(line, *pen);
 }
 
 bool MyPicture::isEmptyScene(){

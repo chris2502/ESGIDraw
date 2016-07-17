@@ -50,9 +50,12 @@ MyWindow::MyWindow() : QWidget()
         connect(menuAbstract->getThisWidget(), SIGNAL(signalResize()), this, SLOT(slotMenuResize()));
         connect(menuAbstract->getThisWidget(), SIGNAL(signalChangeColor(QColor*)), this, SLOT(slotChangeColor(QColor*)));
         connect(menuAbstract->getThisWidget(), SIGNAL(signalNewCalque()), SLOT(slotNewCalque()));
+        connect(menuAbstract->getThisWidget(), SIGNAL(signalChangeGeometricsSharp(int)), this, SLOT(slotChangeGeometricsSharp(int)));
     }
 
     connect(mouseCatch, SIGNAL(signalMouseCatch(QPoint)), this, SLOT(slotMouseCatch(QPoint)));
+    connect(mouseCatch, SIGNAL(signalMouseCatchDrawLine(QPoint, QPoint)), this, SLOT(slotMouseCatchDrawLine(QPoint, QPoint)));
+
     layoutGrid->addWidget(barMenu, 0,0, 1, 5);
     layoutGrid->addWidget(viewGraphic, 1,0, 9, 3);
 
@@ -111,6 +114,12 @@ void MyWindow::slotMouseCatch(const QPoint point){
 
 }
 
+void MyWindow::slotMouseCatchDrawLine(const QPoint pointStart, const QPoint pointEnd){
+    /*qDebug() << "LINE DRAW START" << pointStart.x() << " " << pointStart.y();
+    qDebug() << "LINE DRAW END" << pointEnd.x() << " " << pointEnd.y();*/
+    mypicture->DrawLine(pointStart, pointEnd);
+}
+
 void MyWindow::slotRightTools(){
     toolMenuRight->show();
 
@@ -156,11 +165,19 @@ void MyWindow::slotChangeColor(QColor* color){
     mypicture->setPenColor(color);
 }
 
-void MyWindow::slotSelectPixmap(QString fileName){qDebug() <<"slotselectpixmap window";
+void MyWindow::slotChangeGeometricsSharp(int type){
+    //qDebug() << "slot geometric change";
+    mouseCatch->setType(type);
+}
+
+
+void MyWindow::slotSelectPixmap(QString fileName){
+    qDebug() <<"slotselectpixmap window";
     mypicture->setPixmapItem(fileName);
 }
 
-void MyWindow::slotNewCalque(){qDebug() <<"bonne nuit";
+void MyWindow::slotNewCalque(){
+    qDebug() <<"slotNewCalque";
     QGraphicsScene scene;
     QGraphicsView view;
     QGraphicsPixmapItem itemPixmap;
