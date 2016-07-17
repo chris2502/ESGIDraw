@@ -49,7 +49,7 @@ void MyPicture::setFileName(QString fileName){
     this->fileName=fileName;
     imageChoose.load(fileName);
     pixmapItem = new QGraphicsPixmapItem(imageChoose);
-    pixmapItemList.push_back(pixmapItem);
+    pixmapItemList[fileName]=pixmapItem;
 
     //pixmapItem->setPos(-50, -70);
     sceneGraphic->addItem(pixmapItem);
@@ -73,13 +73,9 @@ void MyPicture::savePicture(){
     image.save("media/toto.png");*/
     QString saveFilename=QFileDialog::getSaveFileName(this, QWidget::tr("Save File"),
                                                       "media/imageSave.png",
-                                                      QWidget::tr("Images (*.png *.xpm *.jpg)"));
+                                                      QWidget::tr("Images (*.png *.xpm *.jpg *.jpeg *.JPG)"));
 
-    QImage img(sceneGraphic->sceneRect().size().toSize(), QImage::Format_ARGB32);
-    //image.fill(Qt::transparent);
-    QPainter painter(&img);
-    sceneGraphic->render(&painter);
-        img.save(saveFilename);
+        getImage().save(saveFilename);
 
    // imageChoose.save(saveFilename);
 }
@@ -200,14 +196,15 @@ int MyPicture::getPriority(){
 
 void MyPicture::setPriority(int priority){
     this->priority=priority;
+    pixmapItem->setZValue(priority);
 }
 
 
 void MyPicture::setPixmapItem(QString fileName){qDebug() <<"filename: "<<fileName;
-    foreach (QGraphicsPixmapItem *item, pixmapItemList) {
-        qDebug() <<"filename listpixmap"<<item->pixmap().toImage().text();
-        if(item->pixmap().toImage().text().compare(fileName)){
-            pixmapItem=item;
+    foreach (QString key, pixmapItemList.keys()) {
+        qDebug() <<"filename listpixmap"<<key;
+        if(key.compare(fileName)==0){
+            pixmapItem=pixmapItemList[key];
             break;
         }
     }
@@ -231,4 +228,13 @@ int MyPicture::getSizeY() {
     if(pixmapItem != Q_NULLPTR && !pixmapItem->pixmap().isNull())
         result = pixmapItem->pixmap().size().height();
     return result;
+}
+
+QImage MyPicture::getImage(){
+
+    QImage img(sceneGraphic->sceneRect().size().toSize(), QImage::Format_ARGB32);
+    //image.fill(Qt::transparent);
+    QPainter painter(&img);
+    sceneGraphic->render(&painter);
+    return img;
 }

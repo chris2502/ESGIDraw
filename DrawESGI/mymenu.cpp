@@ -13,7 +13,7 @@ MyMenu::MyMenu()
     connect(openFile,SIGNAL(triggered()), this, SLOT(slotOpenfile()), Qt::AutoConnection);
 
     saveFile= new QAction("Save file",fileMenu);
-    //saveFile->setDisabled(true);
+    saveFile->setDisabled(true);
     connect(saveFile, SIGNAL(triggered()), this, SLOT(slotSavePicture()));
 
     printFile= new QAction("Print picture",fileMenu);
@@ -81,6 +81,7 @@ MyMenu::MyMenu()
 
     //add to layer
     layerMenu->addAction(newCalque);
+    connect(newCalque, SIGNAL(triggered()), this, SLOT(slotNewCalque()));
 
     toolsMenu= new QMenu("Tools");
     geometricMenu= new QMenu("Geometric sharpes");
@@ -145,7 +146,7 @@ void MyMenu::slotOpenfile(){
 
     fileName= QFileDialog::getOpenFileName(this, tr("Open File"),
                                            "",
-                                           tr("Images (*.png *.xpm *.jpg *.jpeg)"));
+                                           tr("Images (*.png *.xpm *.jpg *.jpeg *.JPG)"));
     emit signalOpenfile(fileName, saveFile);
 }
 
@@ -204,4 +205,8 @@ void MyMenu::slotColorGrey(){
 void MyMenu::slotColorPink(){
     emit signalChangeColor(new QColor("pink"));
 
+}
+
+void MyMenu::slotNewCalque(){
+    emit signalNewCalque();
 }

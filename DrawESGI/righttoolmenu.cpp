@@ -4,19 +4,28 @@ RightToolMenu::RightToolMenu(QPoint p)
 {
 
     barMenu = new QMenuBar(this);
-
+    menuPixmap= new QMenu("Images");
+    barMenu->addMenu(menuPixmap);
 
     //pixmapAction = new QVector<QAction*>();
-//    menuPixmap->addAction(&pixmapAction);
+
     prioritySPinBox= new QSpinBox();
     prioritySPinBox->setMaximum(20);
+    prioritySPinBox->setMinimum(-20);
+    prioritySPinBox->setDisabled(true);
+
     positionSpinBoxX= new QSpinBox();
     positionSpinBoxX->setMaximum(400);
+    positionSpinBoxX->setDisabled(true);
+
     positionSpinBoxY= new QSpinBox();
     positionSpinBoxY->setMaximum(400);
+    positionSpinBoxY->setDisabled(true);
+
     opacitySpinBox = new QSpinBox();
     opacitySpinBox->setMaximum(20);
     opacitySpinBox->setValue(10);
+    opacitySpinBox->setDisabled(true);
     QFormLayout *formLayout = new QFormLayout();
     formLayout->setMargin(50);
     formLayout->addRow(tr("&Priority:"), prioritySPinBox);
@@ -70,15 +79,20 @@ void RightToolMenu::setFileNameActive(QString fileNameActive){
 }
 
 void RightToolMenu::addFileNameImageToAction(QString fileName){
+    foreach (QAction *actionVar, menuPixmap->actions()) {
+        actionVar->setChecked(false);
+    }
     QAction *action = new QAction(fileName, this);
     action->setCheckable(true);
-    barMenu->addAction(action);
-    connect(barMenu, SIGNAL(triggered(QAction*)), SLOT(slotSelectPixmap(QAction*)));
+    action->setChecked(true);
+    menuPixmap->addAction(action);
+
+    connect(menuPixmap, SIGNAL(triggered(QAction*)), SLOT(slotSelectPixmap(QAction*)));
 }
 
 void RightToolMenu::slotSelectPixmap(QAction * action){
 
-    foreach (QAction *actionVar, barMenu->actions()) {
+    foreach (QAction *actionVar, menuPixmap->actions()) {
         if(actionVar != action){
             actionVar->setChecked(false);
 
@@ -86,4 +100,19 @@ void RightToolMenu::slotSelectPixmap(QAction * action){
     }
     action->setChecked(true);
     emit signalSelectPixmap((action->text()));
+}
+
+bool RightToolMenu::isEnable(){
+    if(prioritySPinBox->isEnabled() && positionSpinBoxX->isEnabled() && positionSpinBoxY->isEnabled() &&
+       opacitySpinBox->isEnabled()){
+        return true;
+    }
+    return false;
+}
+
+void RightToolMenu::setEnabled(bool value){
+    prioritySPinBox->setEnabled(value);
+    positionSpinBoxX->setEnabled(value);
+    positionSpinBoxY->setEnabled(value);
+    opacitySpinBox->setEnabled(value);
 }

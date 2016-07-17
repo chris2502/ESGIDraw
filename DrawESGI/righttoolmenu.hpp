@@ -18,7 +18,9 @@ class RightToolMenu: public QWidget
     QSpinBox *positionSpinBoxX;
     QSpinBox *positionSpinBoxY;
     QSpinBox *opacitySpinBox;
+    bool enableInput;
     QString fileNameActive;
+    QMenu *menuPixmap;
     QMenuBar * barMenu;
     QVector<QAction*> pixmapAction;
 public:
@@ -29,6 +31,9 @@ public:
 
     void addFileNameImageToAction(QString);
     void setFileNameActive(QString);
+
+    virtual bool isEnable();
+    virtual void setEnabled(bool);
 
 public slots:
     void slotPriority(int);

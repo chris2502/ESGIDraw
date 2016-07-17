@@ -8,6 +8,7 @@
 #include <QGraphicsItemGroup>
 #include <QImage>
 #include <QPoint>
+#include <QMap>
 #include <QPen>
 #include <QImageWriter>
 #include <QFile>
@@ -23,8 +24,7 @@ private:
     QGraphicsScene *sceneGraphic;
     QString fileName;
     QPixmap imageChoose;
-    QVector<QGraphicsPixmapItem*> pixmapItemList;
-    QImage image;
+    QMap<QString, QGraphicsPixmapItem*> pixmapItemList;
     QVector<QPoint> pointMouse;
     QMouseEvent *event;
     QGraphicsPixmapItem *pixmapItem;
@@ -72,6 +72,7 @@ public:
 
     virtual void paintEvent(QPaintEvent *);
 
+    QImage getImage();
 
     void saveDraw(QPainter &painter);
 

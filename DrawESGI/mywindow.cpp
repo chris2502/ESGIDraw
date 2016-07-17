@@ -30,13 +30,7 @@ MyWindow::MyWindow() : QWidget()
     viewGraphic->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     viewGraphic->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
-    //right tool menu
-    toolMenuRight =new RightToolMenu(this->pos());
-    connect(toolMenuRight, SIGNAL(signalSelectPixmap(QString)), SLOT(slotSelectPixmap(QString)));
-    connect(toolMenuRight, SIGNAL(signalPriority(int)), this, SLOT(slotPriority(int)));
-    connect(toolMenuRight, SIGNAL(signalPositionX(int)), this, SLOT(slotPositionX(int)));
-    connect(toolMenuRight, SIGNAL(signalPositionY(int)), this, SLOT(slotPositionY(int)));
-    connect(toolMenuRight, SIGNAL(signalOpacity(qreal)), this, SLOT(slotOpacity(qreal)));
+    this->refactorToolRightWindow();
 
     //picture which add to graphicview
     mypicture =new MyPicture(viewGraphic->pos(), this);
@@ -55,6 +49,7 @@ MyWindow::MyWindow() : QWidget()
         connect(menuAbstract->getThisWidget(), SIGNAL(signalRotate()), this, SLOT(slotRotate()));
         connect(menuAbstract->getThisWidget(), SIGNAL(signalResize()), this, SLOT(slotMenuResize()));
         connect(menuAbstract->getThisWidget(), SIGNAL(signalChangeColor(QColor*)), this, SLOT(slotChangeColor(QColor*)));
+        connect(menuAbstract->getThisWidget(), SIGNAL(signalNewCalque()), SLOT(slotNewCalque()));
     }
 
     connect(mouseCatch, SIGNAL(signalMouseCatch(QPoint)), this, SLOT(slotMouseCatch(QPoint)));
@@ -73,7 +68,9 @@ MyWindow::MyWindow() : QWidget()
 
 void MyWindow::slotOpenFile(QString fileName, QAction *saveFile){ qDebug() << "iewgraph";
     mypicture->setFileName(fileName);
-    toolMenuRight->setFocus();
+    if(!toolMenuRight->isEnable()){
+        toolMenuRight->setEnabled(true);
+    }
     toolMenuRight->show();
     toolMenuRight->addFileNameImageToAction(fileName);
     if(mypicture->isEmptyScene()){
@@ -83,7 +80,11 @@ void MyWindow::slotOpenFile(QString fileName, QAction *saveFile){ qDebug() << "i
 }
 
 void MyWindow::slotClearScene(QAction *saveFile){
+    delete toolMenuRight;
+    this->refactorToolRightWindow();
     mypicture->clearSceneGraphic();
+    delete mypicture;
+    mypicture =new MyPicture(viewGraphic->pos(), this);
     saveFile->setDisabled(true);
 }
 
@@ -159,7 +160,34 @@ void MyWindow::slotSelectPixmap(QString fileName){qDebug() <<"slotselectpixmap w
     mypicture->setPixmapItem(fileName);
 }
 
+void MyWindow::slotNewCalque(){qDebug() <<"bonne nuit";
+    QGraphicsScene scene;
+    QGraphicsView view;
+    QGraphicsPixmapItem itemPixmap;
+    scene.addPixmap(QPixmap::fromImage(mypicture->getImage()));
+    view.setScene(&scene);
+    layoutGrid->addWidget(&view, 1,4, 3, 3);
+}
+
 void MyWindow::resizeEvent(QResizeEvent *){
    viewGraphic->setSceneRect(viewGraphic->x()-8, viewGraphic->y()-45, viewGraphic->width(), viewGraphic->height());
    //qDebug() << "viewPoint: "<<"viewpointX :"<<viewGraphic->x()<<"| viewY: "<<viewGraphic->y()<<"| viewWid: " <<viewGraphic->width() <<"| viewhei:" <<viewGraphic->height();
+}
+
+void MyWindow::refactorWindow(){
+
+}
+
+void MyWindow::refactorToolRightWindow(){
+    //right tool menu
+    toolMenuRight =new RightToolMenu(this->pos());
+    connect(toolMenuRight, SIGNAL(signalSelectPixmap(QString)), SLOT(slotSelectPixmap(QString)));
+    connect(toolMenuRight, SIGNAL(signalPriority(int)), this, SLOT(slotPriority(int)));
+    connect(toolMenuRight, SIGNAL(signalPositionX(int)), this, SLOT(slotPositionX(int)));
+    connect(toolMenuRight, SIGNAL(signalPositionY(int)), this, SLOT(slotPositionY(int)));
+    connect(toolMenuRight, SIGNAL(signalOpacity(qreal)), this, SLOT(slotOpacity(qreal)));
+}
+
+void MyWindow::refactorPicture(){
+
 }

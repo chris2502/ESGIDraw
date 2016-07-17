@@ -73,6 +73,8 @@ public slots:
 
     void slotRightTools();
 
+    void slotNewCalque();
+
     void slotColorBlue();
     void slotColorRed();
     void slotColorGreen();
@@ -89,6 +91,8 @@ signals:
     void signalPrintPicture();
 
     void signalTheme();
+
+    void signalNewCalque();
 
     void signalRightTools();
     void signalRotate();

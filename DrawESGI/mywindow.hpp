@@ -35,6 +35,9 @@ private:
    // AbtractTestQobject *testObjectAbs;
 public:
     MyWindow();
+    void refactorWindow();
+    void refactorToolRightWindow();
+    void refactorPicture();
 public slots:
     void slotOpenFile(QString, QAction*);
     void slotClearScene(QAction*);
@@ -48,7 +51,7 @@ public slots:
     void slotPositionY(int);
     void slotOpacity(qreal);
     void slotChangeColor(QColor*);
-
+    void slotNewCalque();
     void slotSelectPixmap(QString);
 
     void slotMenuResize();
