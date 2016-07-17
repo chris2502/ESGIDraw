@@ -16,7 +16,7 @@ MyWindow::MyWindow() : QWidget()
     //Bar menu of main window
     barMenu= new QMenuBar(this);
     //catch pos mouse
-    mouseCatch= new CatchMouse(1);
+    mouseCatch= new CatchMouse();
     //menu which add to bar menu
     AbstractMenu *mymenu= new MyMenu();
     menuAbstractList.push_back(mymenu);
@@ -114,30 +114,26 @@ void MyWindow::slotMouseCatch(const QPoint point){
 
     switch(geometric_type){
 
+    //Simple Point
     case 1:
         mypicture->addPointMouse(point, viewGraphic->pos());
         mypicture->drawPointMouse(point);
 
         break;
-
+    //Line
     case 2:
-        qDebug() << "PRESSED STATE = " << mouseCatch->getIsPressedState() << inDrawing
-                    ;
-        if (mouseCatch->getIsPressedState()==true && inDrawing==false)
+        //qDebug() << "Mouse pressed state  is " << mouseCatch->getPressedState() << inDrawing;
+
+        if (mouseCatch->getPressedState()==true && inDrawing==false)
         {
             startPos = point;
              inDrawing = true;
-            qDebug() << "BEGIN PRESSED";
         }
-        else if(mouseCatch->getIsPressedState()==false)
+        else if(mouseCatch->getPressedState()==false)
         {
             endPos = point;
-            //CatchMouse.getPressed=true;
-            qDebug() << "END PRESSED DRAW HERE";
-            //emit signalMouseCatchDrawLine(startPos, event->pos());
-            qDebug() << "FIN DESSIN START" << startPos.x() << " " << startPos.y();
-
-            qDebug() << "FIN DESSIN END" << endPos.x() << " " << endPos.y();
+           // qDebug() << "Beginning line points" << startPos.x() << " " << startPos.y();
+           //qDebug() << "Ending line points" << endPos.x() << " " << endPos.y();
             mypicture->DrawLine(startPos, endPos);
             inDrawing = false;
         }

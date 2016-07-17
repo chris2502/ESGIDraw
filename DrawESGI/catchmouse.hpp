@@ -7,20 +7,13 @@
 class CatchMouse : public QWidget
 {
     Q_OBJECT
-    int type;
     bool isPressed;
-
-    //For lines
-    QPoint startPos;
-        QPoint endPos;
-        bool inDrawing;
 
 public:
     CatchMouse();
     CatchMouse(int p_type);
-    void setType(int p_type);
-    bool getIsPressedState();
-    void setIsPressed(bool b);
+
+    bool getPressedState();
 
     //virtual inherit qobject
     void mouseMoveEvent(QMouseEvent *event);
