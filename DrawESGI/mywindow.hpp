@@ -21,11 +21,6 @@ private:
     int h_win;
     int x_win;
     int y_win;
-    int nInitialX = 0;
-    int nInitialY = 0;
-    int nFinalX = 0;
-    int nFinalY = 0;
-    int drawLines = 1;
 
     QVector<AbstractMenu*> menuAbstractList;
     QMenuBar *barMenu;

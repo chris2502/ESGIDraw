@@ -14,7 +14,7 @@ MyWindow::MyWindow() : QWidget()
     //Bar menu of main window
     barMenu= new QMenuBar(this);
     //catch pos mouse
-    mouseCatch= new CatchMouse();
+    mouseCatch= new CatchMouse(1);
     //menu which add to bar menu
     AbstractMenu *mymenu= new MyMenu();
     menuAbstractList.push_back(mymenu);
@@ -118,6 +118,9 @@ void MyWindow::slotMouseCatchDrawLine(const QPoint pointStart, const QPoint poin
     /*qDebug() << "LINE DRAW START" << pointStart.x() << " " << pointStart.y();
     qDebug() << "LINE DRAW END" << pointEnd.x() << " " << pointEnd.y();*/
     mypicture->DrawLine(pointStart, pointEnd);
+    if(mypicture->isEmptyScene()){
+        viewGraphic->setScene(mypicture->getSceneGraphic());
+    }
 }
 
 void MyWindow::slotRightTools(){
