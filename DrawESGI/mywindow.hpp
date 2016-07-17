@@ -22,6 +22,12 @@ private:
     int x_win;
     int y_win;
 
+    int geometric_type;
+    bool inDrawing;
+    QPoint startPos;
+    QPoint endPos;
+
+
     QVector<AbstractMenu*> menuAbstractList;
     QMenuBar *barMenu;
     MyPicture *mypicture;
@@ -46,7 +52,6 @@ public slots:
     void slotRightTools();
     void slotRotate();
     void slotMouseCatch(const QPoint);
-    void slotMouseCatchDrawLine(const QPoint, const QPoint);
     void slotPriority(int);
     void slotPositionX(int);
     void slotPositionY(int);

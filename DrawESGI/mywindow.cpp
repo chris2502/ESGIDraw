@@ -8,6 +8,8 @@ MyWindow::MyWindow() : QWidget()
     x_win= w_win/2;
     y_win=h_win/2;
     setGeometry(x_win, y_win, w_win, h_win);
+    inDrawing = false;
+    geometric_type = 1;
 
     //layout of main window
     layoutGrid= new QGridLayout(this);
@@ -106,26 +108,45 @@ void MyWindow::slotRotate(){
 }
 
 void MyWindow::slotMouseCatch(const QPoint point){
-    mypicture->addPointMouse(point, viewGraphic->pos());
-    mypicture->drawPointMouse(point);
     if(mypicture->isEmptyScene()){
         viewGraphic->setScene(mypicture->getSceneGraphic());
     }
 
-}
+    switch(geometric_type){
 
-void MyWindow::slotMouseCatchDrawLine(const QPoint pointStart, const QPoint pointEnd){
-    /*qDebug() << "LINE DRAW START" << pointStart.x() << " " << pointStart.y();
-    qDebug() << "LINE DRAW END" << pointEnd.x() << " " << pointEnd.y();*/
-    mypicture->DrawLine(pointStart, pointEnd);
-    if(mypicture->isEmptyScene()){
-        viewGraphic->setScene(mypicture->getSceneGraphic());
+    case 1:
+        mypicture->addPointMouse(point, viewGraphic->pos());
+        mypicture->drawPointMouse(point);
+
+        break;
+
+    case 2:
+        qDebug() << "PRESSED STATE = " << mouseCatch->getIsPressedState() << inDrawing
+                    ;
+        if (mouseCatch->getIsPressedState()==true && inDrawing==false)
+        {
+            startPos = point;
+             inDrawing = true;
+            qDebug() << "BEGIN PRESSED";
+        }
+        else if(mouseCatch->getIsPressedState()==false)
+        {
+            endPos = point;
+            //CatchMouse.getPressed=true;
+            qDebug() << "END PRESSED DRAW HERE";
+            //emit signalMouseCatchDrawLine(startPos, event->pos());
+            qDebug() << "FIN DESSIN START" << startPos.x() << " " << startPos.y();
+
+            qDebug() << "FIN DESSIN END" << endPos.x() << " " << endPos.y();
+            mypicture->DrawLine(startPos, endPos);
+            inDrawing = false;
+        }
+
     }
 }
 
 void MyWindow::slotRightTools(){
     toolMenuRight->show();
-
 }
 
 void MyWindow::slotPriority(int priority){
@@ -170,7 +191,7 @@ void MyWindow::slotChangeColor(QColor* color){
 
 void MyWindow::slotChangeGeometricsSharp(int type){
     //qDebug() << "slot geometric change";
-    mouseCatch->setType(type);
+    geometric_type = type;
 }
 
 

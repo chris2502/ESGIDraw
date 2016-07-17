@@ -8,6 +8,7 @@ class CatchMouse : public QWidget
 {
     Q_OBJECT
     int type;
+    bool isPressed;
 
     //For lines
     QPoint startPos;
@@ -18,6 +19,8 @@ public:
     CatchMouse();
     CatchMouse(int p_type);
     void setType(int p_type);
+    bool getIsPressedState();
+    void setIsPressed(bool b);
 
     //virtual inherit qobject
     void mouseMoveEvent(QMouseEvent *event);
@@ -26,7 +29,6 @@ public:
 
 signals:
     void signalMouseCatch(QPoint);
-    void signalMouseCatchDrawLine(QPoint, QPoint);
 };
 
 #endif // CATCHMOUSE_H
