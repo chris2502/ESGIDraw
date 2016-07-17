@@ -90,14 +90,17 @@ MyMenu::MyMenu()
     gPoint=new QAction("Point", geometricMenu);
     gLine=new QAction("Line", geometricMenu);
     gRect=new QAction("Rectangle", geometricMenu);
+    gEllipse=new QAction("Ellipse", geometricMenu);
 
     geometricMenu->addAction(gPoint);
     geometricMenu->addAction(gLine);
     geometricMenu->addAction(gRect);
+    geometricMenu->addAction(gEllipse);
 
     connect(gPoint, SIGNAL(triggered()), this, SLOT(slotChangeGeometricsSharpPoint()));
     connect(gLine, SIGNAL(triggered()), this, SLOT(slotChangeGeometricsSharpLine()));
     connect(gRect, SIGNAL(triggered()), this, SLOT(slotChangeGeometricsSharpRect()));
+    connect(gEllipse, SIGNAL(triggered()), this, SLOT(slotChangeGeometricsSharpEllipse()));
 
     //Color Menu
     colorMenu= new QMenu("Color");
@@ -234,4 +237,6 @@ void MyMenu::slotChangeGeometricsSharpLine(){
 void MyMenu::slotChangeGeometricsSharpRect(){
     emit signalChangeGeometricsSharp(3);
 }
-
+void MyMenu::slotChangeGeometricsSharpEllipse(){
+    emit signalChangeGeometricsSharp(4);
+}

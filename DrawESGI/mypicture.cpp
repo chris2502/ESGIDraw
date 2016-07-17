@@ -124,9 +124,12 @@ void MyPicture::DrawLine(QPoint pointStart, QPoint pointEnd){
 }
 
 void MyPicture::DrawRect(QPoint pointStart, QPoint pointEnd){
-    //QLine line(pointStart.x(), pointStart.y(),pointEnd.x(), pointEnd.y());
     QRect rect(pointStart.x(), pointStart.y(), pointEnd.x()-pointStart.x(), pointEnd.y()-pointStart.y());
     sceneGraphic->addRect(rect, *pen);
+}
+
+void MyPicture::DrawEllipse(QPoint pointStart, QPoint pointEnd){
+    sceneGraphic->addEllipse(pointStart.x(), pointStart.y(), pointEnd.x()-pointStart.x(), pointEnd.y()-pointStart.y(), *pen);
 }
 
 bool MyPicture::isEmptyScene(){

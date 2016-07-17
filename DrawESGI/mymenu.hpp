@@ -46,6 +46,7 @@ private:
     QAction *gPoint;
     QAction *gLine;
     QAction *gRect;
+    QAction *gEllipse;
     //Menu Color
     QMenu *colorMenu;
     QAction *blue;
@@ -91,6 +92,7 @@ public slots:
     void slotChangeGeometricsSharpPoint();
     void slotChangeGeometricsSharpLine();
     void slotChangeGeometricsSharpRect();
+    void slotChangeGeometricsSharpEllipse();
 
 signals:
     void mySignal(QGraphicsScene*);

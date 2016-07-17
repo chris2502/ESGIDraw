@@ -49,6 +49,7 @@ public:
     void drawPointMouse(QPoint point);
     void DrawLine(QPoint pointStart, QPoint pointEnd);
     void DrawRect(QPoint pointStart, QPoint pointEnd);
+    void DrawEllipse(QPoint pointStart, QPoint pointEnd);
     bool isEmptyScene();
     void setFileName(QString fileName);
     void savePicture();
