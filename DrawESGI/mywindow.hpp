@@ -22,6 +22,12 @@ private:
     int x_win;
     int y_win;
 
+    int geometric_type;
+    bool inDrawing;
+    QPoint startPos;
+    QPoint endPos;
+
+
     QVector<AbstractMenu*> menuAbstractList;
     QMenuBar *barMenu;
     MyPicture *mypicture;
@@ -53,6 +59,7 @@ public slots:
     void slotChangeColor(QColor*);
     void slotNewCalque();
     void slotSelectPixmap(QString);
+   void slotChangeGeometricsSharp(int);
 
     void slotMenuResize();
     void slotResize(int, int);

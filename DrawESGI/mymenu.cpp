@@ -84,8 +84,25 @@ MyMenu::MyMenu()
     connect(newCalque, SIGNAL(triggered()), this, SLOT(slotNewCalque()));
 
     toolsMenu= new QMenu("Tools");
-    geometricMenu= new QMenu("Geometric sharpes");
 
+
+    geometricMenu= new QMenu("Geometric sharpes");
+    gPoint=new QAction("Point", geometricMenu);
+    gLine=new QAction("Line", geometricMenu);
+    gRect=new QAction("Rectangle", geometricMenu);
+    gEllipse=new QAction("Ellipse", geometricMenu);
+
+    geometricMenu->addAction(gPoint);
+    geometricMenu->addAction(gLine);
+    geometricMenu->addAction(gRect);
+    geometricMenu->addAction(gEllipse);
+
+    connect(gPoint, SIGNAL(triggered()), this, SLOT(slotChangeGeometricsSharpPoint()));
+    connect(gLine, SIGNAL(triggered()), this, SLOT(slotChangeGeometricsSharpLine()));
+    connect(gRect, SIGNAL(triggered()), this, SLOT(slotChangeGeometricsSharpRect()));
+    connect(gEllipse, SIGNAL(triggered()), this, SLOT(slotChangeGeometricsSharpEllipse()));
+
+    //Color Menu
     colorMenu= new QMenu("Color");
     blue=new QAction("Blue", colorMenu);
     red=new QAction("Red", colorMenu);
@@ -209,4 +226,17 @@ void MyMenu::slotColorPink(){
 
 void MyMenu::slotNewCalque(){
     emit signalNewCalque();
+}
+
+void MyMenu::slotChangeGeometricsSharpPoint(){
+    emit signalChangeGeometricsSharp(1);
+}
+void MyMenu::slotChangeGeometricsSharpLine(){
+    emit signalChangeGeometricsSharp(2);
+}
+void MyMenu::slotChangeGeometricsSharpRect(){
+    emit signalChangeGeometricsSharp(3);
+}
+void MyMenu::slotChangeGeometricsSharpEllipse(){
+    emit signalChangeGeometricsSharp(4);
 }
