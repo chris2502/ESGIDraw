@@ -118,10 +118,15 @@ void MyPicture::drawPointMouse(QPoint point){
 }
 
 void MyPicture::DrawLine(QPoint pointStart, QPoint pointEnd){
-    qDebug() << "draw line mypicture";
-    //QPen penLine(Qt::blue, 5, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
+    //qDebug() << "draw line mypicture";
     QLine line(pointStart.x(), pointStart.y(),pointEnd.x(), pointEnd.y());
     sceneGraphic->addLine(line, *pen);
+}
+
+void MyPicture::DrawRect(QPoint pointStart, QPoint pointEnd){
+    //QLine line(pointStart.x(), pointStart.y(),pointEnd.x(), pointEnd.y());
+    QRect rect(pointStart.x(), pointStart.y(), pointEnd.x()-pointStart.x(), pointEnd.y()-pointStart.y());
+    sceneGraphic->addRect(rect, *pen);
 }
 
 bool MyPicture::isEmptyScene(){

@@ -123,7 +123,6 @@ void MyWindow::slotMouseCatch(const QPoint point){
     //Line
     case 2:
         //qDebug() << "Mouse pressed state  is " << mouseCatch->getPressedState() << inDrawing;
-
         if (mouseCatch->getPressedState()==true && inDrawing==false)
         {
             startPos = point;
@@ -137,7 +136,23 @@ void MyWindow::slotMouseCatch(const QPoint point){
             mypicture->DrawLine(startPos, endPos);
             inDrawing = false;
         }
-
+        break;
+    case 3:
+        //qDebug() << "Mouse pressed state  is " << mouseCatch->getPressedState() << inDrawing;
+        if (mouseCatch->getPressedState()==true && inDrawing==false)
+        {
+            startPos = point;
+             inDrawing = true;
+        }
+        else if(mouseCatch->getPressedState()==false)
+        {
+            endPos = point;
+           // qDebug() << "Beginning line points" << startPos.x() << " " << startPos.y();
+           //qDebug() << "Ending line points" << endPos.x() << " " << endPos.y();
+            mypicture->DrawRect(startPos, endPos);
+            inDrawing = false;
+        }
+        break;
     }
 }
 

@@ -89,12 +89,15 @@ MyMenu::MyMenu()
     geometricMenu= new QMenu("Geometric sharpes");
     gPoint=new QAction("Point", geometricMenu);
     gLine=new QAction("Line", geometricMenu);
+    gRect=new QAction("Rectangle", geometricMenu);
 
     geometricMenu->addAction(gPoint);
     geometricMenu->addAction(gLine);
+    geometricMenu->addAction(gRect);
 
     connect(gPoint, SIGNAL(triggered()), this, SLOT(slotChangeGeometricsSharpPoint()));
     connect(gLine, SIGNAL(triggered()), this, SLOT(slotChangeGeometricsSharpLine()));
+    connect(gRect, SIGNAL(triggered()), this, SLOT(slotChangeGeometricsSharpRect()));
 
     //Color Menu
     colorMenu= new QMenu("Color");
@@ -227,5 +230,8 @@ void MyMenu::slotChangeGeometricsSharpPoint(){
 }
 void MyMenu::slotChangeGeometricsSharpLine(){
     emit signalChangeGeometricsSharp(2);
+}
+void MyMenu::slotChangeGeometricsSharpRect(){
+    emit signalChangeGeometricsSharp(3);
 }
 
