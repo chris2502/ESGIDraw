@@ -27,6 +27,7 @@ private:
     MyPicture *mypicture;
     CatchMouse *mouseCatch;
     QGridLayout *layoutGrid;
+    QGraphicsView *view;
     QGraphicsView *viewGraphic;
     QGraphicsScene *sceneGraphic;
     RightToolMenu *toolMenuRight;

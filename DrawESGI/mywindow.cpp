@@ -53,10 +53,13 @@ MyWindow::MyWindow() : QWidget()
     }
 
     connect(mouseCatch, SIGNAL(signalMouseCatch(QPoint)), this, SLOT(slotMouseCatch(QPoint)));
-    layoutGrid->addWidget(barMenu, 0,0, 1, 5);
-    layoutGrid->addWidget(viewGraphic, 1,0, 9, 3);
 
-    layoutGrid->addWidget(mouseCatch, 1,0, 9, 3);
+
+    view = new QGraphicsView();
+    layoutGrid->addWidget(barMenu, 0,0, 1, 5);
+    layoutGrid->addWidget(viewGraphic, 1,0, 9, 6);
+    layoutGrid->addWidget(view, 1,7, 3, 3);
+    layoutGrid->addWidget(mouseCatch, 1,0, 9, 6);
    // layoutGrid->addWidget(mymenu->getM_button(), 1,0, 1, 1);
 
     setLayout(layoutGrid);
@@ -160,13 +163,11 @@ void MyWindow::slotSelectPixmap(QString fileName){qDebug() <<"slotselectpixmap w
     mypicture->setPixmapItem(fileName);
 }
 
-void MyWindow::slotNewCalque(){qDebug() <<"bonne nuit";
-    QGraphicsScene scene;
-    QGraphicsView view;
-    QGraphicsPixmapItem itemPixmap;
-    scene.addPixmap(QPixmap::fromImage(mypicture->getImage()));
-    view.setScene(&scene);
-    layoutGrid->addWidget(&view, 1,4, 3, 3);
+void MyWindow::slotNewCalque(){
+
+    view->setScene(mypicture->renderSceneRightImage());qDebug() <<"bonne nuit";
+
+
 }
 
 void MyWindow::resizeEvent(QResizeEvent *){

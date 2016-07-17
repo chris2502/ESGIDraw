@@ -22,6 +22,7 @@ class MyPicture : public QWidget, QGraphicsItemGroup
     //Q_OBJECT
 private:
     QGraphicsScene *sceneGraphic;
+    QGraphicsScene *sceneRight;
     QString fileName;
     QPixmap imageChoose;
     QMap<QString, QGraphicsPixmapItem*> pixmapItemList;
@@ -70,7 +71,11 @@ public:
 
     void setPixmapItem(QString);
 
+    QGraphicsScene* getSceneRight();
+
     virtual void paintEvent(QPaintEvent *);
+
+    QGraphicsScene* renderSceneRightImage();
 
     QImage getImage();
 

@@ -12,6 +12,7 @@ MyPicture::MyPicture(QPoint  posViewGraphics, QWidget *parent, QString fileName)
     this->fileName.clear();
     this->fileName=fileName;
     sceneGraphic= new QGraphicsScene(parent);
+    sceneRight = new QGraphicsScene(parent);
     pixmapItem=Q_NULLPTR;
     degreeRotate=0;
     pen = new QPen(Qt::green, 3, Qt::DashDotLine, Qt::RoundCap, Qt::RoundJoin);
@@ -236,5 +237,13 @@ QImage MyPicture::getImage(){
     //image.fill(Qt::transparent);
     QPainter painter(&img);
     sceneGraphic->render(&painter);
+    img.save(tr("test.png"));
     return img;
+}
+
+
+QGraphicsScene* MyPicture::renderSceneRightImage(){
+    sceneRight->addPixmap(QPixmap::fromImage(getImage()));
+
+    return scene();
 }
