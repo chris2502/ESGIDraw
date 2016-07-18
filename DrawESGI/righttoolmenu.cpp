@@ -3,6 +3,7 @@
 RightToolMenu::RightToolMenu(QPoint p)
 {
 
+    this->setWindowFlags(Qt::WindowStaysOnTopHint);
     barMenu = new QMenuBar(this);
     menuPixmap= new QMenu("Images");
     barMenu->addMenu(menuPixmap);

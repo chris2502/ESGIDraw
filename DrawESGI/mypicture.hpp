@@ -26,7 +26,7 @@ private:
     QString fileName;
     QPixmap imageChoose;
     QMap<QString, QGraphicsPixmapItem*> pixmapItemList;
-    QMap<QString, QMap<QString, int>> infosPixmapItemList;
+    QMap<QString, QMap<QString, QString>> infosPixmapItemList;
     QVector<QPoint> pointMouse;
     QMouseEvent *event;
     QGraphicsPixmapItem *pixmapItem;
@@ -61,7 +61,7 @@ public:
     void setOpacity(qreal);
 
 
-    QMap<QString, int> getInfosPixmapList(QString fileName);
+    QMap<QString, QString> getInfosPixmapList(QString fileName);
 
     int getPositionX();
     void setPositionX(int positionX);

@@ -162,28 +162,27 @@ void MyWindow::slotChangeColor(QColor* color){
 }
 
 void MyWindow::slotSelectPixmap(QString fileName){qDebug() <<"slotselectpixmap window";
-    /* QMap<QString, int> tmpInfos= mypicture->getInfosPixmapList(fileName);
-    foreach (AbstractMenu* menu, menuAbstractList) {
-        RightToolMenu* tmp;
-        if(tmp=dynamic_cast<RightToolMenu*>(menu)){
-            foreach (QString key, tmpInfos.keys) {
-                if(key.compare(tr("priority")) ==0){
-                    tmp->setPrioritySpinBox(tmpInfos[key]);
-                }
-                else if(key.compare(tr("positionX")) ==0){
-                    tmp->setPositionSpinBoxX(tmpInfos[key]);
-                }
-                else if(key.compare(tr("positionY")) ==0){
-                    tmp->setPositionSpinBoxY(tmpInfos[key]);
-                }
-                else if(key.compare(tr("opacity")) ==0){
-                    tmp->setOpacitySpinBox(tmpInfos[key]);
-                }
-            }
+     mypicture->setPixmapItem(fileName);
+     QMap<QString, QString> tmpInfos= mypicture->getInfosPixmapList(fileName);
 
+     foreach (QString key, tmpInfos.keys()) {qDebug() <<"slotselectpixmap window2";
+        if(key.compare(tr("priority")) ==0){qDebug() <<"slotselectpixmap window3";
+            bool ok;
+            toolMenuRight->setPrioritySpinBox(tmpInfos[key].toInt(&ok, 10));
         }
-    }*/
-    mypicture->setPixmapItem(fileName);
+        else if(key.compare(tr("positionX")) ==0){qDebug() <<"slotselectpixmap window4";
+            bool ok;
+            toolMenuRight->setPositionSpinBoxX(tmpInfos[key].toInt(&ok, 10));
+        }
+        else if(key.compare(tr("positionY")) ==0){qDebug() <<"slotselectpixmap window5";
+            bool ok;
+            toolMenuRight->setPositionSpinBoxY(tmpInfos[key].toInt(&ok, 10));
+        }
+        else if(key.compare(tr("opacity")) ==0){qDebug() <<"slotselectpixmap window6";
+            bool ok;
+            toolMenuRight->setOpacitySpinBox((tmpInfos[key].toInt(&ok, 10)) * 10);
+        }
+    }
 }
 
 void MyWindow::slotNewCalque(){
@@ -193,9 +192,14 @@ void MyWindow::slotNewCalque(){
 
 }
 
-void MyWindow::resizeEvent(QResizeEvent *){
-   viewGraphic->setSceneRect(viewGraphic->x()-8, viewGraphic->y()-45, viewGraphic->width(), viewGraphic->height());
-   //qDebug() << "viewPoint: "<<"viewpointX :"<<viewGraphic->x()<<"| viewY: "<<viewGraphic->y()<<"| viewWid: " <<viewGraphic->width() <<"| viewhei:" <<viewGraphic->height();
+void MyWindow::resizeEvent(QResizeEvent *e){
+    qDebug() <<"size: "<<e->size();
+    qreal rapportSizeX=(8.0* e->size().width())/683.0 ;
+    qreal rapportSizeY=(45.0*e->size().height())/384.0 ;
+    qDebug() <<"rapportX: "<<rapportSizeX;
+    qDebug() <<"rapportY: "<<rapportSizeY;
+   viewGraphic->setSceneRect(viewGraphic->x()-rapportSizeX, viewGraphic->y()-rapportSizeY, viewGraphic->width(), viewGraphic->height());
+   qDebug() << "viewPoint: "<<"viewpointX :"<<viewGraphic->x()<<"| viewY: "<<viewGraphic->y()<<"| viewWid: " <<viewGraphic->width() <<"| viewhei:" <<viewGraphic->height();
 }
 
 void MyWindow::refactorWindow(){

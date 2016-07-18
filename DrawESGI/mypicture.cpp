@@ -52,11 +52,11 @@ void MyPicture::setFileName(QString fileName){
     imageChoose.load(fileName);
     pixmapItem = new QGraphicsPixmapItem(imageChoose);
     pixmapItemList[fileName]=pixmapItem;
-    QMap<QString, int> tmp;
-    tmp[tr("priority")]=pixmapItem->zValue();
-    tmp[tr("positionX")]=pixmapItem->pos().x();
-    tmp[tr("positionY")]=pixmapItem->pos().y();
-    tmp[tr("opacity")]=pixmapItem->opacity();
+    QMap<QString, QString> tmp;
+    tmp[tr("priority")]=QString::number(pixmapItem->zValue());
+    tmp[tr("positionX")]=QString::number(pixmapItem->pos().x());
+    tmp[tr("positionY")]=QString::number(pixmapItem->pos().y());
+    tmp[tr("opacity")]=QString::number(pixmapItem->opacity());
     infosPixmapItemList[fileName]=tmp;
 
     //pixmapItem->setPos(-50, -70);
@@ -65,12 +65,14 @@ void MyPicture::setFileName(QString fileName){
 }
 
 
-QMap<QString, int> MyPicture::getInfosPixmapList(QString fileName){
+QMap<QString, QString> MyPicture::getInfosPixmapList(QString fileName){
      foreach (QString key, infosPixmapItemList.keys()) {
         if(key.compare(fileName) == 0){
             return infosPixmapItemList[key];
         }
     }
+     QMap<QString, QString>tmp;
+     return tmp;
 }
 
 /*void MyPicture::slotOpenFile(QPixmap* imageChoose){ qDebug() << "pk slotOPen";
@@ -176,6 +178,9 @@ void MyPicture::paintEvent(QPaintEvent *){
 void MyPicture::setOpacity(qreal opacity){
     this->opacity=opacity;
     pixmapItem->setOpacity(opacity);
+    QMap<QString, QString> tmp;
+    tmp[tr("opacity")]=QString::number(pixmapItem->opacity());
+    infosPixmapItemList[fileName]=tmp;
 
 }
 
@@ -196,6 +201,9 @@ int MyPicture::getPositionX(){
 void MyPicture::setPositionX(int positionX){
     this->positionX=positionX;
     pixmapItem->setX(positionX);
+    QMap<QString, QString> tmp;
+    tmp[tr("positionX")]=QString::number(pixmapItem->pos().x());
+    infosPixmapItemList[fileName]=tmp;
 }
 
 int MyPicture::getPositionY(){
@@ -205,6 +213,9 @@ int MyPicture::getPositionY(){
 void MyPicture::setPositionY(int positionY){
     this->positionY=positionY;
     pixmapItem->setY(positionY);
+    QMap<QString, QString> tmp;
+    tmp[tr("positionY")]=QString::number(pixmapItem->pos().y());
+    infosPixmapItemList[fileName]=tmp;
 }
 
 int MyPicture::getPriority(){
@@ -214,6 +225,9 @@ int MyPicture::getPriority(){
 void MyPicture::setPriority(int priority){
     this->priority=priority;
     pixmapItem->setZValue(priority);
+    QMap<QString, QString> tmp;
+    tmp[tr("priority")]=QString::number(pixmapItem->zValue());
+    infosPixmapItemList[fileName]=tmp;
 }
 
 
