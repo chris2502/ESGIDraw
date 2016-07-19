@@ -50,6 +50,9 @@ public:
     void addPointMouse(QPoint, QPoint posViewGraphics);
     void drawPointMouse();
     void drawPointMouse(QPoint point);
+    void DrawLine(QPoint pointStart, QPoint pointEnd);
+    void DrawRect(QPoint pointStart, QPoint pointEnd);
+    void DrawEllipse(QPoint pointStart, QPoint pointEnd);
     bool isEmptyScene();
     void setFileName(QString fileName);
     void savePicture();
@@ -62,6 +65,8 @@ public:
 
 
     QMap<QString, QString> getInfosPixmapList(QString fileName);
+
+    void applyLayer(int sizeViewX, int sizeViewY);
 
     int getPositionX();
     void setPositionX(int positionX);
@@ -78,13 +83,13 @@ public:
 
     QGraphicsScene* getSceneRight();
 
-    virtual void paintEvent(QPaintEvent *);
+    //virtual void paintEvent(QPaintEvent *);
 
-    QGraphicsScene* renderSceneRightImage();
+    QGraphicsScene* renderSceneRightImage(int sizeRightViewX, int sizeRightViewY);
 
     QImage getImage();
 
-    void saveDraw(QPainter &painter);
+    //void saveDraw(QPainter &painter);
 
     void setSize(int sizeX, int sizeY);
     int getSizeX();

@@ -16,7 +16,7 @@ MyPicture::MyPicture(QPoint  posViewGraphics, QWidget *parent, QString fileName)
     pixmapItem=Q_NULLPTR;
     pixmapItemRight= new QGraphicsPixmapItem();
     degreeRotate=0;
-    pen = new QPen(Qt::green, 3, Qt::DashDotLine, Qt::RoundCap, Qt::RoundJoin);
+    pen = new QPen(Qt::black, 3, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
 }
 
 QGraphicsScene* MyPicture::getSceneGraphic(){
@@ -113,8 +113,7 @@ void MyPicture::printPicture(){
     printer.setOutputFormat(QPrinter::PdfFormat);
     QPainter *painter= new QPainter(&printer); // create a painter which will paint 'on printer'.
     painter->setFont(QFont("Tahoma",8));
-    painter->drawPixmap(200, 200, imageChoose.width()*20, imageChoose.height()*20, imageChoose);
-
+    sceneGraphic->render(painter);
     painter->end();
 }
 
@@ -136,6 +135,21 @@ void MyPicture::drawPointMouse(QPoint point){
 
 }
 
+void MyPicture::DrawLine(QPoint pointStart, QPoint pointEnd){
+    //qDebug() << "draw line mypicture";
+    QLine line(pointStart.x(), pointStart.y(),pointEnd.x(), pointEnd.y());
+    sceneGraphic->addLine(line, *pen);
+}
+
+void MyPicture::DrawRect(QPoint pointStart, QPoint pointEnd){
+    QRect rect(pointStart.x(), pointStart.y(), pointEnd.x()-pointStart.x(), pointEnd.y()-pointStart.y());
+    sceneGraphic->addRect(rect, *pen);
+}
+
+void MyPicture::DrawEllipse(QPoint pointStart, QPoint pointEnd){
+    sceneGraphic->addEllipse(pointStart.x(), pointStart.y(), pointEnd.x()-pointStart.x(), pointEnd.y()-pointStart.y(), *pen);
+}
+
 bool MyPicture::isEmptyScene(){
     if(sceneGraphic->isActive()){
         return false;
@@ -151,6 +165,7 @@ void MyPicture::rotatePixmap(){ qDebug() << "i do rotate: "<<pixmapItem;
    }
 }
 
+/*
 void MyPicture::saveDraw(QPainter &painter){
     painter.setOpacity(pixmapItem->opacity());
 
@@ -173,7 +188,7 @@ void MyPicture::paintEvent(QPaintEvent *){
     painter.setPen(pen);
     saveDraw(painter);
     painter.end();
-}
+}*/
 
 void MyPicture::setOpacity(qreal opacity){
     this->opacity=opacity;
@@ -264,7 +279,7 @@ int MyPicture::getSizeY() {
 QImage MyPicture::getImage(){
 
     QImage img(sceneGraphic->sceneRect().size().toSize(), QImage::Format_ARGB32);
-    //image.fill(Qt::transparent);
+    img.fill(Qt::transparent);
     QPainter painter(&img);
     sceneGraphic->render(&painter);
 
@@ -272,9 +287,19 @@ QImage MyPicture::getImage(){
 }
 
 
-QGraphicsScene* MyPicture::renderSceneRightImage(){
-    pixmapItemRight->setPixmap(QPixmap::fromImage(getImage()));
-    sceneRight->addItem(pixmapItem);
+QGraphicsScene* MyPicture::renderSceneRightImage(int sizeRightViewX, int sizeRightViewY){
+    QPixmap pixmap=QPixmap::fromImage(getImage());
 
-    return scene();
+    pixmapItemRight->setPixmap(pixmap.scaled(pixmap.width() -sizeRightViewX,
+                                             pixmap.height() - 100));
+
+    sceneRight->addItem(pixmapItemRight);
+
+    return sceneRight;
+}
+
+void MyPicture::applyLayer(int sizeViewX, int sizeViewY){
+    pixmapItemRight->setPixmap(pixmapItemRight->pixmap().scaled(pixmapItemRight->pixmap().width() +sizeViewX,
+                                             pixmapItemRight->pixmap().height() + 100));
+    sceneGraphic->addItem(pixmapItemRight);
 }
