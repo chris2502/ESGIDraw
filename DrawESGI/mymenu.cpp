@@ -1,5 +1,4 @@
 #include "mymenu.hpp"
-#include "QDebug"
 MyMenu::MyMenu()
 {
     //Menu file
@@ -156,18 +155,16 @@ MyMenu::~MyMenu(){
     delete resize;
     delete pictureMenu;
     //Menu layer
-    delete layerMenu;
     delete newCalque;
     delete layerMenu;
     delete toolsMenu;
-    delete geometricMenu;
     //Menu GeometricsSharp
     delete gPoint;
     delete gLine;
     delete gRect;
     delete gEllipse;
+    delete geometricMenu;
     //Menu Color
-    delete colorMenu;
     delete blue;
     delete red;
     delete green;
@@ -175,6 +172,7 @@ MyMenu::~MyMenu(){
     delete white;
     delete grey;
     delete pink;
+    delete colorMenu;
 }
 
 QWidget* MyMenu::getThisWidget(){
@@ -229,7 +227,6 @@ void MyMenu::slotRotate(){
 }
 
 void MyMenu::slotResize(){
-    qDebug() << "SLOT RESIZE MENU";
     emit signalResize();
 }
 

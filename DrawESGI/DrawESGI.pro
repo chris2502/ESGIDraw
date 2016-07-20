@@ -11,10 +11,6 @@ SOURCES += \
     catchmouse.cpp \
     righttoolmenu.cpp \
     theme.cpp \
-    abstractparams.cpp \
-    abstractlayer.cpp \
-    layer.cpp \
-    compositelayer.cpp \
     resizetoolmenu.cpp
 
 HEADERS += \
@@ -26,10 +22,6 @@ HEADERS += \
     catchmouse.hpp \
     righttoolmenu.hpp \
     theme.hpp \
-    abstractparams.hpp \
-    layer.hpp \
-    compositelayer.hpp \
-    abstractlayer.hpp \
     resizetoolmenu.h
 
 DISTFILES += \

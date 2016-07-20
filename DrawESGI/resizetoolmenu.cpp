@@ -25,6 +25,13 @@ ResizeToolMenu::ResizeToolMenu(QPoint p, int defaultSizeX, int defaultSizeY)
     this->show();
 }
 
+
+ResizeToolMenu::~ResizeToolMenu(){
+    delete sizeX;
+    delete sizeY;
+    delete button;
+}
+
 void ResizeToolMenu::slotResize(){
     emit signalResize(sizeX->value(), sizeY->value());
 }

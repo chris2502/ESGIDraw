@@ -36,13 +36,12 @@ private:
     QGridLayout *layoutGrid;
     QGraphicsView *view;
     QGraphicsView *viewGraphic;
-    QGraphicsScene *sceneGraphic;
     RightToolMenu *toolMenuRight;
     ResizeToolMenu *resizetoolmenu;
-    QMouseEvent *event;
    // AbtractTestQobject *testObjectAbs;
 public:
     MyWindow();
+    ~MyWindow();
     void refactorWindow();
     void refactorToolRightWindow();
     void refactorPicture();

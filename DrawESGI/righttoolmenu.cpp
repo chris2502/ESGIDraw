@@ -1,5 +1,4 @@
 #include "righttoolmenu.hpp"
-#include <QDebug>
 RightToolMenu::RightToolMenu(QPoint p)
 {
 
@@ -8,7 +7,6 @@ RightToolMenu::RightToolMenu(QPoint p)
     menuPixmap= new QMenu("Images");
     barMenu->addMenu(menuPixmap);
 
-    //pixmapAction = new QVector<QAction*>();
 
     prioritySPinBox= new QSpinBox();
     prioritySPinBox->setMaximum(20);
@@ -46,6 +44,18 @@ RightToolMenu::RightToolMenu(QPoint p)
     this->setWindowTitle("Tools Menu");
 }
 
+RightToolMenu::~RightToolMenu(){
+    delete prioritySPinBox;
+    delete positionSpinBoxX;
+    delete positionSpinBoxY;
+    delete opacitySpinBox;
+    delete menuPixmap;
+    delete barMenu;
+    foreach (QAction* action, pixmapAction) {
+        delete action;
+    }
+    pixmapAction.clear();
+}
 
 void RightToolMenu::setPositionSpinBoxX(int positionSpinBoxX){
     this->positionSpinBoxX->setValue( positionSpinBoxX);

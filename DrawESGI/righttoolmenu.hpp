@@ -25,7 +25,7 @@ class RightToolMenu: public QWidget
     QVector<QAction*> pixmapAction;
 public:
     RightToolMenu(QPoint point);
-
+    ~RightToolMenu();
     void setPositionSpinBoxX(int positionSpinBoxX);
     void setPositionSpinBoxY(int positionSpinBoxY);
 

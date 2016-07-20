@@ -12,6 +12,8 @@ MyWindow::MyWindow() : QWidget()
     inDrawing = false;
     geometric_type = 1;
 
+    resizetoolmenu=Q_NULLPTR;
+
     //layout of main window
     layoutGrid= new QGridLayout(this);
     //Bar menu of main window
@@ -82,6 +84,23 @@ MyWindow::MyWindow() : QWidget()
     show();
 }
 
+MyWindow::~MyWindow(){
+    foreach (AbstractMenu * menu, menuAbstractList) {
+        delete menu;
+    }
+    delete barMenu;
+    delete buttonPush;
+    delete mypicture;
+    delete mouseCatch;
+    delete layoutGrid;
+    delete view;
+    delete viewGraphic;
+    delete toolMenuRight;
+    if(resizetoolmenu != Q_NULLPTR)
+        delete resizetoolmenu;
+    menuAbstractList.clear();
+
+}
 
 void MyWindow::refactorToolRightWindow(){
     //right tool menu

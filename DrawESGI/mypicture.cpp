@@ -1,6 +1,4 @@
 #include "mypicture.hpp"
-#include <QDebug>
-
 MyPicture::MyPicture(QPoint  posViewGraphics, QWidget *parent, QString fileName)
 {
     this->posViewGraphics=posViewGraphics;
@@ -17,6 +15,22 @@ MyPicture::MyPicture(QPoint  posViewGraphics, QWidget *parent, QString fileName)
     pixmapItemRight= new QGraphicsPixmapItem();
     degreeRotate=0;
     pen = new QPen(Qt::black, 3, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
+}
+
+MyPicture::~MyPicture(){
+    for(auto it = pixmapItemList.begin(); it != pixmapItemList.end(); ){
+        QGraphicsPixmapItem* tmp= it.value();
+        pixmapItemList.erase(it);
+        delete tmp;
+    }
+
+    pixmapItemList.clear();
+
+    delete pixmapItem;
+    delete pixmapItemRight;
+    delete pen;
+    delete sceneGraphic;
+    delete sceneRight;
 }
 
 QGraphicsScene* MyPicture::getSceneGraphic(){
@@ -58,8 +72,6 @@ void MyPicture::setFileName(QString fileName){
     tmp[tr("positionY")]=QString::number(pixmapItem->pos().y());
     tmp[tr("opacity")]=QString::number(pixmapItem->opacity());
     infosPixmapItemList[fileName]=tmp;
-
-    //pixmapItem->setPos(-50, -70);
     sceneGraphic->addItem(pixmapItem);
 
 }
@@ -75,13 +87,6 @@ QMap<QString, QString> MyPicture::getInfosPixmapList(QString fileName){
      return tmp;
 }
 
-/*void MyPicture::slotOpenFile(QPixmap* imageChoose){ qDebug() << "pk slotOPen";
-    if(imageChoose!=nullptr){
-        sceneGraphic->clear();
-        sceneGraphic->addPixmap(*imageChoose);
-    }
-}
-*/
 void MyPicture::savePicture(){
     /*
     QImage image("media/toto.png");
@@ -111,32 +116,27 @@ void MyPicture::printPicture(){
     printer.setFullPage(false);
     printer.setOutputFileName(saveFilename);
     printer.setOutputFormat(QPrinter::PdfFormat);
-    QPainter *painter= new QPainter(&printer); // create a painter which will paint 'on printer'.
+    QPainter *painter= new QPainter(&printer);
     painter->setFont(QFont("Tahoma",8));
     sceneGraphic->render(painter);
     painter->end();
 }
 
 void MyPicture::addPointMouse(QPoint point, QPoint posViewGraphics){
-    qDebug() << "posviewgraph: "<< posViewGraphics;
     pointMouse.push_back(point);
 }
 
 void MyPicture::drawPointMouse(){
     foreach(QPoint point, pointMouse){
-        qDebug() << "drawPoint: "<< point<<"| pointX :"<<point.x()<<"| pointY: "<<point.y();
         sceneGraphic->addEllipse(point.x(), point.y(), 5, 5, *pen);
     }
 }
 
 void MyPicture::drawPointMouse(QPoint point){
-        qDebug() << "drawPoint: "<< point<<"| pointX :"<<point.x()<<"| pointY: "<<point.y();
         sceneGraphic->addEllipse(point.x(), point.y(), 5, 5, *pen);
-
 }
 
 void MyPicture::DrawLine(QPoint pointStart, QPoint pointEnd){
-    //qDebug() << "draw line mypicture";
     QLine line(pointStart.x(), pointStart.y(),pointEnd.x(), pointEnd.y());
     sceneGraphic->addLine(line, *pen);
 }
@@ -157,7 +157,7 @@ bool MyPicture::isEmptyScene(){
     return true;
 }
 
-void MyPicture::rotatePixmap(){ qDebug() << "i do rotate: "<<pixmapItem;
+void MyPicture::rotatePixmap(){
 
    if(pixmapItem != Q_NULLPTR){
        degreeRotate=degreeRotate+90;
@@ -165,30 +165,6 @@ void MyPicture::rotatePixmap(){ qDebug() << "i do rotate: "<<pixmapItem;
    }
 }
 
-/*
-void MyPicture::saveDraw(QPainter &painter){
-    painter.setOpacity(pixmapItem->opacity());
-
-    painter.drawPixmap(pixmapItem->x(), pixmapItem->y(), pixmapItem->pixmap());qDebug() << "opacity"<<opacity;
-    //painter.setOpacity(opacity);
-    //painter.drawPixmap(pixmapItem->x()+40, pixmapItem->y()+50, imageChoose);
-    //painter.setOpacity(0.1);
-
-    foreach (QPoint p, pointMouse) {
-        painter.drawPoint(p);
-    }
-}
-
-void MyPicture::paintEvent(QPaintEvent *){
-    QPainter painter;
-    painter.begin(this);
-
-    painter.setRenderHint(QPainter::Antialiasing);
-    QPen pen(Qt::blue, 5, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
-    painter.setPen(pen);
-    saveDraw(painter);
-    painter.end();
-}*/
 
 void MyPicture::setOpacity(qreal opacity){
     this->opacity=opacity;
@@ -246,9 +222,8 @@ void MyPicture::setPriority(int priority){
 }
 
 
-void MyPicture::setPixmapItem(QString fileName){qDebug() <<"filename: "<<fileName;
+void MyPicture::setPixmapItem(QString fileName){
     foreach (QString key, pixmapItemList.keys()) {
-        qDebug() <<"filename listpixmap"<<key;
         if(key.compare(fileName)==0){
             pixmapItem=pixmapItemList[key];
             break;

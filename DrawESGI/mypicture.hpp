@@ -28,7 +28,6 @@ private:
     QMap<QString, QGraphicsPixmapItem*> pixmapItemList;
     QMap<QString, QMap<QString, QString>> infosPixmapItemList;
     QVector<QPoint> pointMouse;
-    QMouseEvent *event;
     QGraphicsPixmapItem *pixmapItem;
     QGraphicsPixmapItem *pixmapItemRight;
     QPoint  posViewGraphics;
@@ -41,6 +40,7 @@ private:
 
 public:
     MyPicture(QPoint  posViewGraphics, QWidget *parent=Q_NULLPTR, QString fileName=Q_NULLPTR);
+    ~MyPicture();
     QGraphicsScene* getSceneGraphic();
     void clearSceneGraphic();
     void setSceneGraphic(QGraphicsScene *sceneGraphic);

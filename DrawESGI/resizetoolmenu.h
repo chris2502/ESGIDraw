@@ -18,7 +18,7 @@ class ResizeToolMenu: public QWidget
 
 public:
     ResizeToolMenu(QPoint point, int defaultSizeX, int defaultSizeY);
-
+    ~ResizeToolMenu();
     void setPositionSpinBoxX(int positionSpinBoxX);
     void setPositionSpinBoxY(int positionSpinBoxY);
 
