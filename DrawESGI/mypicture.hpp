@@ -30,6 +30,7 @@ private:
     QVector<QPoint> pointMouse;
     QGraphicsPixmapItem *pixmapItem;
     QGraphicsPixmapItem *pixmapItemRight;
+    QGraphicsPixmapItem *pixmapRightTmp;
     QPoint  posViewGraphics;
     int degreeRotate;
     int priority;

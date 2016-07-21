@@ -12,6 +12,7 @@ MyPicture::MyPicture(QPoint  posViewGraphics, QWidget *parent, QString fileName)
     sceneGraphic= new QGraphicsScene(parent);
     sceneRight = new QGraphicsScene(parent);
     pixmapItem=Q_NULLPTR;
+    pixmapRightTmp= new QGraphicsPixmapItem();
     pixmapItemRight= new QGraphicsPixmapItem();
     degreeRotate=0;
     pen = new QPen(Qt::black, 3, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
@@ -22,7 +23,7 @@ MyPicture::~MyPicture(){
         delete item;
     }
 
-
+    delete pixmapRightTmp;
     delete pixmapItemRight;
     delete pen;
     delete sceneGraphic;
@@ -260,7 +261,7 @@ QImage MyPicture::getImage(){
 
 QGraphicsScene* MyPicture::renderSceneRightImage(int sizeRightViewX, int sizeRightViewY){
     QPixmap pixmap=QPixmap::fromImage(getImage());
-
+    pixmapRightTmp->setPixmap(pixmap);
     pixmapItemRight->setPixmap(pixmap.scaled(pixmap.width() -sizeRightViewX,
                                              pixmap.height() - 100));
 
@@ -272,5 +273,5 @@ QGraphicsScene* MyPicture::renderSceneRightImage(int sizeRightViewX, int sizeRig
 void MyPicture::applyLayer(int sizeViewX, int sizeViewY){
     pixmapItemRight->setPixmap(pixmapItemRight->pixmap().scaled(pixmapItemRight->pixmap().width() +sizeViewX,
                                              pixmapItemRight->pixmap().height() + 100));
-    sceneGraphic->addItem(pixmapItemRight);
+    sceneGraphic->addItem(pixmapRightTmp);
 }
