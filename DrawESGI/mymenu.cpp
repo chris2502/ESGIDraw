@@ -15,10 +15,11 @@ MyMenu::MyMenu()
     saveFile->setDisabled(true);
     connect(saveFile, SIGNAL(triggered()), this, SLOT(slotSavePicture()));
 
-    printFile= new QAction("Print picture",fileMenu);
+    printFile= new QAction("Export pdf",fileMenu);
     connect(printFile, SIGNAL(triggered()), this, SLOT(slotPrintPicture()));
 
     settingFile= new QAction("Setting",fileMenu);
+    settingFile->setDisabled(true);
 
     exitApp= new QAction("Exit",fileMenu);
     //quit application when we click in Action exitApp
@@ -44,15 +45,15 @@ MyMenu::MyMenu()
     editMenu->addAction(copy);
     editMenu->addAction(copy);
     editMenu->addAction(clean);
-
+    editMenu->setDisabled(true);
 
     //Menu Screen
     screenMenu= new QMenu("Screen");
     theme=new QAction("Thème", screenMenu);
     connect(theme, SIGNAL(triggered()), SLOT(slotTheme()));
-
+    theme->setDisabled(true);
     canvas=new QAction("Canvas", screenMenu);
-
+    canvas->setDisabled(true);
     rightToolsMenu=new QAction("Right Tool Menu", screenMenu);
     connect(rightToolsMenu, SIGNAL(triggered()), this, SLOT(slotRightTools()));
 
@@ -83,7 +84,7 @@ MyMenu::MyMenu()
     connect(newCalque, SIGNAL(triggered()), this, SLOT(slotNewCalque()));
 
     toolsMenu= new QMenu("Tools");
-
+    toolsMenu->setDisabled(true);
 
     geometricMenu= new QMenu("Geometric sharpes");
     gPoint=new QAction("Point", geometricMenu);

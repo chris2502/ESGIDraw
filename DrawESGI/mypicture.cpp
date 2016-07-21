@@ -18,15 +18,11 @@ MyPicture::MyPicture(QPoint  posViewGraphics, QWidget *parent, QString fileName)
 }
 
 MyPicture::~MyPicture(){
-    for(auto it = pixmapItemList.begin(); it != pixmapItemList.end(); ){
-        QGraphicsPixmapItem* tmp= it.value();
-        pixmapItemList.erase(it);
-        delete tmp;
+    for(QGraphicsPixmapItem* item : pixmapItemList.values()) {
+        delete item;
     }
 
-    pixmapItemList.clear();
 
-    delete pixmapItem;
     delete pixmapItemRight;
     delete pen;
     delete sceneGraphic;
